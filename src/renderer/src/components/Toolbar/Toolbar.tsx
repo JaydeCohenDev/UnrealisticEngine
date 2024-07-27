@@ -25,7 +25,11 @@ export default function Toolbar() {
         window.Editor.SaveLayout();
       })
     );
-    windowMenu.AddItem(new EdMenuItem('Reset Layout'));
+    windowMenu.AddItem(
+      new EdMenuItem('Reset Layout', () => {
+        window.Editor.ResetLayout();
+      })
+    );
 
     menu.AddItem(new EdMenuItem('Tools'));
     menu.AddItem(new EdMenuItem('Build'));
@@ -42,8 +46,8 @@ export default function Toolbar() {
 
   return (
     <div className="toolbar">
-      {menu.GetItems().map((item) => {
-        return <ToolbarMenuItem item={item} />;
+      {menu.GetItems().map((item, index) => {
+        return <ToolbarMenuItem item={item} key={index} />;
       })}
     </div>
   );

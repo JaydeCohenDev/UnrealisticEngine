@@ -22,9 +22,13 @@ export default function ToolbarMenuItem(props: IToolbarMenuItemProps) {
       <div className="toolbarMenu" onClick={WhenClicked}>
         {props.item.GetDisplayText()}
       </div>
-      <div className="toolbarMenuDropdown" style={{ display: isOpen ? 'block' : 'none' }} onMouseLeave={WhenMouseLeave}>
-        {props.item.GetItems().map((item) => {
-          return <ToolbarMenuSubItem item={item} />;
+      <div
+        className="toolbarMenuDropdown"
+        style={{ display: isOpen ? 'block' : 'none' }}
+        onMouseLeave={WhenMouseLeave}
+      >
+        {props.item.GetItems().map((item, index) => {
+          return <ToolbarMenuSubItem item={item} key={index} />;
         })}
       </div>
     </div>

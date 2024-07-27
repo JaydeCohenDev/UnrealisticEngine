@@ -42,9 +42,9 @@ export class EditorLayoutPane implements ISerializable {
   }
 
   public async Load() {
-    if (this._componentName === undefined) return;
-
-    this._component = window.Editor.GetEdPanel(this._componentName);
+    if (this._componentName !== undefined) {
+      this._component = window.Editor.GetEdPanel(this._componentName);
+    }
 
     if (this.HasSplit()) {
       await this.GetContentInSlot(0).Load();
@@ -88,41 +88,47 @@ export class EditorLayoutPane implements ISerializable {
   }
 
   public Serialize(): string {
-    return stringify(this);
-
-    let data = {};
-    data['componentName'] = JSON.stringify(this._componentName);
-    data['direction'] = JSON.stringify(this._direction);
-    data['sizes'] = JSON.stringify(this._sizes);
-
-    if (this.HasSplit()) {
-      let children: string[] = [];
-      this._children.forEach((child) => {
-        children.push(child.Serialize());
-      });
-
-      data['children'] = JSON.stringify(children);
-    }
-
+    let data: {} = this.SerializeToObject();
     return JSON.stringify(data);
   }
 
-  public Deserialize(data: string): boolean {
-    Object.assign(this, parse(data));
-    return true;
+  protected SerializeToObject(): {} {
+    let data = {};
+    data['componentName'] = this._componentName;
+    data['direction'] = this._direction;
+    data['sizes'] = this._sizes;
 
+    if (this.HasSplit()) {
+      let children: {}[] = [];
+      this._children.forEach((child) => {
+        children.push(child.SerializeToObject());
+      });
+
+      data['children'] = children;
+    }
+
+    return data;
+  }
+
+  public Deserialize(data: string): boolean {
     let dataObj = JSON.parse(data);
 
     this._componentName = dataObj['componentName'];
+
     this._direction = dataObj['direction'];
     this._sizes = dataObj['sizes'];
 
     if (dataObj['children'] !== undefined) {
+      const children = dataObj['children'];
+
+      const childA = children[0];
+      const childB = children[1];
+
       let sideA = new EditorLayoutPane();
-      sideA.Deserialize(dataObj['children'][0]);
+      if (!sideA.Deserialize(JSON.stringify(childA))) return false;
 
       let sideB = new EditorLayoutPane();
-      sideB.Deserialize(dataObj['children'][1]);
+      if (!sideB.Deserialize(JSON.stringify(childB))) return false;
 
       this.Split(this._direction!, sideA, sideB);
     }

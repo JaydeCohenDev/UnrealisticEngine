@@ -12,6 +12,8 @@ export default class Editor {
   protected _registeredEditorPanels: { [id: string]: () => JSX.Element } = {};
   protected _world: World;
 
+  public;
+
   constructor() {
     this._world = new World('editor world');
     this._layout = new EditorLayout();
@@ -21,12 +23,12 @@ export default class Editor {
 
   public async Load() {
     const loadedLayoutString = localStorage.getItem('edLayout');
-    let forceReset = true;
+    let forceReset = false;
     if (loadedLayoutString !== null && !forceReset) {
-      let layout = new EditorLayout();
-      layout.Deserialize(loadedLayoutString);
+      this._layout = new EditorLayout();
+      this._layout.Deserialize(loadedLayoutString);
 
-      await layout.GetRootPane().Load();
+      await this._layout.GetRootPane().Load();
     } else {
       this.ResetLayout();
     }
@@ -73,5 +75,7 @@ export default class Editor {
           new EditorLayoutPane(DetailsPanel)
         )
       );
+
+    window.ForceUpdate(); // doesnt work?
   }
 }
