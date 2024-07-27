@@ -18,7 +18,15 @@ export default function Toolbar() {
     );
 
     menu.AddItem(new EdMenuItem('Edit'));
-    menu.AddItem(new EdMenuItem('Window'));
+
+    const windowMenu = menu.AddItem(new EdMenuItem('Window'));
+    windowMenu.AddItem(
+      new EdMenuItem('Save Layout', () => {
+        alert('save layout');
+      })
+    );
+    windowMenu.AddItem(new EdMenuItem('Reset Layout'));
+
     menu.AddItem(new EdMenuItem('Tools'));
     menu.AddItem(new EdMenuItem('Build'));
     menu.AddItem(new EdMenuItem('Select'));

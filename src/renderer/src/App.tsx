@@ -1,5 +1,6 @@
 import Split from 'react-split';
-import { EditorLayout, EditorLayoutPanel } from './engine/EdLayout/EditorLayout';
+import { EditorLayout, EditorLayoutPane } from './engine/EdLayout/EditorLayout';
+import EditorPane from './components/EditorPane';
 import Viewport from './components/Viewport';
 import Outliner from './components/Outliner';
 import DetailsPanel from './components/DetailsPanel';
@@ -12,24 +13,28 @@ function App(): JSX.Element {
   //const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
 
   const layout = new EditorLayout();
-  layout.OpenPanel(new EditorLayoutPanel());
+  layout
+    .GetRootPane()
+    .Split(
+      'horizontal',
+      new EditorLayoutPane().Split(
+        'vertical',
+        new EditorLayoutPane(Viewport),
+        new EditorLayoutPane(ContentBrowser)
+      ),
+      new EditorLayoutPane().Split(
+        'vertical',
+        new EditorLayoutPane(Outliner),
+        new EditorLayoutPane(DetailsPanel)
+      )
+    );
 
   return (
     <div className="edWindow">
       <div className="full-size">
         <Toolbar />
-        <Split className="split split-horizontal" gutterSize={5}>
-          <Split className="split" gutterSize={5} direction="vertical">
-            <Viewport />
-            <ContentBrowser />
-          </Split>
-          <div>
-            <Split className="split" gutterSize={5} direction="vertical">
-              <Outliner />
-              <DetailsPanel />
-            </Split>
-          </div>
-        </Split>
+
+        <EditorPane layout={layout.GetRootPane()} />
       </div>
     </div>
   );

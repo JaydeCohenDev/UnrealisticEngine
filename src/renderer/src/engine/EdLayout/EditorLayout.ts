@@ -1,22 +1,50 @@
 export class EditorLayout {
-  protected _basePanel: EditorLayoutPanel;
+  protected _rootPane: EditorLayoutPane;
 
   constructor() {
-    this._basePanel = new EditorLayoutPanel();
+    this._rootPane = new EditorLayoutPane();
   }
 
-  public OpenPanel(panel: EditorLayoutPanel): void {}
+  public GetRootPane(): EditorLayoutPane {
+    return this._rootPane;
+  }
 }
 
-export class EditorLayoutPanel {
-  protected _leftSplit?: EditorLayoutPanel;
-  protected _rightSplit?: EditorLayoutPanel;
+export class EditorLayoutPane {
+  protected _component?: () => JSX.Element;
+  protected _children: EditorLayoutPane[] = [];
+  protected _direction?: 'horizontal' | 'vertical';
 
-  constructor() {}
+  constructor(component?: () => JSX.Element) {
+    this._component = component;
+  }
 
-  public Split(): void {}
+  public Split(
+    direction: 'horizontal' | 'vertical',
+    sideA: EditorLayoutPane,
+    sideB: EditorLayoutPane
+  ): EditorLayoutPane {
+    this._direction = direction;
+
+    this._children[0] = sideA;
+    this._children[1] = sideB;
+
+    return this;
+  }
 
   public HasSplit(): boolean {
-    return this._leftSplit !== undefined || this._rightSplit !== undefined;
+    return this._children.length > 0;
+  }
+
+  public GetSplitDirection(): 'horizontal' | 'vertical' | undefined {
+    return this._direction;
+  }
+
+  public GetContentInSlot(slot: 0 | 1): EditorLayoutPane {
+    return this._children[slot];
+  }
+
+  public GetComponent(): () => JSX.Element {
+    return this._component!;
   }
 }
