@@ -22,7 +22,7 @@ export default function Toolbar() {
     const windowMenu = menu.AddItem(new EdMenuItem('Window'));
     windowMenu.AddItem(
       new EdMenuItem('Save Layout', () => {
-        alert('save layout');
+        window.Editor.SaveLayout();
       })
     );
     windowMenu.AddItem(new EdMenuItem('Reset Layout'));
