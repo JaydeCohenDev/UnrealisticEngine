@@ -1,4 +1,6 @@
 import ActorComponent from './ActorComponent';
+import { SubclassOf } from './Class';
+import World from './World';
 
 type Constructor<T> = new (...args: any[]) => T;
 
@@ -6,16 +8,26 @@ export default class Actor {
   private static NEXT_ACTOR_ID = 1;
   protected UID: number;
   protected _components: ActorComponent[] = [];
+  protected _world?: World;
 
-  constructor() {
+  protected constructor() {
     this.UID = Actor.NEXT_ACTOR_ID++;
   }
 
-  public AddComponent(component: ActorComponent): Actor {
+  public SetWorld(newWorld: World): void {
+    this._world = newWorld;
+  }
+
+  public GetWorld(): World | undefined {
+    return this._world;
+  }
+
+  public AddComponent(componentClass: SubclassOf<ActorComponent>): ActorComponent {
+    var component = new componentClass();
     this._components.push(component);
     component.SetOwner(this);
 
-    return this;
+    return component;
   }
 
   public RemoveComponent(component: ActorComponent): Actor {
@@ -28,9 +40,17 @@ export default class Actor {
     return this;
   }
 
-  public GetComponentOfType(componentType: Constructor<ActorComponent>): ActorComponent | undefined {
+  public GetComponentOfType(
+    componentType: Constructor<ActorComponent>
+  ): ActorComponent | undefined {
     return this._components.find((c) => {
       return c instanceof componentType;
     });
+  }
+
+  public GetRootComponent(): ActorComponent | undefined {
+    if (this._components.length == 0) return undefined;
+
+    return this._components[0];
   }
 }

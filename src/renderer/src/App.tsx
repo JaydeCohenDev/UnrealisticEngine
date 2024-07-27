@@ -3,7 +3,6 @@ import Toolbar from './components/Toolbar/Toolbar';
 
 import './assets/edLayout.css';
 import Editor from './engine/Editor';
-import { useEffect } from 'react';
 
 declare global {
   interface Window {

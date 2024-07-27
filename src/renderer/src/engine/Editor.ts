@@ -1,17 +1,19 @@
 import { EditorLayout, EditorLayoutPane } from './EdLayout/EditorLayout';
-import { parse, stringify } from 'flatted';
 import Viewport from '@renderer/components/Viewport';
 import ContentBrowser from '@renderer/components/ContentBrowser';
 import Outliner from '@renderer/components/Outliner';
 import DetailsPanel from '@renderer/components/DetailsPanel';
+import World from './World';
 
 type ReactComponent = () => JSX.Element;
 
 export default class Editor {
   protected _layout: EditorLayout;
   protected _registeredEditorPanels: { [id: string]: () => JSX.Element } = {};
+  protected _world: World;
 
   constructor() {
+    this._world = new World('editor world');
     this._layout = new EditorLayout();
 
     this.RegisterEdPanels([Viewport, ContentBrowser, Outliner, DetailsPanel]);

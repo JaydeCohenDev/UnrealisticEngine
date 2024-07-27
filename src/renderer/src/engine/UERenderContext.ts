@@ -1,7 +1,4 @@
 import * as THREE from 'three';
-// import Actor from './Actor';
-// import MeshComponent from './MeshComponent';
-// import ActorComponent from './ActorComponent';
 
 export default class UERenderContext {
   protected _renderer: THREE.WebGLRenderer;
@@ -38,12 +35,6 @@ export default class UERenderContext {
 
     this._camera.position.z = 2.5;
 
-    // const testActor = new Actor();
-    // const component = new MeshComponent();
-    // testActor.AddComponent(component);
-
-    //const foundComp = testActor.GetComponentOfType(MeshComponent);
-
     this._renderer.setAnimationLoop(() => {
       this.Render();
     });
@@ -66,10 +57,11 @@ export default class UERenderContext {
   protected Render(): void {
     this._renderer.render(this._scene, this._camera);
 
-    this._testCube.rotation.x += 0.005;
-    this._testCube.rotation.y += 0.0035;
+    this._testCube.rotation.x += 0.00562;
+    this._testCube.rotation.y += 0.00353;
+    this._testCube.rotation.z += 0.00621;
 
-    this.h += 0.0001;
+    this.h += 0.00025;
     this.h %= 1;
 
     const mat = this._testCube.material as THREE.MeshBasicMaterial;
