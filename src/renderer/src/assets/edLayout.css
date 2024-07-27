@@ -1,0 +1,30 @@
+.edWindow {
+  width: 100vw;
+  height: 100vh;
+}
+
+.edPanel {
+  width: 100%;
+  height: 100%;
+}
+
+.split {
+  width: 100%;
+  height: 100%;
+}
+
+.split-horizontal {
+  display: flex;
+  flex-direction: row;
+}
+
+.gutter {
+  background-color: #1b1b1f;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  cursor: e-resize;
+}
+
+.gutter.gutter-vertical {
+  cursor: n-resize;
+}

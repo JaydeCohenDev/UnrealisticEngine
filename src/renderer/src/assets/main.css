@@ -1,0 +1,45 @@
+body {
+  background-color: #161618;
+  color: #dfdfd6;
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  overflow: hidden;
+  user-select: none;
+}
+
+.panel {
+  flex-grow: 1;
+  padding: 10px;
+}
+
+.full-size {
+  width: 100%;
+  height: 100%;
+}
+
+.flex {
+  display: flex;
+}
+
+.column {
+  flex-direction: column;
+}
+
+.flex-grow {
+  flex-grow: 1;
+}
+
+.editor-main {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-flow: column;
+  justify-items: end;
+}
+
+.viewport {
+  width: 100%;
+  height: 100%;
+  background-color: black;
+}
