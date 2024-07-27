@@ -4,6 +4,7 @@ import ContentBrowser from '@renderer/components/ContentBrowser';
 import Outliner from '@renderer/components/Outliner';
 import DetailsPanel from '@renderer/components/DetailsPanel';
 import World from './World';
+import ViewportEditorPawn from './ViewportEditorPawn';
 
 type ReactComponent = () => JSX.Element;
 
@@ -12,11 +13,13 @@ export default class Editor {
   protected _registeredEditorPanels: { [id: string]: () => JSX.Element } = {};
   protected _world: World;
 
-  public;
+  protected _viewportPawn: ViewportEditorPawn;
 
   constructor() {
     this._world = new World('editor world');
     this._layout = new EditorLayout();
+
+    this._viewportPawn = this._world.Spawn(ViewportEditorPawn);
 
     this.RegisterEdPanels([Viewport, ContentBrowser, Outliner, DetailsPanel]);
   }
