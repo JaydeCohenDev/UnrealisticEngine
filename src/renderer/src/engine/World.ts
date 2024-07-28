@@ -16,4 +16,10 @@ export default class World {
 
     return actor;
   }
+
+  public Tick(_deltaTime: number): void {
+    this._actors.forEach((actor) => {
+      actor.Tick(_deltaTime);
+    });
+  }
 }

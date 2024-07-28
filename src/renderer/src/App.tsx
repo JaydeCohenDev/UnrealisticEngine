@@ -3,9 +3,10 @@ import Toolbar from './components/Toolbar/Toolbar';
 
 import './assets/edLayout.css';
 import Editor from './engine/Editor';
-import { useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 
 import * as THREE from 'three';
+import Input from './engine/Input';
 
 declare global {
   interface Window {
@@ -22,6 +23,14 @@ function App(): JSX.Element {
 
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
   window.ForceUpdate = forceUpdate;
+
+  useEffect(() => {
+    Input.StartListening();
+
+    return () => {
+      Input.StopListening();
+    };
+  });
 
   return (
     <div className="edWindow">

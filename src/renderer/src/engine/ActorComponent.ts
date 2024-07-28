@@ -16,4 +16,6 @@ export default abstract class ActorComponent {
 
     this.Owner.RemoveComponent(this);
   }
+
+  public Tick(_deltaTime: number): void {}
 }

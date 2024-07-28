@@ -1,5 +1,6 @@
 import * as Engine from '@renderer/engine/Engine';
-import { MouseEventHandler, useEffect } from 'react';
+import { useEffect } from 'react';
+import { Vector3 } from 'three';
 
 export default function Viewport() {
   useEffect(() => {
@@ -27,13 +28,12 @@ export default function Viewport() {
 
   function UpdatePosition(e: MouseEvent): void {
     if (isAiming) {
-      console.log(e);
-
       const xDelta = e.movementX / 1000;
       const yDelta = e.movementY / 1000;
 
-      window.Camera.rotateX(-yDelta);
-      window.Camera.rotateY(-xDelta);
+      window.Camera.rotateOnWorldAxis(new Vector3(0, 1, 0), -xDelta);
+      const rightVector = new Vector3(1, 0, 0).applyQuaternion(window.Camera.quaternion);
+      window.Camera.rotateOnWorldAxis(rightVector, -yDelta);
     }
   }
 

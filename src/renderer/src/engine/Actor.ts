@@ -53,4 +53,12 @@ export default class Actor {
 
     return this._components[0];
   }
+
+  public BeginPlay(): void {}
+  public EndPlay(): void {}
+  public Tick(_deltaTime: number): void {
+    this._components.forEach((component) => {
+      component.Tick(_deltaTime);
+    });
+  }
 }

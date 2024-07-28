@@ -21,6 +21,8 @@ function createWindow(): void {
     }
   });
 
+  mainWindow.removeMenu();
+
   mainWindow.on('ready-to-show', () => {
     mainWindow.show();
   });

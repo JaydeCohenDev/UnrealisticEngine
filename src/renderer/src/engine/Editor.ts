@@ -55,6 +55,10 @@ export default class Editor {
     return this._layout;
   }
 
+  public GetWorld(): World {
+    return this._world;
+  }
+
   public SaveLayout(): void {
     const layoutData = this._layout.Serialize();
     localStorage.setItem('edLayout', layoutData);
