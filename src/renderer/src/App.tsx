@@ -5,10 +5,13 @@ import './assets/edLayout.css';
 import Editor from './engine/Editor';
 import { useReducer } from 'react';
 
+import * as THREE from 'three';
+
 declare global {
   interface Window {
     Editor: Editor;
     ForceUpdate: React.DispatchWithoutAction;
+    Camera: THREE.PerspectiveCamera;
   }
 }
 

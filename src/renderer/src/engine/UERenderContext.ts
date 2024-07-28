@@ -16,6 +16,7 @@ export default class UERenderContext {
 
     this._scene = new THREE.Scene();
     this._camera = new THREE.PerspectiveCamera(75, aspectRatio, nearClip, farClip);
+    window.Camera = this._camera;
 
     this._renderer = new THREE.WebGLRenderer({ canvas: canvas });
     this._renderer.setSize(viewportWidth, viewportHeight);
