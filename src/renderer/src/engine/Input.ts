@@ -1,3 +1,5 @@
+import Message from './Message';
+
 export default class Input {
   protected static Keys: { [id: string]: boolean } = {};
 
@@ -28,7 +30,13 @@ export default class Input {
     Input.Keys[keyCode] = true;
   }
 
-  protected static OnMouseWheel(e): void {}
+  protected static OnMouseWheel(e): void {
+    const wheelDelta: number = e.wheelDeltaY;
+
+    Message.Send('MOUSE_WHEEL', {
+      wheelDelta: wheelDelta
+    });
+  }
 
   protected static OnKeyUp(e: KeyboardEvent): void {
     e.preventDefault();

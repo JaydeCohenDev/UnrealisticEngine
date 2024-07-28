@@ -7,12 +7,14 @@ import { useEffect, useReducer } from 'react';
 
 import * as THREE from 'three';
 import Input from './engine/Input';
+import UERenderContext from './engine/UERenderContext';
 
 declare global {
   interface Window {
     Editor: Editor;
     ForceUpdate: React.DispatchWithoutAction;
     Camera: THREE.PerspectiveCamera;
+    RenderContext: UERenderContext;
   }
 }
 

@@ -62,6 +62,12 @@ export default class UERenderContext {
     const helper = new THREE.CameraHelper(sun.shadow.camera);
     this._scene.add(helper);
     this.Render();
+
+    window.RenderContext = this;
+  }
+
+  public GetRenderer(): THREE.WebGLRenderer {
+    return this._renderer;
   }
 
   protected CreateFloor(): THREE.Mesh {
@@ -94,7 +100,7 @@ export default class UERenderContext {
     sun.shadow.mapSize.width = 512;
     sun.shadow.mapSize.height = 512;
     sun.shadow.camera.near = 0.5;
-    sun.shadow.camera.far = 100;
+    sun.shadow.camera.far = 50;
     return sun;
   }
 
