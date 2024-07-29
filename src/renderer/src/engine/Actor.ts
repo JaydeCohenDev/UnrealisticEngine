@@ -22,6 +22,10 @@ export default class Actor {
     return this._world;
   }
 
+  public GetDisplayName(): string {
+    return `${this.constructor.name} [${this.UID}]`;
+  }
+
   public AddComponent<T extends ActorComponent>(componentClass: SubclassOf<ActorComponent>): T {
     var component = new componentClass();
     this._components.push(component);

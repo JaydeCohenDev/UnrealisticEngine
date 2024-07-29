@@ -39,6 +39,10 @@ export default class World {
     this._scene.add(helper);
   }
 
+  public GetAllActors(): Actor[] {
+    return this._actors;
+  }
+
   protected CreateFloor(): THREE.Mesh {
     const gridTexture = new THREE.TextureLoader().load('src/assets/textures/default_grid.png');
     gridTexture.wrapS = THREE.RepeatWrapping;
