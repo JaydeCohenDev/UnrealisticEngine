@@ -22,12 +22,12 @@ export default class Actor {
     return this._world;
   }
 
-  public AddComponent(componentClass: SubclassOf<ActorComponent>): ActorComponent {
+  public AddComponent<T extends ActorComponent>(componentClass: SubclassOf<ActorComponent>): T {
     var component = new componentClass();
     this._components.push(component);
     component.SetOwner(this);
 
-    return component;
+    return component as T;
   }
 
   public RemoveComponent(component: ActorComponent): Actor {
@@ -54,8 +54,18 @@ export default class Actor {
     return this._components[0];
   }
 
-  public BeginPlay(): void {}
-  public EndPlay(): void {}
+  public BeginPlay(): void {
+    this._components.forEach((component) => {
+      component.BeginPlay();
+    });
+  }
+
+  public EndPlay(): void {
+    this._components.forEach((component) => {
+      component.EndPlay();
+    });
+  }
+
   public Tick(_deltaTime: number): void {
     this._components.forEach((component) => {
       component.Tick(_deltaTime);

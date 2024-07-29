@@ -1,4 +1,5 @@
 import Actor from './Actor';
+import World from './World';
 
 export default abstract class ActorComponent {
   protected Owner: Actor | null = null;
@@ -16,6 +17,13 @@ export default abstract class ActorComponent {
 
     this.Owner.RemoveComponent(this);
   }
+
+  public GetWorld(): World | undefined {
+    return this.Owner?.GetWorld();
+  }
+
+  public BeginPlay(): void {}
+  public EndPlay(): void {}
 
   public Tick(_deltaTime: number): void {}
 }

@@ -1,12 +1,13 @@
 import Actor from './Actor';
 import { SubclassOf } from './Class';
 import * as THREE from 'three';
+import TestCubeActor from './TestCubeActor';
 
 export default class World {
   protected _name: string;
   protected _actors: Actor[] = [];
 
-  protected _testCube: THREE.Mesh;
+  protected _testCube: TestCubeActor;
 
   protected _floorMesh: THREE.Mesh;
 
@@ -20,13 +21,7 @@ export default class World {
     this._scene = new THREE.Scene();
     this._scene.background = new THREE.Color('#e8f7fc');
 
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const material = new THREE.MeshStandardMaterial({ color: 0xff0000 });
-    this._testCube = new THREE.Mesh(geometry, material);
-    this._testCube.castShadow = true;
-    this._testCube.receiveShadow = true;
-    this._testCube.position.y += 2;
-    this._scene.add(this._testCube);
+    this._testCube = this.Spawn(TestCubeActor);
 
     this._floorMesh = this.CreateFloor();
     this._scene.add(this._floorMesh);
@@ -86,6 +81,7 @@ export default class World {
     const actor = new actorClass();
     this._actors.push(actor);
     actor.SetWorld(this);
+    actor.BeginPlay();
 
     return actor;
   }
@@ -94,19 +90,7 @@ export default class World {
     return this._scene;
   }
 
-  protected h: number = 0;
-
   public Tick(_deltaTime: number): void {
-    this._testCube.rotation.x += 0.00562;
-    this._testCube.rotation.y += 0.00353;
-    this._testCube.rotation.z += 0.00621;
-
-    this.h += 0.00025;
-    this.h %= 1;
-
-    const mat = this._testCube.material as THREE.MeshStandardMaterial;
-    mat.color.setHSL(this.h, 1, 0.5);
-
     this._actors.forEach((actor) => {
       actor.Tick(_deltaTime);
     });
