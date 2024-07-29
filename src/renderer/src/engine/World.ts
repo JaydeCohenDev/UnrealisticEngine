@@ -2,12 +2,14 @@ import Actor from './Actor';
 import { SubclassOf } from './Class';
 import * as THREE from 'three';
 import TestCubeActor from './TestCubeActor';
+import { DirectionalLightActor } from './DirectionalLightActor';
 
 export default class World {
   protected _name: string;
   protected _actors: Actor[] = [];
 
   protected _testCube: TestCubeActor;
+  protected _sun: DirectionalLightActor;
 
   protected _floorMesh: THREE.Mesh;
 
@@ -26,17 +28,15 @@ export default class World {
     this._floorMesh = this.CreateFloor();
     this._scene.add(this._floorMesh);
 
-    const sun = this.CreateSun();
-    this._scene.add(sun);
+    this._sun = this.Spawn(DirectionalLightActor);
+    // const sun = this.CreateSun();
+    // this._scene.add(sun);
 
     const skylight = this.CreateSkylight();
     this._scene.add(skylight);
 
-    // const skybox = this.CreateSkybox();
-    // this._scene.add(skybox);
-
-    const helper = new THREE.CameraHelper(sun.shadow.camera);
-    this._scene.add(helper);
+    // const helper = new THREE.CameraHelper(sun.shadow.camera);
+    // this._scene.add(helper);
   }
 
   public GetAllActors(): Actor[] {
@@ -58,12 +58,6 @@ export default class World {
     ground.castShadow = true;
 
     return ground;
-  }
-
-  protected CreateSkybox(): THREE.Mesh {
-    const geo = new THREE.BoxGeometry(10000, 10000, 10000);
-    const skybox = new THREE.Mesh(geo);
-    return skybox;
   }
 
   protected CreateSun(): THREE.DirectionalLight {
