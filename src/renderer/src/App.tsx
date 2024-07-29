@@ -14,7 +14,7 @@ declare global {
     Editor: Editor;
     ForceUpdate: React.DispatchWithoutAction;
     Camera: THREE.PerspectiveCamera;
-    RenderContext: UERenderContext;
+    RenderContext: UERenderContext | undefined;
   }
 }
 

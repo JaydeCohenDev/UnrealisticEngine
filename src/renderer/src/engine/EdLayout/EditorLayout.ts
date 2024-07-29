@@ -89,6 +89,7 @@ export class EditorLayoutPane implements ISerializable {
 
   public Serialize(): string {
     let data: {} = this.SerializeToObject();
+    console.log(data);
     return JSON.stringify(data);
   }
 

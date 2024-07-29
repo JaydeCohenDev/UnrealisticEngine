@@ -4,7 +4,11 @@ import { Vector3 } from 'three';
 
 export default function Viewport() {
   useEffect(() => {
-    Engine.CreateRenderContext();
+    const renderContext = Engine.CreateRenderContext();
+
+    return () => {
+      renderContext.Destroy();
+    };
   }, []);
 
   let isAiming: boolean = false;
