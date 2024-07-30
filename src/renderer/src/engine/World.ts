@@ -7,6 +7,7 @@ import SkyLightActor from './SkyLightActor';
 import StaticMeshActor from './StaticMeshActor';
 import StaticMeshComponent from './StaticMeshComponent';
 import { StaticMesh } from './StaticMesh';
+import Texture2d from './Texture2d';
 
 export default class World {
   protected _name: string;
@@ -29,11 +30,8 @@ export default class World {
 
     this._testCube = this.Spawn(TestCubeActor);
 
-    const gridTexture = new THREE.TextureLoader().load('src/assets/textures/default_grid.png');
-    gridTexture.wrapS = THREE.RepeatWrapping;
-    gridTexture.wrapT = THREE.RepeatWrapping;
-    gridTexture.repeat.set(4, 4);
-    const floorMaterial = new THREE.MeshStandardMaterial({ map: gridTexture });
+    const gridTexture = new Texture2d('src/assets/textures/default_grid.png');
+    const floorMaterial = new THREE.MeshStandardMaterial({ map: gridTexture.Data });
     this._floor = this.Spawn(StaticMeshActor, 'floor');
     const smc = this._floor.GetComponentOfType(StaticMeshComponent);
     smc?.SetStaticMesh(StaticMesh.FromBox(10, 1, 10, floorMaterial));
