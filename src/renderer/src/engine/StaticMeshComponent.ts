@@ -10,6 +10,12 @@ export default class StaticMeshComponent extends SceneComponent {
     this._staticMesh = newStaticMesh;
     this._staticMesh.GetRenderMesh().castShadow = this._castShadow;
     this._staticMesh.GetRenderMesh().receiveShadow = this._receiveShadow;
+
+    const world = this.GetWorld();
+    if (world !== undefined && this._staticMesh !== undefined) {
+      world.GetRenderScene().remove(this._staticMesh.GetRenderMesh());
+      world.GetRenderScene().add(this._staticMesh.GetRenderMesh());
+    }
   }
 
   public GetStaticMesh(): StaticMesh | undefined {

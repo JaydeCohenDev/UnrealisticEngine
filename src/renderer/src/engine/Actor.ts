@@ -51,12 +51,12 @@ export default class Actor {
     return this;
   }
 
-  public GetComponentOfType(
-    componentType: Constructor<ActorComponent>
-  ): ActorComponent | undefined {
+  public GetComponentOfType<T extends ActorComponent>(
+    componentType: Constructor<T>
+  ): T | undefined {
     return this._components.find((c) => {
       return c instanceof componentType;
-    });
+    }) as T;
   }
 
   public GetRootComponent(): ActorComponent | undefined {
