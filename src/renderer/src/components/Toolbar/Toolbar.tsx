@@ -2,6 +2,7 @@ import { EdMenu, EdMenuItem } from '@renderer/engine/EdLayout/EdMenu';
 
 import './../../assets/toolbar.css';
 import ToolbarMenuItem from './ToolbarMenuItem';
+import StaticMeshActor from '@renderer/engine/StaticMeshActor';
 
 export default function Toolbar() {
   function CreateMenu(): EdMenu {
@@ -34,7 +35,14 @@ export default function Toolbar() {
     menu.AddItem(new EdMenuItem('Tools'));
     menu.AddItem(new EdMenuItem('Build'));
     menu.AddItem(new EdMenuItem('Select'));
-    menu.AddItem(new EdMenuItem('Actor'));
+
+    const actorMenu = menu.AddItem(new EdMenuItem('Actor'));
+    actorMenu.AddItem(
+      new EdMenuItem('Spawn Cube', () => {
+        window.Editor.GetWorld().Spawn(StaticMeshActor, 'testStaticMeshActor');
+      })
+    );
+
     menu.AddItem(new EdMenuItem('Help'));
 
     console.log('menu created');

@@ -8,6 +8,7 @@ import StaticMeshActor from './StaticMeshActor';
 import StaticMeshComponent from './StaticMeshComponent';
 import { StaticMesh } from './StaticMesh';
 import Texture2d from './Texture2d';
+import Message from './Message';
 
 export default class World {
   protected _name: string;
@@ -55,6 +56,8 @@ export default class World {
     }
 
     actor.BeginPlay();
+
+    Message.Send('ACTOR_SPAWN', { actor: actor });
 
     return actor;
   }

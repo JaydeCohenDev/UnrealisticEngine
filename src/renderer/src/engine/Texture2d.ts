@@ -3,6 +3,7 @@ import * as THREE from 'three';
 
 export default class Texture2d extends Asset {
   protected _path: string;
+
   protected _data: THREE.Texture;
 
   public get Data(): THREE.Texture {
