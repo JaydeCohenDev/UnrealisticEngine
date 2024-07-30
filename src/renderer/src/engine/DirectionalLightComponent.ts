@@ -3,11 +3,13 @@ import * as THREE from 'three';
 
 export default class DirectionalLightComponent extends SceneComponent {
   protected _light: THREE.DirectionalLight;
+  protected _helper: THREE.CameraHelper;
 
   constructor() {
     super();
 
     this._light = new THREE.DirectionalLight(0xffffff, 1); // TODO expose params
+    this._helper = new THREE.CameraHelper(this._light.shadow.camera);
 
     this._light.position.set(0, 10, 0); // TODO move to scene component position
 
@@ -26,6 +28,7 @@ export default class DirectionalLightComponent extends SceneComponent {
     const world = this.GetWorld();
     if (world !== undefined) {
       world.GetRenderScene().add(this._light);
+      world.GetRenderScene().add(this._helper);
     }
   }
 
@@ -35,6 +38,7 @@ export default class DirectionalLightComponent extends SceneComponent {
     const world = this.GetWorld();
     if (world !== undefined) {
       world.GetRenderScene().remove(this._light);
+      world.GetRenderScene().remove(this._helper);
     }
   }
 }

@@ -9,9 +9,12 @@ export default class Actor {
   protected UID: number;
   protected _components: ActorComponent[] = [];
   protected _world?: World;
+  protected _customName: string;
 
   protected constructor() {
     this.UID = Actor.NEXT_ACTOR_ID++;
+
+    this._customName = this.constructor.name;
   }
 
   public SetWorld(newWorld: World): void {
@@ -22,8 +25,12 @@ export default class Actor {
     return this._world;
   }
 
+  public Rename(newName: string) {
+    this._customName = newName;
+  }
+
   public GetDisplayName(): string {
-    return `${this.constructor.name} [${this.UID}]`;
+    return `${this._customName} [${this.UID}]`;
   }
 
   public AddComponent<T extends ActorComponent>(componentClass: SubclassOf<ActorComponent>): T {

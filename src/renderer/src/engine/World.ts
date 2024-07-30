@@ -28,15 +28,10 @@ export default class World {
     this._floorMesh = this.CreateFloor();
     this._scene.add(this._floorMesh);
 
-    this._sun = this.Spawn(DirectionalLightActor);
-    // const sun = this.CreateSun();
-    // this._scene.add(sun);
+    this._sun = this.Spawn(DirectionalLightActor, 'Sun');
 
     const skylight = this.CreateSkylight();
     this._scene.add(skylight);
-
-    // const helper = new THREE.CameraHelper(sun.shadow.camera);
-    // this._scene.add(helper);
   }
 
   public GetAllActors(): Actor[] {
@@ -60,25 +55,19 @@ export default class World {
     return ground;
   }
 
-  protected CreateSun(): THREE.DirectionalLight {
-    const sun = new THREE.DirectionalLight(0xffffff, 1);
-    sun.position.set(0, 10, 0);
-    sun.castShadow = true;
-    sun.shadow.mapSize.width = 512;
-    sun.shadow.mapSize.height = 512;
-    sun.shadow.camera.near = 0.5;
-    sun.shadow.camera.far = 50;
-    return sun;
-  }
-
   protected CreateSkylight(): THREE.AmbientLight {
     return new THREE.AmbientLight(0xffffff, 0.5);
   }
 
-  public Spawn<T extends Actor>(actorClass: SubclassOf<T>): T {
+  public Spawn<T extends Actor>(actorClass: SubclassOf<T>, name?: string): T {
     const actor = new actorClass();
     this._actors.push(actor);
     actor.SetWorld(this);
+
+    if (name !== undefined) {
+      actor.Rename(name);
+    }
+
     actor.BeginPlay();
 
     return actor;
