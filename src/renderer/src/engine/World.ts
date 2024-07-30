@@ -3,6 +3,7 @@ import { SubclassOf } from './Class';
 import * as THREE from 'three';
 import TestCubeActor from './TestCubeActor';
 import { DirectionalLightActor } from './DirectionalLightActor';
+import SkyLightActor from './SkyLightActor';
 
 export default class World {
   protected _name: string;
@@ -10,6 +11,7 @@ export default class World {
 
   protected _testCube: TestCubeActor;
   protected _sun: DirectionalLightActor;
+  protected _skylight: SkyLightActor;
 
   protected _floorMesh: THREE.Mesh;
 
@@ -30,8 +32,7 @@ export default class World {
 
     this._sun = this.Spawn(DirectionalLightActor, 'Sun');
 
-    const skylight = this.CreateSkylight();
-    this._scene.add(skylight);
+    this._skylight = this.Spawn(SkyLightActor, 'SkyLight');
   }
 
   public GetAllActors(): Actor[] {
