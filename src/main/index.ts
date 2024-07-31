@@ -9,6 +9,7 @@ function createWindow(): void {
   const mainWindow = new BrowserWindow({
     width: 1280,
     height: 720,
+    icon: join(__dirname, '../../resources/ueLogox256.ico'),
     show: false,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
