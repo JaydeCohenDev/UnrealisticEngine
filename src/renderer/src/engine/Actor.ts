@@ -51,6 +51,10 @@ export default class Actor {
     return this;
   }
 
+  public GetAllComponents(): ActorComponent[] {
+    return this._components;
+  }
+
   public GetComponentOfType<T extends ActorComponent>(
     componentType: Constructor<T>
   ): T | undefined {

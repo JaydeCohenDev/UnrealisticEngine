@@ -4,7 +4,6 @@ export default class UEvent {
   protected _listeners: UEventCallback[] = [];
 
   public AddListener(callback: UEventCallback): void {
-    this.RemoveListener(callback);
     this._listeners.push(callback);
   }
 

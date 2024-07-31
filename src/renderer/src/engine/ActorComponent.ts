@@ -26,4 +26,8 @@ export default abstract class ActorComponent {
   public EndPlay(): void {}
 
   public Tick(_deltaTime: number): void {}
+
+  public GetDisplayName(): string {
+    return this.constructor.name;
+  }
 }

@@ -32,19 +32,19 @@ export default function Outliner() {
     setSelectedActors(newActorArray);
   };
 
+  const ActorSelectionSetChanged = () => {
+    RebuildOutlinerList();
+  };
+
   useEffect(() => {
-    window.Editor.OnActorSelectionSetChanged.AddListener(() => {
-      RebuildOutlinerList();
-    });
+    window.Editor.OnActorSelectionSetChanged.AddListener(ActorSelectionSetChanged);
     Message.AddListener('ACTOR_SPAWN', () => {
       RebuildOutlinerList();
     });
     RebuildOutlinerList();
 
     return () => {
-      window.Editor.OnActorSelectionSetChanged.RemoveListener(() => {
-        RebuildOutlinerList();
-      });
+      window.Editor.OnActorSelectionSetChanged.RemoveListener(ActorSelectionSetChanged);
     };
   }, []);
 

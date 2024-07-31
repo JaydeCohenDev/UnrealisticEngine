@@ -1,7 +1,7 @@
 export default class Reflection {
   protected static _registeredClasses: { [className: string]: string[] } = {};
 
-  static RegisterProperty(parentClass: any, propertyName: string) {
+  public static RegisterProperty(parentClass: any, propertyName: string) {
     const className = parentClass.constructor.name;
 
     console.log(`UPROPERTY REGISTERED: ${propertyName} on ${className}`);
@@ -12,5 +12,11 @@ export default class Reflection {
     Reflection._registeredClasses[className].push(propertyName);
 
     console.log(Reflection._registeredClasses);
+  }
+
+  public static GetPropertiesOf(parentClass: Object): string[] {
+    const className = parentClass.constructor.name;
+
+    return this._registeredClasses[className] ?? [];
   }
 }
