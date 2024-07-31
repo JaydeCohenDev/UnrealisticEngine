@@ -3,9 +3,6 @@
   overflow-y: scroll;
 }
 
-.outlinerListScrollbox {
-}
-
 .outlinerList {
   list-style: none;
   padding-inline-start: 0px;
@@ -14,6 +11,7 @@
 .outlinerRow {
   background-color: transparent;
   padding: 5px 10px;
+  cursor: pointer;
 
   transition: 0.2s all;
 }
@@ -21,6 +19,7 @@
 .selected {
   background-color: #2d5bcb;
   padding: 5px 10px;
+  cursor: pointer;
   font-weight: bold;
 
   transition: 0.2s all;
