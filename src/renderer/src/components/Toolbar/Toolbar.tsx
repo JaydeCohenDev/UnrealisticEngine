@@ -5,6 +5,8 @@ import ToolbarMenuItem from './ToolbarMenuItem';
 import StaticMeshActor from '@renderer/engine/StaticMeshActor';
 
 export default function Toolbar() {
+  const ipcTriggerRefresh = (): void => window.electron.ipcRenderer.send('refresh');
+
   function CreateMenu(): EdMenu {
     const menu = new EdMenu();
 
@@ -29,6 +31,11 @@ export default function Toolbar() {
     windowMenu.AddItem(
       new EdMenuItem('Reset Layout', () => {
         window.Editor.ResetLayout();
+      })
+    );
+    windowMenu.AddItem(
+      new EdMenuItem('Refresh', () => {
+        window.api.refresh();
       })
     );
 
