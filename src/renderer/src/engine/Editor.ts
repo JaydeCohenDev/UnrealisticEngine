@@ -5,15 +5,21 @@ import Outliner from '@renderer/components/Outliner/Outliner';
 import DetailsPanel from '@renderer/components/DetailsPanel';
 import World from './World';
 import ViewportEditorPawn from './ViewportEditorPawn';
+import Actor from './Actor';
+import UEvent from './UEvent';
 
 type ReactComponent = () => JSX.Element;
 
 export default class Editor {
+  public OnActorSelectionSetChanged: UEvent = new UEvent();
+
   protected _layout: EditorLayout;
   protected _registeredEditorPanels: { [id: string]: () => JSX.Element } = {};
   protected _world: World;
 
   protected _viewportPawn: ViewportEditorPawn;
+
+  protected _selectedActors: Actor[] = [];
 
   constructor() {
     this._world = new World('editor world');
@@ -35,6 +41,15 @@ export default class Editor {
     } else {
       this.ResetLayout();
     }
+  }
+
+  public SetSelectedActors(actors: Actor[]): void {
+    this._selectedActors = actors;
+    this.OnActorSelectionSetChanged.Invoke({ selectedActors: actors });
+  }
+
+  public GetSelectedActors(): Actor[] {
+    return this._selectedActors;
   }
 
   protected RegisterEdPanels(components: ReactComponent[]) {
