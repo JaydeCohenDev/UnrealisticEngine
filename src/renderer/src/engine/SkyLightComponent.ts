@@ -1,14 +1,15 @@
-import { UProperty } from './Decorators';
+import { UClass, UFunction, UProperty } from './Decorators';
 import SceneComponent from './SceneComponent';
 import * as THREE from 'three';
 
+@UClass()
 export default class SkyLightComponent extends SceneComponent {
   protected _skylight: THREE.AmbientLight;
 
-  @UProperty
+  @UProperty()
   public LightColor: THREE.ColorRepresentation = 0xffffff;
 
-  @UProperty
+  @UProperty()
   public Intensity: number = 0.5;
 
   constructor() {
@@ -17,6 +18,7 @@ export default class SkyLightComponent extends SceneComponent {
     this._skylight = new THREE.AmbientLight(0xffffff, 0.5);
   }
 
+  @UFunction()
   public BeginPlay(): void {
     super.BeginPlay();
 

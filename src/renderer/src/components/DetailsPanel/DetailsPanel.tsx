@@ -26,8 +26,8 @@ export default function DetailsPanel() {
 
   return (
     <div className="panel">
-      <h2>{displayActor?.GetDisplayName()}</h2>
-
+      <h3>Details Panel</h3>
+      <h4>{displayActor?.GetDisplayName()}</h4>
       {displayActor
         ?.GetAllComponents()
         .map((component) => <ComponentDetails component={component} />)}

@@ -1,3 +1,5 @@
+import { SubclassOf } from './Class';
+
 export default class Reflection {
   protected static _registeredClasses: { [className: string]: string[] } = {};
 
@@ -18,5 +20,10 @@ export default class Reflection {
     const className = parentClass.constructor.name;
 
     return this._registeredClasses[className] ?? [];
+  }
+
+  public static GetPropertiesFrom(classType: SubclassOf<Object>): string[] {
+    const className = classType.name;
+    return this._registeredClasses[className];
   }
 }

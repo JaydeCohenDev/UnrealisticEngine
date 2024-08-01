@@ -2,15 +2,15 @@ import { UClass, UProperty } from './Decorators';
 import SceneComponent from './SceneComponent';
 import * as THREE from 'three';
 
-@UClass
+@UClass()
 export default class DirectionalLightComponent extends SceneComponent {
   protected _light: THREE.DirectionalLight;
   protected _helper: THREE.CameraHelper;
 
-  @UProperty
+  @UProperty()
   protected MyNumber: number = 10;
 
-  @UProperty
+  @UProperty()
   protected MyString: string = 'Hello, world!';
 
   constructor() {

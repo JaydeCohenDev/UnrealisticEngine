@@ -9,11 +9,11 @@ export interface IComponentDetailsProps {
 export default function ComponentDetails(props: IComponentDetailsProps) {
   return (
     <div>
-      <h3>{props.component.GetDisplayName()}</h3>
+      <h5>{props.component.GetDisplayName()}</h5>
 
       <ul>
-        {Reflection.GetPropertiesOf(props.component).map((propName) => (
-          <ComponentProperty component={props.component} propName={propName} />
+        {Reflection.GetPropertiesOf(props.component).map((propName, index) => (
+          <ComponentProperty key={index} component={props.component} propName={propName} />
         ))}
       </ul>
     </div>
