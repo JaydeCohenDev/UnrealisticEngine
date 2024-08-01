@@ -11,11 +11,9 @@ export default function ComponentDetails(props: IComponentDetailsProps) {
     <div>
       <h5>{props.component.GetDisplayName()}</h5>
 
-      <ul>
-        {Reflection.GetPropertiesOf(props.component).map((propName, index) => (
-          <ComponentProperty key={index} component={props.component} propName={propName} />
-        ))}
-      </ul>
+      {Reflection.GetPropertiesOf(props.component).map((uprop, index) => (
+        <ComponentProperty key={index} uprop={uprop} component={props.component} />
+      ))}
     </div>
   );
 }

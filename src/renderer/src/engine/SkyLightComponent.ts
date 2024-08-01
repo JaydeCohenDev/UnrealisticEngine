@@ -7,10 +7,13 @@ export default class SkyLightComponent extends SceneComponent {
   protected _skylight: THREE.AmbientLight;
 
   @UProperty()
-  public LightColor: THREE.ColorRepresentation = 0xffffff;
+  public LightColor: THREE.Color = new THREE.Color(0xffffff);
 
   @UProperty()
   public Intensity: number = 0.5;
+
+  @UProperty()
+  public CastShadow: boolean = false;
 
   constructor() {
     super();

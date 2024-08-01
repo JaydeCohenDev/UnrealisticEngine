@@ -30,7 +30,7 @@ export default function DetailsPanel() {
       <h4>{displayActor?.GetDisplayName()}</h4>
       {displayActor
         ?.GetAllComponents()
-        .map((component) => <ComponentDetails component={component} />)}
+        .map((component, index) => <ComponentDetails key={index} component={component} />)}
     </div>
   );
 }

@@ -1,18 +1,18 @@
 import ActorComponent from '@renderer/engine/ActorComponent';
+import UProperty from '@renderer/engine/UProperty';
 
 export interface IComponentPropertyProps {
+  uprop: UProperty;
   component: ActorComponent;
-  propName: string;
 }
 
 export default function ComponentProperty(props: IComponentPropertyProps) {
-  const getPropertyValue = () => {
-    return props.component[props.propName];
-  };
-
+  const PropViewComponent = window.Editor.GetPropertyViewFor(props.uprop.GetTypeName())!;
+  // HELP DOESNT GET RECREATED IF SAME COMPONENT TYPE !!
   return (
-    <li>
-      {props.propName} = {getPropertyValue()}
-    </li>
+    <>
+      <div>{props.uprop.GetPropertyName()}</div>
+      <PropViewComponent uproperty={props.uprop} component={props.component} />
+    </>
   );
 }

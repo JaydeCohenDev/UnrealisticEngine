@@ -7,6 +7,13 @@ import World from './World';
 import ViewportEditorPawn from './ViewportEditorPawn';
 import Actor from './Actor';
 import UEvent from './UEvent';
+import NumberPropertyView from '@renderer/components/DetailsPanel/Property/NumberPropertyView';
+import TextPropertyView from '@renderer/components/DetailsPanel/Property/TextPropertyView';
+import * as THREE from 'three';
+import ColorPropertyView from '@renderer/components/DetailsPanel/Property/ColorPropertyView';
+import BooleanPropertyView from '@renderer/components/DetailsPanel/Property/BooleanPropertyView';
+import UProperty from './UProperty';
+import { IPropertyViewProps } from '@renderer/components/DetailsPanel/Property/PropertyViewBase';
 
 type ReactComponent = () => JSX.Element;
 
@@ -19,6 +26,9 @@ export default class Editor {
 
   protected _viewportPawn: ViewportEditorPawn;
 
+  protected _registeredPropertyViews: { [id: string]: (props: IPropertyViewProps) => JSX.Element } =
+    {};
+
   protected _selectedActors: Actor[] = [];
 
   constructor() {
@@ -28,6 +38,11 @@ export default class Editor {
     this._viewportPawn = this._world.Spawn(ViewportEditorPawn);
 
     this.RegisterEdPanels([Viewport, ContentBrowser, Outliner, DetailsPanel]);
+
+    this.RegisterPropertyView('number', NumberPropertyView);
+    this.RegisterPropertyView('string', TextPropertyView);
+    this.RegisterPropertyView(THREE.Color.name, ColorPropertyView);
+    this.RegisterPropertyView('boolean', BooleanPropertyView);
   }
 
   public async Load() {
@@ -52,13 +67,26 @@ export default class Editor {
     return this._selectedActors;
   }
 
-  protected RegisterEdPanels(components: ReactComponent[]) {
+  public RegisterEdPanels(components: ReactComponent[]) {
     components.forEach((component) => {
       this.RegisterEdPanel(component);
     });
   }
 
-  protected RegisterEdPanel(component: ReactComponent) {
+  public RegisterPropertyView(
+    typeName: string,
+    component: (props: IPropertyViewProps) => JSX.Element
+  ): void {
+    this._registeredPropertyViews[typeName] = component;
+  }
+
+  public GetPropertyViewFor(
+    typeName: string
+  ): (props: IPropertyViewProps) => JSX.Element | undefined {
+    return this._registeredPropertyViews[typeName];
+  }
+
+  public RegisterEdPanel(component: ReactComponent) {
     this._registeredEditorPanels[component.name] = component;
   }
 

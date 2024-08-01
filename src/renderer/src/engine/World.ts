@@ -39,6 +39,8 @@ export default class World {
 
     this._sun = this.Spawn(DirectionalLightActor, 'Sun');
 
+    this.Spawn(DirectionalLightActor, 'Moon');
+
     this._skylight = this.Spawn(SkyLightActor, 'SkyLight');
   }
 

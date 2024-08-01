@@ -24,7 +24,7 @@ export default class Input {
   }
 
   protected static OnKeyDown(e: KeyboardEvent): void {
-    e.preventDefault();
+    //e.preventDefault(); // breaks text input in details panel
 
     const keyCode = e.code;
     Input.Keys[keyCode] = true;
