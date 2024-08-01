@@ -1,4 +1,5 @@
 import { UClass, UProperty } from './Decorators';
+import Input from './Input';
 import SceneComponent from './SceneComponent';
 import * as THREE from 'three';
 

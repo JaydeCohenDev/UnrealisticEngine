@@ -8,6 +8,7 @@ export default class StaticMeshComponent extends SceneComponent {
 
   public SetStaticMesh(newStaticMesh: StaticMesh): void {
     this._staticMesh = newStaticMesh;
+    this._staticMesh.GetRenderMesh()['owner'] = this;
     this._staticMesh.GetRenderMesh().castShadow = this._castShadow;
     this._staticMesh.GetRenderMesh().receiveShadow = this._receiveShadow;
 
