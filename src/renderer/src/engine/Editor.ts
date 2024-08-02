@@ -12,8 +12,8 @@ import TextPropertyView from '@renderer/components/DetailsPanel/Property/TextPro
 import * as THREE from 'three';
 import ColorPropertyView from '@renderer/components/DetailsPanel/Property/ColorPropertyView';
 import BooleanPropertyView from '@renderer/components/DetailsPanel/Property/BooleanPropertyView';
-import UProperty from './UProperty';
 import { IPropertyViewProps } from '@renderer/components/DetailsPanel/Property/PropertyViewBase';
+import StaticMeshComponent from './StaticMeshComponent';
 
 type ReactComponent = () => JSX.Element;
 
@@ -60,6 +60,25 @@ export default class Editor {
 
   public SetSelectedActors(actors: Actor[]): void {
     this._selectedActors = actors;
+
+    const selectedObjs: THREE.Object3D[] = [];
+    actors.forEach((actor) => {
+      const smc = actor.GetComponentOfType(StaticMeshComponent);
+      if (smc !== undefined) {
+        const staticMesh = smc.GetStaticMesh();
+        if (staticMesh !== undefined) {
+          selectedObjs.push(staticMesh.GetRenderMesh()!);
+        }
+      }
+    });
+
+    if (window.RenderContext !== undefined) {
+      const outlinePass = window.RenderContext.PostProcessStack.outlinePass;
+      if (outlinePass !== undefined) {
+        outlinePass.selectedObjects = selectedObjs;
+      }
+    }
+
     this.OnActorSelectionSetChanged.Invoke({ selectedActors: actors });
   }
 

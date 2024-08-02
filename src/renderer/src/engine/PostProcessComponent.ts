@@ -1,5 +1,6 @@
 import ActorComponent from './ActorComponent';
 import { UProperty } from './Decorators';
+import * as THREE from 'three';
 
 export default class PostProcessComponent extends ActorComponent {
   @UProperty({ category: 'Bloom' })
@@ -20,6 +21,12 @@ export default class PostProcessComponent extends ActorComponent {
   @UProperty({ category: 'Temporal Anti-Aliasing', minVal: 0, maxVal: 8 })
   protected TAASamples: number = 4;
 
+  @UProperty({ category: 'Outlines' })
+  protected EnableOutlines: boolean = true;
+
+  @UProperty({ category: 'Outlines' })
+  protected OutlineColor: THREE.Color = new THREE.Color(0xffff00);
+
   public Tick(_deltaTime: number): void {
     if (window.RenderContext === undefined) return;
 
@@ -35,6 +42,11 @@ export default class PostProcessComponent extends ActorComponent {
     if (postStack.taaPass !== undefined) {
       postStack.taaPass.enabled = this.EnableTAA;
       postStack.taaPass.sampleLevel = this.TAASamples;
+    }
+
+    if (postStack.outlinePass !== undefined) {
+      postStack.outlinePass.enabled = this.EnableOutlines;
+      postStack.outlinePass.visibleEdgeColor = this.OutlineColor;
     }
   }
 }

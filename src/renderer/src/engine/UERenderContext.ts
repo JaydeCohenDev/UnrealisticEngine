@@ -1,13 +1,20 @@
 import * as THREE from 'three';
 import Time from './Time';
 import { EffectComposer } from 'three/examples/jsm/addons';
-import { RenderPass, OutputPass, TAARenderPass, UnrealBloomPass } from 'three/examples/jsm/addons';
+import {
+  RenderPass,
+  OutputPass,
+  TAARenderPass,
+  UnrealBloomPass,
+  OutlinePass
+} from 'three/examples/jsm/addons';
 
 //import * as POSTPROCESSING from 'postprocessing';
 
 type PostProcessStack = {
   taaPass?: TAARenderPass;
   bloomPass?: UnrealBloomPass;
+  outlinePass?: OutlinePass;
 };
 
 export default class UERenderContext {
@@ -60,6 +67,18 @@ export default class UERenderContext {
       0
     );
     this._composer.addPass(this.PostProcessStack.bloomPass);
+
+    this.PostProcessStack.outlinePass = new OutlinePass(
+      new THREE.Vector2(viewportWidth, viewportHeight),
+      scene,
+      cam,
+      []
+    );
+    this.PostProcessStack.outlinePass.edgeThickness = 3;
+    this.PostProcessStack.outlinePass.edgeStrength = 10;
+    this.PostProcessStack.outlinePass.edgeGlow = 0;
+    this.PostProcessStack.outlinePass.hiddenEdgeColor = new THREE.Color(0x00000000);
+    this._composer.addPass(this.PostProcessStack.outlinePass);
 
     const outputPass = new OutputPass();
     this._composer.addPass(outputPass);

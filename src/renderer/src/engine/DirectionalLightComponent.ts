@@ -11,7 +11,7 @@ export default class DirectionalLightComponent extends SceneComponent {
   protected Intensity: number = 1;
 
   @UProperty()
-  protected LightColor: THREE.Color = new THREE.Color('0xffffff');
+  protected LightColor: THREE.Color = new THREE.Color(0xffffff);
 
   @UProperty()
   protected CastShadow: boolean = true;

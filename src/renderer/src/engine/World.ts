@@ -28,7 +28,8 @@ export default class World {
     this._name = name;
 
     this._scene = new THREE.Scene();
-    this._scene.background = new THREE.Color('#e8f7fc');
+    //this._scene.background = new THREE.Color('#e8f7fc');
+    this._scene.background = new THREE.Color('#333333');
 
     this._testCube = this.Spawn(TestCubeActor);
 
