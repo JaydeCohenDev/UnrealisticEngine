@@ -1,9 +1,21 @@
 import * as THREE from 'three';
 import Time from './Time';
+import { EffectComposer } from 'three/examples/jsm/addons';
+import {
+  RenderPass,
+  OutputPass,
+  GlitchPass,
+  TAARenderPass,
+  UnrealBloomPass
+} from 'three/examples/jsm/addons';
+
+import * as POSTPROCESSING from 'postprocessing';
 
 export default class UERenderContext {
   protected _renderer: THREE.WebGLRenderer;
   protected _camera: THREE.PerspectiveCamera;
+
+  protected _composer: EffectComposer;
 
   protected _pendingKill: boolean = false;
 
@@ -26,6 +38,30 @@ export default class UERenderContext {
     this._renderer.setSize(viewportWidth, viewportHeight);
     this._renderer.shadowMap.enabled = true;
     this._renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    this._composer = new EffectComposer(this._renderer);
+
+    const scene = window.Editor.GetWorld().GetRenderScene();
+    const cam = window.Camera;
+
+    const renderPass = new RenderPass(scene, cam);
+    this._composer.addPass(renderPass);
+    this._composer.setSize(viewportWidth, viewportHeight);
+
+    const taaPass = new TAARenderPass(scene, cam);
+    taaPass.sampleLevel = 8;
+    this._composer.addPass(taaPass);
+
+    const bloomPass = new UnrealBloomPass(
+      new THREE.Vector2(viewportWidth, viewportHeight),
+      0.15,
+      0,
+      0
+    );
+    this._composer.addPass(bloomPass);
+
+    const outputPass = new OutputPass();
+    this._composer.addPass(outputPass);
 
     new ResizeObserver(() => {
       this.ResizeToParent();
@@ -62,6 +98,7 @@ export default class UERenderContext {
     const aspectRatio: number = viewportWidth / viewportHeight;
 
     this._renderer.setSize(viewportWidth, viewportHeight);
+    this._composer.setSize(viewportWidth, viewportHeight);
 
     this._camera.aspect = aspectRatio;
     this._camera.updateProjectionMatrix();
@@ -72,7 +109,8 @@ export default class UERenderContext {
 
     Time.TickTimer.update(timestamp);
 
-    this._renderer.render(window.Editor.GetWorld().GetRenderScene(), this._camera);
+    this._composer.render();
+    //this._renderer.render(window.Editor.GetWorld().GetRenderScene(), this._camera);
 
     window.requestAnimationFrame((timestamp) => {
       this.Render(timestamp);
