@@ -27,7 +27,7 @@ export default function DetailsPanel() {
   }, []);
 
   return (
-    <div className="panel">
+    <div className="panel detailsPanel">
       <h3>Details Panel</h3>
       <h4>{displayActor?.GetDisplayName()}</h4>
       {displayActor

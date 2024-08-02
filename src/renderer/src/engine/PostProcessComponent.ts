@@ -17,8 +17,8 @@ export default class PostProcessComponent extends ActorComponent {
   @UProperty({ category: 'Temporal Anti-Aliasing' })
   protected EnableTAA: boolean = true;
 
-  @UProperty({ category: 'Temporal Anti-Aliasing' })
-  protected TAASamples: number = 8;
+  @UProperty({ category: 'Temporal Anti-Aliasing', minVal: 0, maxVal: 8 })
+  protected TAASamples: number = 4;
 
   public Tick(_deltaTime: number): void {
     if (window.RenderContext === undefined) return;
@@ -30,6 +30,11 @@ export default class PostProcessComponent extends ActorComponent {
       postStack.bloomPass.strength = this.BloomStrength;
       postStack.bloomPass.radius = this.BloomRadius;
       postStack.bloomPass.threshold = this.BloomThreshold;
+    }
+
+    if (postStack.taaPass !== undefined) {
+      postStack.taaPass.enabled = this.EnableTAA;
+      postStack.taaPass.sampleLevel = this.TAASamples;
     }
   }
 }
