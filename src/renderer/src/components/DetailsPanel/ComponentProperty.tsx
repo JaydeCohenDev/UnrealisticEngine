@@ -8,7 +8,7 @@ export interface IComponentPropertyProps {
 
 export default function ComponentProperty(props: IComponentPropertyProps) {
   const PropViewComponent = window.Editor.GetPropertyViewFor(props.uprop.GetTypeName())!;
-  // HELP DOESNT GET RECREATED IF SAME COMPONENT TYPE !!
+
   return (
     <>
       <div>{props.uprop.GetPropertyName()}</div>

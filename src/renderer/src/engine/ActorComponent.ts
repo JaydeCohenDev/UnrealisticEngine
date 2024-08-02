@@ -2,7 +2,19 @@ import Actor from './Actor';
 import World from './World';
 
 export default abstract class ActorComponent {
+  protected static NEXT_ID = 1;
+
   protected Owner: Actor | null = null;
+  protected _id: number;
+
+  constructor() {
+    this._id = ActorComponent.NEXT_ID;
+    ActorComponent.NEXT_ID++;
+  }
+
+  public get Id(): number {
+    return this._id;
+  }
 
   public SetOwner(newOwner: Actor | null): void {
     this.Owner = newOwner;
