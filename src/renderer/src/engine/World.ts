@@ -9,6 +9,7 @@ import StaticMeshComponent from './StaticMeshComponent';
 import { StaticMesh } from './StaticMesh';
 import Texture2d from './Texture2d';
 import Message from './Message';
+import PostProcessVolume from './PostProcessVolume';
 
 export default class World {
   protected _name: string;
@@ -40,6 +41,8 @@ export default class World {
     this._sun = this.Spawn(DirectionalLightActor, 'Sun');
 
     this._skylight = this.Spawn(SkyLightActor, 'SkyLight');
+
+    this.Spawn(PostProcessVolume);
   }
 
   public GetAllActors(): Actor[] {

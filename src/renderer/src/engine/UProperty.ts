@@ -1,12 +1,31 @@
+export type UPropertySpecifiers = {
+  category?: string;
+};
+
 export default class UProperty {
   protected _typeName: string;
   protected _parentObject: Object;
   protected _propertyName: string;
+  protected _specifiers?: UPropertySpecifiers;
 
-  public constructor(typeName: string, parentObj: Object, propName: string) {
+  public constructor(
+    typeName: string,
+    parentObj: Object,
+    propName: string,
+    specifiers?: UPropertySpecifiers
+  ) {
     this._typeName = typeName;
     this._parentObject = parentObj;
     this._propertyName = propName;
+    this._specifiers = specifiers ?? {};
+  }
+
+  public GetCategory(): string {
+    return this._specifiers?.category ?? 'Default';
+  }
+
+  public GetSpecifiers(): UPropertySpecifiers | undefined {
+    return this._specifiers;
   }
 
   public GetTypeName(): string {

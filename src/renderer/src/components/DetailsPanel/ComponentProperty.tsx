@@ -11,7 +11,9 @@ export default function ComponentProperty(props: IComponentPropertyProps) {
 
   return (
     <>
-      <div>{props.uprop.GetPropertyName()}</div>
+      <div>
+        [{props.uprop.GetCategory()}] {props.uprop.GetPropertyName()}
+      </div>
       <PropViewComponent uproperty={props.uprop} component={props.component} />
     </>
   );

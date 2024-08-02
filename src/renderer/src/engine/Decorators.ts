@@ -1,8 +1,9 @@
 import Reflection from './Reflection';
+import { UPropertySpecifiers } from './UProperty';
 
-export function UProperty() {
+export function UProperty(specifiers?: UPropertySpecifiers) {
   return function UProperty(parentClass: any, propertyName: string) {
-    Reflection.RegisterProperty(parentClass, propertyName);
+    Reflection.RegisterProperty(parentClass, propertyName, specifiers);
   };
 }
 
