@@ -39,7 +39,7 @@ export default class Input {
   }
 
   protected static OnKeyDown(e: KeyboardEvent): void {
-    //e.preventDefault(); // breaks text input in details panel
+    if (document.pointerLockElement !== undefined) e.preventDefault();
 
     const keyCode = e.code;
     Input.Keys[keyCode] = true;
@@ -54,7 +54,7 @@ export default class Input {
   }
 
   protected static OnKeyUp(e: KeyboardEvent): void {
-    e.preventDefault();
+    if (document.pointerLockElement !== undefined) e.preventDefault();
 
     const keyCode = e.code;
     Input.Keys[keyCode] = false;

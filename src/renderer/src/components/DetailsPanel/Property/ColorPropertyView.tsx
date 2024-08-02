@@ -1,12 +1,43 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IPropertyViewProps } from './PropertyViewBase';
 import { SketchPicker } from 'react-color';
+import * as THREE from 'three';
 
 import '../../../assets/colorPicker.css';
 
+type uiColor = {
+  r: number;
+  g: number;
+  b: number;
+  a: number;
+};
+
 export default function ColorPropertyView(props: IPropertyViewProps) {
-  const [color, setColor] = useState({ r: 241, g: 112, b: 19, a: 1 });
+  const getColorFromSource = (): uiColor => {
+    const col: THREE.Color = props.uproperty.GetCurrentValueOf(props.component);
+    return {
+      r: col.r * 255,
+      g: col.g * 255,
+      b: col.b * 255,
+      a: 1
+    };
+  };
+
+  const setColorAtSource = (newColor: uiColor) => {
+    const col: THREE.Color = new THREE.Color(newColor.r / 255, newColor.g / 255, newColor.b / 255);
+    props.uproperty.SetCurrentValueOf(props.component, col);
+  };
+
+  const [color, setColor] = useState<uiColor>(getColorFromSource());
   const [showPicker, setShowPicker] = useState(false);
+
+  useEffect(() => {
+    setColor(getColorFromSource());
+  }, []);
+
+  useEffect(() => {
+    setColorAtSource(color);
+  }, [color]);
 
   const handleClick = () => {
     setShowPicker(true);

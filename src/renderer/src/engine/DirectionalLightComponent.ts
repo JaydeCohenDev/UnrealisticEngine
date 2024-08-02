@@ -8,10 +8,13 @@ export default class DirectionalLightComponent extends SceneComponent {
   protected _helper: THREE.CameraHelper;
 
   @UProperty()
-  protected MyNumber: number = 10;
+  protected Intensity: number = 1;
 
   @UProperty()
-  protected MyString: string = 'Hello, world!';
+  protected LightColor: THREE.Color = new THREE.Color('0xffffff');
+
+  @UProperty()
+  protected CastShadow: boolean = true;
 
   constructor() {
     super();
@@ -28,6 +31,12 @@ export default class DirectionalLightComponent extends SceneComponent {
     this._light.shadow.camera.near = 0.5;
     this._light.shadow.camera.far = 50;
     // TODO expose params
+  }
+
+  public Tick(_deltaTime: number): void {
+    this._light.color = this.LightColor;
+    this._light.intensity = this.Intensity;
+    this._light.castShadow = this.CastShadow;
   }
 
   public BeginPlay(): void {

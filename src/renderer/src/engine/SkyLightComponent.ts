@@ -12,13 +12,15 @@ export default class SkyLightComponent extends SceneComponent {
   @UProperty()
   public Intensity: number = 0.5;
 
-  @UProperty()
-  public CastShadow: boolean = false;
-
   constructor() {
     super();
 
     this._skylight = new THREE.AmbientLight(0xffffff, 0.5);
+  }
+
+  public Tick(_deltaTime: number): void {
+    this._skylight.color = this.LightColor;
+    this._skylight.intensity = this.Intensity;
   }
 
   @UFunction()
