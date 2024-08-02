@@ -6,8 +6,6 @@ export default function TextPropertyView(props: IPropertyViewProps) {
 
   useEffect(() => {
     setText(props.uproperty.GetCurrentValueOf(props.component));
-
-    console.log(props.component);
   }, []);
 
   const onTextChange = (e) => {
