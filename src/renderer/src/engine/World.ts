@@ -39,6 +39,7 @@ export default class World {
     smc?.SetStaticMesh(StaticMesh.FromBox(10, 1, 10, floorMaterial));
 
     this._sun = this.Spawn(DirectionalLightActor, 'Sun');
+    this.Spawn(DirectionalLightActor, 'moon');
 
     this._skylight = this.Spawn(SkyLightActor, 'SkyLight');
 

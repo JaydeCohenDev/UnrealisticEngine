@@ -39,7 +39,9 @@ export default class Input {
   }
 
   protected static OnKeyDown(e: KeyboardEvent): void {
-    if (document.pointerLockElement !== undefined) e.preventDefault();
+    if (document.pointerLockElement !== null) {
+      e.preventDefault();
+    }
 
     const keyCode = e.code;
     Input.Keys[keyCode] = true;

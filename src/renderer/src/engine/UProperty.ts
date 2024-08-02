@@ -1,12 +1,15 @@
 export type UPropertySpecifiers = {
   category?: string;
+  numberStepSize?: number;
+  minVal?: number;
+  maxVal?: number;
 };
 
 export default class UProperty {
   protected _typeName: string;
   protected _parentObject: Object;
   protected _propertyName: string;
-  protected _specifiers?: UPropertySpecifiers;
+  protected _specifiers: UPropertySpecifiers;
 
   public constructor(
     typeName: string,
@@ -24,7 +27,7 @@ export default class UProperty {
     return this._specifiers?.category ?? 'Default';
   }
 
-  public GetSpecifiers(): UPropertySpecifiers | undefined {
+  public GetSpecifiers(): UPropertySpecifiers {
     return this._specifiers;
   }
 

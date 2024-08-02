@@ -1,15 +1,14 @@
 import * as THREE from 'three';
 import Time from './Time';
 import { EffectComposer } from 'three/examples/jsm/addons';
-import {
-  RenderPass,
-  OutputPass,
-  GlitchPass,
-  TAARenderPass,
-  UnrealBloomPass
-} from 'three/examples/jsm/addons';
+import { RenderPass, OutputPass, TAARenderPass, UnrealBloomPass } from 'three/examples/jsm/addons';
 
-import * as POSTPROCESSING from 'postprocessing';
+//import * as POSTPROCESSING from 'postprocessing';
+
+type PostProcessStack = {
+  taaPass?: TAARenderPass;
+  bloomPass?: UnrealBloomPass;
+};
 
 export default class UERenderContext {
   protected _renderer: THREE.WebGLRenderer;
@@ -18,6 +17,8 @@ export default class UERenderContext {
   protected _composer: EffectComposer;
 
   protected _pendingKill: boolean = false;
+
+  public PostProcessStack: PostProcessStack = {};
 
   public constructor(canvas: HTMLCanvasElement) {
     console.log('rendering context created');
@@ -48,17 +49,17 @@ export default class UERenderContext {
     this._composer.addPass(renderPass);
     this._composer.setSize(viewportWidth, viewportHeight);
 
-    const taaPass = new TAARenderPass(scene, cam);
-    taaPass.sampleLevel = 8;
-    this._composer.addPass(taaPass);
+    this.PostProcessStack.taaPass = new TAARenderPass(scene, cam);
+    this.PostProcessStack.taaPass.sampleLevel = 8;
+    this._composer.addPass(this.PostProcessStack.taaPass);
 
-    const bloomPass = new UnrealBloomPass(
+    this.PostProcessStack.bloomPass = new UnrealBloomPass(
       new THREE.Vector2(viewportWidth, viewportHeight),
       0.15,
       0,
       0
     );
-    this._composer.addPass(bloomPass);
+    this._composer.addPass(this.PostProcessStack.bloomPass);
 
     const outputPass = new OutputPass();
     this._composer.addPass(outputPass);

@@ -2,6 +2,8 @@ import Actor from '@renderer/engine/Actor';
 import { useEffect, useState } from 'react';
 import ComponentDetails from './ComponentDetails';
 
+import '../../assets/detailsPanel.css';
+
 export default function DetailsPanel() {
   const [displayActor, setDisplayActor] = useState<Actor | null>(null);
 
@@ -30,7 +32,7 @@ export default function DetailsPanel() {
       <h4>{displayActor?.GetDisplayName()}</h4>
       {displayActor
         ?.GetAllComponents()
-        .map((component, index) => <ComponentDetails key={component.Id} component={component} />)}
+        .map((component) => <ComponentDetails key={component.Id} component={component} />)}
     </div>
   );
 }

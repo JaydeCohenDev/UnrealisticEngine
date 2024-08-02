@@ -9,13 +9,29 @@ export default function NumberPropertyView(props: IPropertyViewProps) {
   }, []);
 
   const onTextChange = (e) => {
-    setNum(e.target.value);
-    props.uproperty.SetCurrentValueOf(props.component, e.target.value);
+    let newVal = e.target.value as number;
+
+    if (props.uproperty.GetSpecifiers().minVal !== undefined) {
+      newVal = Math.max(newVal, props.uproperty.GetSpecifiers().minVal!);
+    }
+
+    if (props.uproperty.GetSpecifiers().maxVal !== undefined) {
+      newVal = Math.min(newVal, props.uproperty.GetSpecifiers().maxVal!);
+    }
+
+    setNum(newVal);
+    props.uproperty.SetCurrentValueOf(props.component, newVal);
   };
 
   return (
     <>
-      <input type="number" value={num} onChange={onTextChange} />
+      <input
+        className="detailsInput"
+        step={props.uproperty.GetSpecifiers()?.numberStepSize ?? 1}
+        type="number"
+        value={num}
+        onChange={onTextChange}
+      />
     </>
   );
 }
