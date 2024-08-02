@@ -1,3 +1,3 @@
 export default function ContentBrowser() {
-  return <div className="panel">Content Browser</div>;
+  return <div className="">Content Browser</div>;
 }

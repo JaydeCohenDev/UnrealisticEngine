@@ -1,11 +1,18 @@
 body {
   background-color: #161618;
   color: #dfdfd6;
-  margin: 0;
+  margin: 0px;
   font-family: 'Inter', sans-serif;
-  overflow: hidden;
   user-select: none;
   scrollbar-color: #272a2f transparent;
+}
+
+#root {
+  position: absolute;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
 }
 
 .panel {
@@ -13,9 +20,16 @@ body {
   padding: 10px;
 }
 
+.split {
+  max-width: 100%;
+  max-height: 100%;
+}
+
 .full-size {
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .flex {
@@ -33,7 +47,7 @@ body {
 .editor-main {
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
+
   display: flex;
   flex-flow: column;
   justify-items: end;

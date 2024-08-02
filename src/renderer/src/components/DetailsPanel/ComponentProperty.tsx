@@ -10,11 +10,11 @@ export default function ComponentProperty(props: IComponentPropertyProps) {
   const PropViewComponent = window.Editor.GetPropertyViewFor(props.uprop.GetTypeName())!;
 
   return (
-    <>
+    <div>
       <div>
         [{props.uprop.GetCategory()}] {props.uprop.GetPropertyName()}
       </div>
       <PropViewComponent uproperty={props.uprop} component={props.component} />
-    </>
+    </div>
   );
 }

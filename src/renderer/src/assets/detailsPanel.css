@@ -1,9 +1,11 @@
 .detailsPanel {
+}
+
+.detailsWrapper {
   overflow-y: scroll;
 }
 
 .detailsInput {
-  width: 100%;
   background-color: #0f0f10;
   color: #ffffff8f;
   border: none;
@@ -16,4 +18,6 @@
 .detailsInput:focus {
   background-color: #28282b;
   color: white;
+}
+.componentDetails {
 }

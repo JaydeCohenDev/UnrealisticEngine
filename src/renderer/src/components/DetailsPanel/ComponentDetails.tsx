@@ -8,7 +8,7 @@ export interface IComponentDetailsProps {
 
 export default function ComponentDetails(props: IComponentDetailsProps) {
   return (
-    <div>
+    <div className="componentDetails">
       <h5>{props.component.GetDisplayName()}</h5>
 
       {Reflection.GetPropertiesOf(props.component).map((uprop) => (

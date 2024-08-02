@@ -27,12 +27,14 @@ export default function DetailsPanel() {
   }, []);
 
   return (
-    <div className="panel detailsPanel">
+    <div className="detailsWrapper">
       <h3>Details Panel</h3>
-      <h4>{displayActor?.GetDisplayName()}</h4>
-      {displayActor
-        ?.GetAllComponents()
-        .map((component) => <ComponentDetails key={component.Id} component={component} />)}
+      <div className="detailsPanel">
+        <h4>{displayActor?.GetDisplayName()}</h4>
+        {displayActor
+          ?.GetAllComponents()
+          .map((component) => <ComponentDetails key={component.Id} component={component} />)}
+      </div>
     </div>
   );
 }
