@@ -1,5 +1,6 @@
 import ActorComponent from '@renderer/engine/ActorComponent';
 import * as Engine from '@renderer/engine/Engine';
+import FMath from '@renderer/engine/FMath';
 import Input from '@renderer/engine/Input';
 import { useEffect } from 'react';
 import * as THREE from 'three';
@@ -31,9 +32,34 @@ export default function Viewport() {
 
       const cursorPos = Input.GetMousePosition();
 
+      const viewportWidth = canvas.parentElement!.clientWidth;
+      const viewportHeight = canvas.parentElement!.clientHeight;
+      const viewportStartX = canvas.parentElement!.getBoundingClientRect().x;
+      const viewportStartY = canvas.parentElement!.getBoundingClientRect().y;
+
+      const viewportDeltaX = FMath.MapRange(
+        cursorPos.x,
+        viewportStartX,
+        viewportStartX + viewportWidth,
+        0,
+        viewportWidth
+      );
+
+      // const viewportDeltaX = FMath.Clamp(cursorPos.x, viewportStartX, viewportWidth);
+      // const viewportDeltaY = FMath.Clamp(cursorPos.y, viewportStartY, viewportHeight);
+
+      //      console.log(cursorPos.y);
+      const viewportDeltaY = FMath.MapRange(
+        cursorPos.y,
+        viewportStartY,
+        viewportStartY + viewportHeight,
+        0,
+        viewportHeight
+      );
+
       const castPos = new THREE.Vector2(
-        (cursorPos.x / canvas.parentElement!.clientWidth) * 2 - 1,
-        -(cursorPos.y / canvas.parentElement!.clientHeight) * 2 + 1
+        (viewportDeltaX / viewportWidth) * 2 - 1,
+        -(viewportDeltaY / viewportHeight) * 2 + 1
       );
 
       const raycaster = new THREE.Raycaster();

@@ -17,6 +17,8 @@ export default class Actor {
     this._customName = this.constructor.name;
   }
 
+  public async Load(): Promise<void> {}
+
   public SetWorld(newWorld: World): void {
     this._world = newWorld;
   }

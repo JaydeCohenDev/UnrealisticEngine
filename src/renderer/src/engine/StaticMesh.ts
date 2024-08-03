@@ -21,7 +21,7 @@ export class StaticMesh extends Asset {
     return mesh;
   }
 
-  public static FromGLTF(path: string): StaticMesh {
+  public static FromGLTF(path: string, callback: (staticMesh: StaticMesh) => void): void {
     const mesh = new StaticMesh();
 
     const loader = new GLTFLoader();
@@ -31,10 +31,9 @@ export class StaticMesh extends Asset {
       mesh._geometry = loadedMesh.geometry;
       mesh._material = loadedMesh.material as THREE.Material;
       mesh._mesh = loadedMesh;
-      return mesh;
-    });
 
-    return mesh;
+      callback(mesh);
+    });
   }
 
   constructor() {

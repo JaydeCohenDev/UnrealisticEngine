@@ -72,6 +72,8 @@ export default class World {
 
     Message.Send('ACTOR_SPAWN', { actor: actor });
 
+    actor.Load();
+
     return actor;
   }
 
