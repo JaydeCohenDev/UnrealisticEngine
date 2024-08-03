@@ -9,7 +9,7 @@ export interface IComponentDetailsProps {
 export default function ComponentDetails(props: IComponentDetailsProps) {
   return (
     <div className="componentDetails">
-      <h5>{props.component.GetDisplayName()}</h5>
+      <h5 className="detailsComponentName">{props.component.GetDisplayName()}</h5>
       {Reflection.GetPropertyCategoriesOf(props.component).map((category) => {
         return <DetailsCategory key={category} category={category} component={props.component} />;
       })}

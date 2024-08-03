@@ -7,6 +7,11 @@ body {
   scrollbar-color: #272a2f transparent;
 }
 
+::selection {
+  color: white;
+  background: rgba(255, 255, 255, 0.5);
+}
+
 #root {
   position: absolute;
   left: 0px;

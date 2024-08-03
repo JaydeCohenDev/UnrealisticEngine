@@ -2,7 +2,10 @@ import Actor from '@renderer/engine/Actor';
 import { useEffect, useState } from 'react';
 import ComponentDetails from './ComponentDetails';
 
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+
 import '../../assets/detailsPanel.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export default function DetailsPanel() {
   const [displayActor, setDisplayActor] = useState<Actor | null>(null);
@@ -29,7 +32,13 @@ export default function DetailsPanel() {
   return (
     <div className="detailsWrapper">
       <div className="detailsPanel">
-        <h4>{displayActor?.GetDisplayName()}</h4>
+        <div className="detailsHeader">
+          <h4>{displayActor?.GetDisplayName()}</h4>
+          <div className="searchBox">
+            <FontAwesomeIcon icon={faSearch} />
+            <input placeholder="Search" />
+          </div>
+        </div>
         {displayActor
           ?.GetAllComponents()
           .map((component) => <ComponentDetails key={component.Id} component={component} />)}

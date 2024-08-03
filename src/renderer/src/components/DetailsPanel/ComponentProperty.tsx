@@ -9,9 +9,13 @@ export interface IComponentPropertyProps {
 export default function ComponentProperty(props: IComponentPropertyProps) {
   const PropViewComponent = window.Editor.GetPropertyViewFor(props.uprop.GetTypeName())!;
 
+  const toDisplayText = (text: string): string => {
+    return text.replace(/([a-z])([A-Z])/g, '$1 $2');
+  };
+
   return (
     <div className="propertyDetails">
-      <div>{props.uprop.GetPropertyName()}</div>
+      <div className="propName">{toDisplayText(props.uprop.GetPropertyName())}</div>
       <PropViewComponent uproperty={props.uprop} component={props.component} />
     </div>
   );
