@@ -13,6 +13,7 @@ import PostProcessVolume from './PostProcessVolume';
 import TransformGizmoActor from './TransformGizmo';
 import IHitResult from './HitResult';
 import SceneComponent from './SceneComponent';
+import { RGBELoader } from 'three/examples/jsm/addons';
 
 export default class World {
   protected _name: string;
@@ -31,7 +32,8 @@ export default class World {
     this._name = name;
 
     this._scene = new THREE.Scene();
-    this._scene.background = new THREE.Color('#333333');
+
+    //this._scene.background = new THREE.Color('#333333');
 
     this._testCube = this.Spawn(TestCubeActor);
 
@@ -80,7 +82,9 @@ export default class World {
 
   public MultiLineTrace(viewportPos: THREE.Vector2): IHitResult[] {
     const raycaster = new THREE.Raycaster();
-    raycaster.setFromCamera(viewportPos, window.Camera);
+
+    const ndcPos = window.Editor.ToViewportNDC(viewportPos);
+    raycaster.setFromCamera(ndcPos, window.Camera);
 
     const children = this.GetRenderScene().children;
     const intersects = raycaster.intersectObjects(children);

@@ -106,6 +106,10 @@ export default class Editor {
 
   public GetMousePositionInViewportNDC(): THREE.Vector2 {
     const pos = this.GetMousePositionInViewport();
+    return this.ToViewportNDC(pos);
+  }
+
+  public ToViewportNDC(pos: THREE.Vector2): THREE.Vector2 {
     const viewportBounds = this.GetViewportBounds();
 
     return new THREE.Vector2(

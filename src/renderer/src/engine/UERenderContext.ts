@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import Time from './Time';
-import { EffectComposer } from 'three/examples/jsm/addons';
+import { EffectComposer, RGBELoader } from 'three/examples/jsm/addons';
 import {
   RenderPass,
   OutputPass,
@@ -46,6 +46,16 @@ export default class UERenderContext {
     this._renderer.setSize(viewportWidth, viewportHeight);
     this._renderer.shadowMap.enabled = true;
     this._renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    const hdriLoader = new RGBELoader();
+    hdriLoader.load('src/assets/hdr/quarry_01_1k.hdr', (texture) => {
+      texture.mapping = THREE.EquirectangularReflectionMapping;
+
+      window.Editor.GetWorld().GetRenderScene().environment = texture;
+      window.Editor.GetWorld().GetRenderScene().background = texture;
+
+      texture.dispose();
+    });
 
     this._composer = new EffectComposer(this._renderer);
 

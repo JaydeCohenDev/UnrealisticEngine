@@ -26,7 +26,7 @@ export default function Viewport() {
 
     // Editor actor selection
     if (e.button === 0) {
-      const castPos = window.Editor.GetMousePositionInViewportNDC();
+      const castPos = window.Editor.GetMousePositionInViewport();
       const world = window.Editor.GetWorld();
       const hit = world.LineTraceSingle(castPos);
       window.Editor.SetSelectedActors(hit.actor !== undefined ? [hit.actor] : []);

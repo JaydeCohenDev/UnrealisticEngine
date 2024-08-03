@@ -19,7 +19,7 @@ export default class TransformGizmoActor extends Actor {
       const world = this.GetWorld();
       if (world === undefined) return;
 
-      const testPos = window.Editor.GetMousePositionInViewportNDC();
+      const testPos = window.Editor.GetMousePositionInViewport();
       const hit = world.LineTraceSingle(testPos);
 
       if (hit.actor === this) {
