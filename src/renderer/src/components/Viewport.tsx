@@ -1,7 +1,4 @@
-import ActorComponent from '@renderer/engine/ActorComponent';
 import * as Engine from '@renderer/engine/Engine';
-import FMath from '@renderer/engine/FMath';
-import Input from '@renderer/engine/Input';
 import { useEffect } from 'react';
 import * as THREE from 'three';
 
@@ -27,60 +24,12 @@ export default function Viewport() {
       return;
     }
 
+    // Editor actor selection
     if (e.button === 0) {
-      // left click
-
-      const cursorPos = Input.GetMousePosition();
-
-      const viewportWidth = canvas.parentElement!.clientWidth;
-      const viewportHeight = canvas.parentElement!.clientHeight;
-      const viewportStartX = canvas.parentElement!.getBoundingClientRect().x;
-      const viewportStartY = canvas.parentElement!.getBoundingClientRect().y;
-
-      const viewportDeltaX = FMath.MapRange(
-        cursorPos.x,
-        viewportStartX,
-        viewportStartX + viewportWidth,
-        0,
-        viewportWidth
-      );
-
-      // const viewportDeltaX = FMath.Clamp(cursorPos.x, viewportStartX, viewportWidth);
-      // const viewportDeltaY = FMath.Clamp(cursorPos.y, viewportStartY, viewportHeight);
-
-      //      console.log(cursorPos.y);
-      const viewportDeltaY = FMath.MapRange(
-        cursorPos.y,
-        viewportStartY,
-        viewportStartY + viewportHeight,
-        0,
-        viewportHeight
-      );
-
-      const castPos = new THREE.Vector2(
-        (viewportDeltaX / viewportWidth) * 2 - 1,
-        -(viewportDeltaY / viewportHeight) * 2 + 1
-      );
-
-      const raycaster = new THREE.Raycaster();
-      raycaster.setFromCamera(castPos, window.Camera);
-
+      const castPos = window.Editor.GetMousePositionInViewportNDC();
       const world = window.Editor.GetWorld();
-      const children = world.GetRenderScene().children;
-      const intersects = raycaster.intersectObjects(children);
-
-      for (let intersect of intersects) {
-        const hitOwner = intersect.object['owner'] as ActorComponent;
-        if (hitOwner !== undefined) {
-          const hitActor = hitOwner.GetOwner();
-          if (hitActor !== undefined && hitActor !== null) {
-            window.Editor.SetSelectedActors([hitActor]);
-            return;
-          }
-        }
-      }
-
-      window.Editor.SetSelectedActors([]);
+      const hitActors = world.LineTrace(castPos);
+      window.Editor.SetSelectedActors(hitActors);
     }
   }
 

@@ -14,6 +14,9 @@ import ColorPropertyView from '@renderer/components/DetailsPanel/Property/ColorP
 import BooleanPropertyView from '@renderer/components/DetailsPanel/Property/BooleanPropertyView';
 import { IPropertyViewProps } from '@renderer/components/DetailsPanel/Property/PropertyViewBase';
 import StaticMeshComponent from './StaticMeshComponent';
+import Input from './Input';
+import FMath from './FMath';
+import RectBounds from './RectBounds';
 
 type ReactComponent = () => JSX.Element;
 
@@ -56,6 +59,59 @@ export default class Editor {
     } else {
       this.ResetLayout();
     }
+  }
+
+  public GetViewportBounds(): RectBounds {
+    if (window.RenderContext === undefined) return RectBounds.Empty();
+
+    const canvas = window.RenderContext.GetCanvas();
+
+    const viewportWidth = canvas.parentElement!.clientWidth;
+    const viewportHeight = canvas.parentElement!.clientHeight;
+    const viewportStartX = canvas.parentElement!.getBoundingClientRect().x;
+    const viewportStartY = canvas.parentElement!.getBoundingClientRect().y;
+
+    return new RectBounds(viewportStartX, viewportStartY, viewportWidth, viewportHeight);
+  }
+
+  public GetMousePositionInViewport(): THREE.Vector2 {
+    const cursorPos = Input.GetMousePosition();
+
+    if (window.RenderContext === undefined) return new THREE.Vector2(0, 0);
+
+    const canvas = window.RenderContext.GetCanvas();
+
+    const viewportWidth = canvas.parentElement!.clientWidth;
+    const viewportHeight = canvas.parentElement!.clientHeight;
+    const viewportStartX = canvas.parentElement!.getBoundingClientRect().x;
+    const viewportStartY = canvas.parentElement!.getBoundingClientRect().y;
+
+    const viewportDeltaX = FMath.MapRange(
+      cursorPos.x,
+      viewportStartX,
+      viewportStartX + viewportWidth,
+      0,
+      viewportWidth
+    );
+    const viewportDeltaY = FMath.MapRange(
+      cursorPos.y,
+      viewportStartY,
+      viewportStartY + viewportHeight,
+      0,
+      viewportHeight
+    );
+
+    return new THREE.Vector2(viewportDeltaX, viewportDeltaY);
+  }
+
+  public GetMousePositionInViewportNDC(): THREE.Vector2 {
+    const pos = this.GetMousePositionInViewport();
+    const viewportBounds = this.GetViewportBounds();
+
+    return new THREE.Vector2(
+      (pos.x / viewportBounds.Width) * 2 - 1,
+      -(pos.y / viewportBounds.Height) * 2 + 1
+    );
   }
 
   public SetSelectedActors(actors: Actor[]): void {

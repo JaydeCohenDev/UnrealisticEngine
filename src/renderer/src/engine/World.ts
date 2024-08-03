@@ -10,8 +10,8 @@ import { StaticMesh } from './StaticMesh';
 import Texture2d from './Texture2d';
 import Message from './Message';
 import PostProcessVolume from './PostProcessVolume';
-import { GLTFLoader } from 'three/examples/jsm/addons';
 import TransformGizmoActor from './TransformGizmo';
+import ActorComponent from './ActorComponent';
 
 export default class World {
   protected _name: string;
@@ -75,6 +75,28 @@ export default class World {
     actor.Load();
 
     return actor;
+  }
+
+  public LineTrace(viewportPos: THREE.Vector2): Actor[] {
+    const raycaster = new THREE.Raycaster();
+    raycaster.setFromCamera(viewportPos, window.Camera);
+
+    const children = this.GetRenderScene().children;
+    const intersects = raycaster.intersectObjects(children);
+
+    const hitActors: Actor[] = [];
+
+    for (let intersect of intersects) {
+      const hitOwner = intersect.object['owner'] as ActorComponent;
+      if (hitOwner !== undefined) {
+        const hitActor = hitOwner.GetOwner();
+        if (hitActor !== undefined && hitActor !== null) {
+          hitActors.push(hitActor);
+        }
+      }
+    }
+
+    return hitActors;
   }
 
   public GetRenderScene(): THREE.Scene {

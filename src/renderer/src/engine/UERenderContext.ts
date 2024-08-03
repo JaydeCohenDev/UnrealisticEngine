@@ -104,6 +104,10 @@ export default class UERenderContext {
     return this._renderer;
   }
 
+  public GetCanvas(): HTMLCanvasElement {
+    return this._renderer.domElement;
+  }
+
   public Destroy(): void {
     console.log('rendering context being destroyed');
 
