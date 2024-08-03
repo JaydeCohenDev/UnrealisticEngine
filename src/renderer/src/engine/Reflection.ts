@@ -1,3 +1,4 @@
+import { ArrayContains } from './Array';
 import { SubclassOf } from './Class';
 import UProperty, { UPropertySpecifiers } from './UProperty';
 
@@ -39,5 +40,18 @@ export default class Reflection {
     const className = classType.name;
 
     return this._registeredClasses[className];
+  }
+
+  public static GetPropertyCategoriesOf(parentClass: Object): string[] {
+    const categories: string[] = [];
+
+    this.GetPropertiesOf(parentClass).forEach((uprop) => {
+      const categoryName: string = uprop.GetCategory();
+      if (!ArrayContains(categories, categoryName)) {
+        categories.push(categoryName);
+      }
+    });
+
+    return categories;
   }
 }

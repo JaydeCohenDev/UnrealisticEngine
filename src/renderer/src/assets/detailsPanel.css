@@ -6,11 +6,12 @@
 }
 
 .detailsInput {
-  background-color: #0f0f10;
+  background-color: rgba(255, 255, 255, 0.05);
   color: #ffffff8f;
   border: none;
   padding: 10px;
   font-size: 15px;
+  flex-grow: 1;
 
   transition: 0.2s all;
 }
@@ -19,5 +20,60 @@
   background-color: #28282b;
   color: white;
 }
+
+input:focus {
+  border-left: 4px solid #2d5bcb;
+  outline: none;
+}
+
 .componentDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.propertyDetails {
+  display: flex;
+  flex-direction: row;
+}
+
+.detailsCategory {
+}
+
+.categoryHeader {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  letter-spacing: 2px;
+
+  transition: 0.2s all;
+}
+
+.categoryHeader:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.categoryContents {
+  padding: 30px 20px;
+  background-color: rgba(0, 0, 0, 0.25);
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+
+  transition: 0.2s all;
+}
+
+.categoryCollapse {
+  height: 0;
+  display: none;
+}
+
+.categoryShow {
+  height: auto;
+  display: flex;
+}
+
+.categoryCollapseIcon {
+  margin-right: 10px;
+  transition: 0.2s all;
 }

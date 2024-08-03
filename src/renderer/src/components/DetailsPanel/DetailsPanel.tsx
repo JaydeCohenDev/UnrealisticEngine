@@ -28,7 +28,6 @@ export default function DetailsPanel() {
 
   return (
     <div className="detailsWrapper">
-      <h3>Details Panel</h3>
       <div className="detailsPanel">
         <h4>{displayActor?.GetDisplayName()}</h4>
         {displayActor
