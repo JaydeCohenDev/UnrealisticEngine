@@ -77,7 +77,7 @@ export default class World {
     return actor;
   }
 
-  public LineTrace(viewportPos: THREE.Vector2): Actor[] {
+  public MultiLineTrace(viewportPos: THREE.Vector2): Actor[] {
     const raycaster = new THREE.Raycaster();
     raycaster.setFromCamera(viewportPos, window.Camera);
 
@@ -97,6 +97,11 @@ export default class World {
     }
 
     return hitActors;
+  }
+
+  public LineTraceSingle(viewportPos: THREE.Vector2): Actor | undefined {
+    const hitActors = this.MultiLineTrace(viewportPos);
+    return hitActors.length > 0 ? hitActors[0] : undefined;
   }
 
   public GetRenderScene(): THREE.Scene {

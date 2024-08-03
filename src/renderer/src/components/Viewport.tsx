@@ -28,8 +28,8 @@ export default function Viewport() {
     if (e.button === 0) {
       const castPos = window.Editor.GetMousePositionInViewportNDC();
       const world = window.Editor.GetWorld();
-      const hitActors = world.LineTrace(castPos);
-      window.Editor.SetSelectedActors(hitActors);
+      const hitActor = world.LineTraceSingle(castPos);
+      window.Editor.SetSelectedActors(hitActor !== undefined ? [hitActor] : []);
     }
   }
 
