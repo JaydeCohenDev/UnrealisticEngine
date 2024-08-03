@@ -1,22 +1,17 @@
-import { useEffect, useState } from 'react';
 import { IPropertyViewProps } from './PropertyViewBase';
+import CheckBox from '@renderer/components/CheckBox';
 
 export default function BooleanPropertyView(props: IPropertyViewProps) {
-  const [isChecked, setIsChecked] = useState(props.uproperty.GetCurrentValueOf(props.component));
-
-  useEffect(() => {
-    setIsChecked(props.uproperty.GetCurrentValueOf(props.component));
-  }, []);
-
-  const onChange = (e) => {
-    const checked = e.target.checked;
-    setIsChecked(checked);
-    props.uproperty.SetCurrentValueOf(props.component, checked);
+  const handleCheckboxToggle = (isChecked: boolean) => {
+    props.uproperty.SetCurrentValueOf(props.component, !isChecked);
   };
 
   return (
-    <>
-      <input type="checkbox" checked={isChecked} onChange={onChange} />
-    </>
+    <div>
+      <CheckBox
+        onChecked={handleCheckboxToggle}
+        defaultVal={props.uproperty.GetCurrentValueOf(props.component)}
+      />
+    </div>
   );
 }

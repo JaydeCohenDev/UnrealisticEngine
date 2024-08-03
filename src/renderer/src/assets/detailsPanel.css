@@ -33,7 +33,7 @@ input:focus {
 
 .propertyDetails {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .detailsCategory {

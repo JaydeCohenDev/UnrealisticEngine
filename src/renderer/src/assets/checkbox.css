@@ -1,0 +1,28 @@
+.checkBoxBg {
+  width: 20px;
+  height: 20px;
+  background-color: rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transition: 0.2s all;
+}
+
+.checkBoxBg:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.checkBoxBg:hover > .checkBoxFill {
+  background-color: #6285dc;
+}
+
+.checkBoxFill {
+  width: 50%;
+  height: 50%;
+
+  background-color: #2d5bcb;
+  opacity: 0;
+}
