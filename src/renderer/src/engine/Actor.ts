@@ -19,6 +19,10 @@ export default class Actor {
 
   public async Load(): Promise<void> {}
 
+  public AllowEditorSelection(): boolean {
+    return true;
+  }
+
   public SetWorld(newWorld: World): void {
     this._world = newWorld;
   }

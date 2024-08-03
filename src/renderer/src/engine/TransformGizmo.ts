@@ -13,6 +13,8 @@ export default class TransformGizmoActor extends Actor {
     this._gizmoMeshComponent = this.AddComponent(StaticMeshComponent);
   }
 
+  public Tick(_deltaTime: number): void {}
+
   public async Load(): Promise<void> {
     super.Load();
 
@@ -30,5 +32,9 @@ export default class TransformGizmoActor extends Actor {
         });
       }
     });
+  }
+
+  public AllowEditorSelection(): boolean {
+    return false;
   }
 }

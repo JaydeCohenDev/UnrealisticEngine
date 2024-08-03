@@ -115,10 +115,12 @@ export default class Editor {
   }
 
   public SetSelectedActors(actors: Actor[]): void {
-    this._selectedActors = actors;
+    this._selectedActors = actors.filter((actor) => {
+      return actor.AllowEditorSelection();
+    });
 
     const selectedObjs: THREE.Object3D[] = [];
-    actors.forEach((actor) => {
+    this._selectedActors.forEach((actor) => {
       const smc = actor.GetComponentOfType(StaticMeshComponent);
       if (smc !== undefined) {
         const staticMesh = smc.GetStaticMesh();
