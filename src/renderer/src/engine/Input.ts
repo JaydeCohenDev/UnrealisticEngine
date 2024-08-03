@@ -1,9 +1,13 @@
 import Message from './Message';
 import * as THREE from 'three';
 
+export type MouseButton = 'MOUSE_LEFT' | 'MOUSE_MIDDLE' | 'MOUSE_RIGHT';
+
 export default class Input {
   protected static Keys: { [id: string]: boolean } = {};
-  protected static _mousePosition: THREE.Vector2;
+  protected static _mousePosition: THREE.Vector2 = new THREE.Vector2();
+
+  protected static MouseButtons: MouseButton[] = ['MOUSE_LEFT', 'MOUSE_MIDDLE', 'MOUSE_RIGHT'];
 
   public static StartListening() {
     Input.Keys = {};
@@ -11,6 +15,8 @@ export default class Input {
     window.addEventListener('keyup', this.OnKeyUp);
     window.addEventListener('mousewheel', this.OnMouseWheel);
     window.addEventListener('pointermove', this.OnMouseMove);
+    window.addEventListener('mousedown', this.OnMouseDown);
+    window.addEventListener('mouseup', this.OnMouseUp);
   }
 
   public static StopListening() {
@@ -18,6 +24,8 @@ export default class Input {
     window.removeEventListener('keyup', this.OnKeyUp);
     window.removeEventListener('mousewheel', this.OnMouseWheel);
     window.removeEventListener('pointermove', this.OnMouseMove);
+    window.removeEventListener('mousedown', this.OnMouseDown);
+    window.removeEventListener('mouseup', this.OnMouseUp);
     Input.Keys = {};
   }
 
@@ -27,15 +35,29 @@ export default class Input {
     return Input.Keys[key] !== undefined ? Input.Keys[key] : false;
   }
 
+  public static IsMouseButtonDown(mouseButton: MouseButton): boolean {
+    return Input.Keys[mouseButton] ?? false;
+  }
+
   public static GetMousePosition(): THREE.Vector2 {
     return Input._mousePosition;
   }
 
-  protected static OnMouseMove(e: any): void {
+  protected static OnMouseMove(e): void {
     const xPos = e.clientX;
     const yPos = e.clientY;
 
     Input._mousePosition = new THREE.Vector2(xPos, yPos);
+  }
+
+  protected static OnMouseDown(e): void {
+    const buttonId = e.button;
+    Input.Keys[Input.MouseButtons[buttonId]] = true;
+  }
+
+  protected static OnMouseUp(e): void {
+    const buttonId = e.button;
+    Input.Keys[Input.MouseButtons[buttonId]] = false;
   }
 
   protected static OnKeyDown(e: KeyboardEvent): void {

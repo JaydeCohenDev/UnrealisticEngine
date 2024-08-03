@@ -11,7 +11,8 @@ import Texture2d from './Texture2d';
 import Message from './Message';
 import PostProcessVolume from './PostProcessVolume';
 import TransformGizmoActor from './TransformGizmo';
-import ActorComponent from './ActorComponent';
+import IHitResult from './HitResult';
+import SceneComponent from './SceneComponent';
 
 export default class World {
   protected _name: string;
@@ -77,31 +78,37 @@ export default class World {
     return actor;
   }
 
-  public MultiLineTrace(viewportPos: THREE.Vector2): Actor[] {
+  public MultiLineTrace(viewportPos: THREE.Vector2): IHitResult[] {
     const raycaster = new THREE.Raycaster();
     raycaster.setFromCamera(viewportPos, window.Camera);
 
     const children = this.GetRenderScene().children;
     const intersects = raycaster.intersectObjects(children);
 
-    const hitActors: Actor[] = [];
+    const hitResults: IHitResult[] = [];
 
     for (let intersect of intersects) {
-      const hitOwner = intersect.object['owner'] as ActorComponent;
+      const hitOwner = intersect.object['owner'] as SceneComponent;
       if (hitOwner !== undefined) {
         const hitActor = hitOwner.GetOwner();
         if (hitActor !== undefined && hitActor !== null) {
-          hitActors.push(hitActor);
+          hitResults.push({
+            actor: hitActor,
+            component: hitOwner,
+            position: intersect.point,
+            distance: intersect.distance,
+            renderObject: intersect.object
+          });
         }
       }
     }
 
-    return hitActors;
+    return hitResults;
   }
 
-  public LineTraceSingle(viewportPos: THREE.Vector2): Actor | undefined {
-    const hitActors = this.MultiLineTrace(viewportPos);
-    return hitActors.length > 0 ? hitActors[0] : undefined;
+  public LineTraceSingle(viewportPos: THREE.Vector2): IHitResult {
+    const hits = this.MultiLineTrace(viewportPos);
+    return hits.length > 0 ? hits[0] : {};
   }
 
   public GetRenderScene(): THREE.Scene {

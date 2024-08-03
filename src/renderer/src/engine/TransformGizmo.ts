@@ -1,4 +1,5 @@
 import Actor from './Actor';
+import Input from './Input';
 import { StaticMesh } from './StaticMesh';
 import StaticMeshComponent from './StaticMeshComponent';
 
@@ -13,7 +14,24 @@ export default class TransformGizmoActor extends Actor {
     this._gizmoMeshComponent = this.AddComponent(StaticMeshComponent);
   }
 
-  public Tick(_deltaTime: number): void {}
+  public Tick(_deltaTime: number): void {
+    if (Input.IsMouseButtonDown('MOUSE_LEFT')) {
+      const world = this.GetWorld();
+      if (world === undefined) return;
+
+      const testPos = window.Editor.GetMousePositionInViewportNDC();
+      const hit = world.LineTraceSingle(testPos);
+
+      if (hit.actor === this) {
+        const staticMesh = this._gizmoMeshComponent.GetStaticMesh();
+        if (staticMesh !== undefined) {
+          if (hit.renderObject === staticMesh.GetRenderMesh().children[1]) {
+            console.log('drag up');
+          }
+        }
+      }
+    }
+  }
 
   public async Load(): Promise<void> {
     super.Load();
