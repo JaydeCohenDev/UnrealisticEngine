@@ -62,6 +62,8 @@ export default class UERenderContext {
     const scene = window.Editor.GetWorld().GetRenderScene();
     const cam = window.Camera;
 
+    this._renderer.toneMapping = THREE.LinearToneMapping;
+
     const renderPass = new RenderPass(scene, cam);
     this._composer.addPass(renderPass);
     this._composer.setSize(viewportWidth, viewportHeight);
