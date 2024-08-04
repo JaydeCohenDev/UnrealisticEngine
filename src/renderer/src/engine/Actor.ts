@@ -23,6 +23,10 @@ export default class Actor {
     return true;
   }
 
+  public ShowInOutliner(): boolean {
+    return true;
+  }
+
   public SetWorld(newWorld: World): void {
     this._world = newWorld;
   }

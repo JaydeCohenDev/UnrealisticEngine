@@ -52,6 +52,12 @@ export default class Editor {
     this.RegisterPropertyView('string', TextPropertyView);
     this.RegisterPropertyView(THREE.Color.name, ColorPropertyView);
     this.RegisterPropertyView('boolean', BooleanPropertyView);
+
+    Input.OnKeyPressed.AddListener((e) => {
+      if (e === 'Escape') {
+        this.SetSelectedActors([]);
+      }
+    });
   }
 
   public async Load() {
@@ -68,9 +74,9 @@ export default class Editor {
   }
 
   public SetTransformActor(actor?: Actor) {
-    if (actor === undefined) return;
     if (actor === this._transformActor) return;
     this.ClearTransformActor();
+    if (actor === undefined) return;
 
     this._transformActor = actor;
 

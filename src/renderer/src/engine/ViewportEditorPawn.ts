@@ -18,6 +18,10 @@ export default class ViewportEditorPawn extends Pawn {
     });
   }
 
+  public ShowInOutliner(): boolean {
+    return false;
+  }
+
   public Tick(_deltaTime: number): void {
     if (window.RenderContext === undefined) return;
 

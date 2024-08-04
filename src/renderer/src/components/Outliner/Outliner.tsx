@@ -25,8 +25,10 @@ export default function Outliner() {
     window.Editor.GetWorld()
       .GetAllActors()
       .forEach((actor) => {
-        const isSelected = ArrayContains(selectedActors, actor);
-        newActorArray.push(new ActorSelectionState(actor, isSelected));
+        if (actor.ShowInOutliner()) {
+          const isSelected = ArrayContains(selectedActors, actor);
+          newActorArray.push(new ActorSelectionState(actor, isSelected));
+        }
       });
 
     setSelectedActors(newActorArray);

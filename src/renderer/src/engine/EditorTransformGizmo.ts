@@ -26,6 +26,10 @@ export default class EditorTransformGizmo extends Actor {
     this._transformGizmo['noEdHighlight'] = true;
   }
 
+  public ShowInOutliner(): boolean {
+    return false;
+  }
+
   public BeginPlay(): void {
     this.GetWorld()!.GetRenderScene().add(this._transformGizmo);
 
