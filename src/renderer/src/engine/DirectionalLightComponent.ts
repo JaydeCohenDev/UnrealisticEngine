@@ -45,7 +45,7 @@ export default class DirectionalLightComponent extends SceneComponent {
     const world = this.GetWorld();
     if (world !== undefined) {
       world.GetRenderScene().add(this._light);
-      world.GetRenderScene().add(this._helper);
+      //world.GetRenderScene().add(this._helper);
     }
   }
 
@@ -55,7 +55,7 @@ export default class DirectionalLightComponent extends SceneComponent {
     const world = this.GetWorld();
     if (world !== undefined) {
       world.GetRenderScene().remove(this._light);
-      world.GetRenderScene().remove(this._helper);
+      //world.GetRenderScene().remove(this._helper);
     }
   }
 }

@@ -42,16 +42,16 @@ export default class World {
     this._floor = this.Spawn(StaticMeshActor, 'floor');
     const smc = this._floor.GetComponentOfType(StaticMeshComponent);
     smc?.SetStaticMesh(StaticMesh.FromBox(10, 1, 10, floorMaterial));
+    smc?.GetStaticMesh()?.GetRenderMesh().position.setY(-0.51);
 
     // const loader = new GLTFLoader();
     // loader.load('src/assets/models/gizmo.glb', (data) => {
     //   this._scene.add(data.scene);
     // });
 
-    const gizmo = this.Spawn(TransformGizmoActor);
+    //const gizmo = this.Spawn(TransformGizmoActor);
 
     this._sun = this.Spawn(DirectionalLightActor, 'Sun');
-    this.Spawn(DirectionalLightActor, 'moon');
 
     this._skylight = this.Spawn(SkyLightActor, 'SkyLight');
 

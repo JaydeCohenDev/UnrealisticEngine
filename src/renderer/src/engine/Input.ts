@@ -1,9 +1,15 @@
 import Message from './Message';
 import * as THREE from 'three';
+import UEvent from './UEvent';
 
 export type MouseButton = 'MOUSE_LEFT' | 'MOUSE_MIDDLE' | 'MOUSE_RIGHT';
 
 export default class Input {
+  public static OnMouseButtonPressed: UEvent = new UEvent();
+  public static OnMouseButtonReleased: UEvent = new UEvent();
+  public static OnKeyPressed: UEvent = new UEvent();
+  public static OnKeyReleased: UEvent = new UEvent();
+
   protected static Keys: { [id: string]: boolean } = {};
   protected static _mousePosition: THREE.Vector2 = new THREE.Vector2();
 
@@ -52,12 +58,16 @@ export default class Input {
 
   protected static OnMouseDown(e): void {
     const buttonId = e.button;
-    Input.Keys[Input.MouseButtons[buttonId]] = true;
+    const mouseButton = Input.MouseButtons[buttonId];
+    Input.Keys[mouseButton] = true;
+    Input.OnMouseButtonPressed.Invoke({ mouseButton: mouseButton });
   }
 
   protected static OnMouseUp(e): void {
     const buttonId = e.button;
-    Input.Keys[Input.MouseButtons[buttonId]] = false;
+    const mouseButton = Input.MouseButtons[buttonId];
+    Input.Keys[mouseButton] = false;
+    Input.OnMouseButtonReleased.Invoke({ mouseButton: mouseButton });
   }
 
   protected static OnKeyDown(e: KeyboardEvent): void {
@@ -67,6 +77,7 @@ export default class Input {
 
     const keyCode = e.code;
     Input.Keys[keyCode] = true;
+    Input.OnKeyPressed.Invoke(keyCode);
   }
 
   protected static OnMouseWheel(e): void {
@@ -82,5 +93,6 @@ export default class Input {
 
     const keyCode = e.code;
     Input.Keys[keyCode] = false;
+    Input.OnKeyReleased.Invoke(keyCode);
   }
 }

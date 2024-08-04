@@ -17,6 +17,7 @@ import StaticMeshComponent from './StaticMeshComponent';
 import Input from './Input';
 import FMath from './FMath';
 import RectBounds from './RectBounds';
+import { TransformControls } from 'three/examples/jsm/addons';
 
 type ReactComponent = () => JSX.Element;
 
@@ -29,6 +30,9 @@ export default class Editor {
 
   protected _viewportPawn: ViewportEditorPawn;
 
+  protected _transformActor?: Actor;
+  protected _transformGizmo?: TransformControls;
+
   protected _registeredPropertyViews: { [id: string]: (props: IPropertyViewProps) => JSX.Element } =
     {};
 
@@ -38,6 +42,8 @@ export default class Editor {
     this._world = new World('editor world');
     this._layout = new EditorLayout();
 
+    //this._world.GetRenderScene().add(new THREE.GridHelper(50, 50, 0x888888, 0x444444));
+
     this._viewportPawn = this._world.Spawn(ViewportEditorPawn);
 
     this.RegisterEdPanels([Viewport, ContentBrowser, Outliner, DetailsPanel]);
@@ -46,6 +52,23 @@ export default class Editor {
     this.RegisterPropertyView('string', TextPropertyView);
     this.RegisterPropertyView(THREE.Color.name, ColorPropertyView);
     this.RegisterPropertyView('boolean', BooleanPropertyView);
+
+    Input.OnKeyPressed.AddListener((keyCode) => {
+      if (this._transformGizmo) {
+        if (keyCode === 'KeyQ') {
+          this._transformGizmo.setSpace(this._transformGizmo.space === 'local' ? 'world' : 'local');
+        }
+        if (keyCode === 'KeyW') {
+          this._transformGizmo.setMode('translate');
+        }
+        if (keyCode === 'KeyE') {
+          this._transformGizmo.setMode('rotate');
+        }
+        if (keyCode === 'KeyR') {
+          this._transformGizmo.setMode('scale');
+        }
+      }
+    });
   }
 
   public async Load() {
@@ -58,6 +81,37 @@ export default class Editor {
       await this._layout.GetRootPane().Load();
     } else {
       this.ResetLayout();
+    }
+  }
+
+  public SetTransformActor(actor?: Actor) {
+    this.ClearTransformActor();
+
+    if (actor === undefined) return;
+
+    this._transformActor = actor;
+
+    this._transformGizmo = new TransformControls(
+      window.Camera,
+      window.RenderContext?.GetRenderer().domElement
+    );
+
+    this._transformGizmo['noEdHighlight'] = true;
+
+    const smc = actor.GetComponentOfType(StaticMeshComponent);
+    if (smc) {
+      this._transformGizmo.attach(smc.GetStaticMesh()!.GetRenderMesh());
+    }
+    this._world.GetRenderScene().add(this._transformGizmo);
+  }
+
+  public ClearTransformActor() {
+    this._transformActor = undefined;
+
+    if (this._transformGizmo) {
+      this._transformGizmo.reset();
+      this._world.GetRenderScene().remove(this._transformGizmo);
+      this._transformGizmo = undefined;
     }
   }
 
@@ -137,9 +191,11 @@ export default class Editor {
     if (window.RenderContext !== undefined) {
       const outlinePass = window.RenderContext.PostProcessStack.outlinePass;
       if (outlinePass !== undefined) {
-        outlinePass.selectedObjects = selectedObjs;
+        //outlinePass.selectedObjects = selectedObjs;
       }
     }
+
+    this.SetTransformActor(this._selectedActors[0]);
 
     this.OnActorSelectionSetChanged.Invoke({ selectedActors: actors });
   }
