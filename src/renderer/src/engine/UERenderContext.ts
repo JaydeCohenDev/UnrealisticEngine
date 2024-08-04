@@ -42,7 +42,7 @@ export default class UERenderContext {
     this._camera.position.z = 5;
     this._camera.position.y = 2.5;
 
-    this._renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+    this._renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: false });
     this._renderer.setSize(viewportWidth, viewportHeight);
     this._renderer.shadowMap.enabled = true;
     this._renderer.shadowMap.type = THREE.PCFSoftShadowMap;

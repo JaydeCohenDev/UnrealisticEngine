@@ -92,4 +92,13 @@ export default class Actor {
       component.Tick(_deltaTime);
     });
   }
+
+  public Destroy(): void {
+    this._components.forEach((component) => {
+      component.Destroy();
+    });
+
+    this.EndPlay();
+    this.GetWorld()?.Remove(this);
+  }
 }

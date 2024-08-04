@@ -25,6 +25,7 @@ export default abstract class ActorComponent {
   }
 
   public Destroy(): void {
+    this.EndPlay();
     if (this.Owner === null) return;
 
     this.Owner.RemoveComponent(this);

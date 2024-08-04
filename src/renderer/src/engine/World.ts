@@ -69,6 +69,10 @@ export default class World {
     return actor;
   }
 
+  public Remove(actor: Actor) {
+    this._actors = this._actors.filter((a) => a !== actor);
+  }
+
   public MultiLineTrace(viewportPos: THREE.Vector2): IHitResult[] {
     const raycaster = new THREE.Raycaster();
 

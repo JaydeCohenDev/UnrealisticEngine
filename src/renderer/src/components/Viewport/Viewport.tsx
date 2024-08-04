@@ -46,6 +46,8 @@ export default function Viewport() {
       const castPos = window.Editor.GetMousePositionInViewport();
       const world = window.Editor.GetWorld();
       const hit = world.LineTraceSingle(castPos);
+      console.log(hit);
+
       window.Editor.SetSelectedActors(hit.actor !== undefined ? [hit.actor] : []);
     }
   }

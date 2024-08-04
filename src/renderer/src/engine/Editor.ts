@@ -17,7 +17,7 @@ import StaticMeshComponent from './StaticMeshComponent';
 import Input from './Input';
 import FMath from './FMath';
 import RectBounds from './RectBounds';
-import { TransformControls } from 'three/examples/jsm/addons';
+import EditorTransformGizmo from './EditorTransformGizmo';
 
 type ReactComponent = () => JSX.Element;
 
@@ -31,7 +31,7 @@ export default class Editor {
   protected _viewportPawn: ViewportEditorPawn;
 
   protected _transformActor?: Actor;
-  protected _transformGizmo?: TransformControls;
+  protected _transformGizmo?: EditorTransformGizmo;
 
   protected _registeredPropertyViews: { [id: string]: (props: IPropertyViewProps) => JSX.Element } =
     {};
@@ -52,23 +52,6 @@ export default class Editor {
     this.RegisterPropertyView('string', TextPropertyView);
     this.RegisterPropertyView(THREE.Color.name, ColorPropertyView);
     this.RegisterPropertyView('boolean', BooleanPropertyView);
-
-    Input.OnKeyPressed.AddListener((keyCode) => {
-      if (this._transformGizmo) {
-        if (keyCode === 'KeyQ') {
-          this._transformGizmo.setSpace(this._transformGizmo.space === 'local' ? 'world' : 'local');
-        }
-        if (keyCode === 'KeyW') {
-          this._transformGizmo.setMode('translate');
-        }
-        if (keyCode === 'KeyE') {
-          this._transformGizmo.setMode('rotate');
-        }
-        if (keyCode === 'KeyR') {
-          this._transformGizmo.setMode('scale');
-        }
-      }
-    });
   }
 
   public async Load() {
@@ -85,41 +68,25 @@ export default class Editor {
   }
 
   public SetTransformActor(actor?: Actor) {
-    this.ClearTransformActor();
-
     if (actor === undefined) return;
+    if (actor === this._transformActor) return;
+    this.ClearTransformActor();
 
     this._transformActor = actor;
 
-    this._transformGizmo = new TransformControls(
-      window.Camera,
-      window.RenderContext?.GetRenderer().domElement
-    );
-
-    this._transformGizmo['noEdHighlight'] = true;
-
-    const smc = actor.GetComponentOfType(StaticMeshComponent);
-    if (smc) {
-      this._transformGizmo.attach(smc.GetStaticMesh()!.GetRenderMesh());
-    }
-    this._world.GetRenderScene().add(this._transformGizmo);
+    this._transformGizmo = this.GetWorld().Spawn(EditorTransformGizmo);
+    this._transformGizmo.AttachTo(actor);
   }
 
   public ClearTransformActor() {
     this._transformActor = undefined;
-
-    if (this._transformGizmo) {
-      this._transformGizmo.reset();
-      this._world.GetRenderScene().remove(this._transformGizmo);
-      this._transformGizmo = undefined;
-    }
+    this._transformGizmo?.Destroy();
   }
 
   public GetViewportBounds(): RectBounds {
     if (window.RenderContext === undefined) return RectBounds.Empty();
 
     const canvas = window.RenderContext.GetCanvas();
-
     const viewportWidth = canvas.parentElement!.clientWidth;
     const viewportHeight = canvas.parentElement!.clientHeight;
     const viewportStartX = canvas.parentElement!.getBoundingClientRect().x;

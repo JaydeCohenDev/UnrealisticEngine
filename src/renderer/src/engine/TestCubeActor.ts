@@ -28,9 +28,9 @@ export default class TestCubeActor extends StaticMeshActor {
 
     const mesh = this._staticMeshComponent.GetStaticMesh();
     if (mesh !== undefined) {
-      mesh.GetRenderMesh().rotation.x += 0.00562;
-      mesh.GetRenderMesh().rotation.y += 0.00353;
-      mesh.GetRenderMesh().rotation.z += 0.00621;
+      // mesh.GetRenderMesh().rotation.x += 0.00562;
+      // mesh.GetRenderMesh().rotation.y += 0.00353;
+      // mesh.GetRenderMesh().rotation.z += 0.00621;
 
       this.hue += 0.00025;
       this.hue %= 1;
