@@ -1,5 +1,5 @@
 import { EditorLayout, EditorLayoutPane } from './EdLayout/EditorLayout';
-import Viewport from '@renderer/components/Viewport';
+import Viewport from '@renderer/components/Viewport/Viewport';
 import ContentBrowser from '@renderer/components/ContentBrowser';
 import Outliner from '@renderer/components/Outliner/Outliner';
 import DetailsPanel from '@renderer/components/DetailsPanel/DetailsPanel';
