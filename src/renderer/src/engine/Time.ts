@@ -10,4 +10,8 @@ export default class Time {
   public static GetWorldDeltaSeconds(): number {
     return Time.TickTimer.getDelta();
   }
+
+  public static GetFrameRate(): number {
+    return 1.0 / Time.GetWorldDeltaSeconds();
+  }
 }

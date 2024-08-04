@@ -83,21 +83,17 @@ export default function Viewport() {
           <ViewportControlGroup>
             <ViewportSettingDropdown icon={faSortDown} />
           </ViewportControlGroup>
-
           <ViewportControlGroup>
             <ViewportSettingDropdown icon={faEye} name="View Mode" />
           </ViewportControlGroup>
-
           <ViewportControlGroup>
             <ViewportSettingDropdown icon={faCamera} name="Render Mode" />
           </ViewportControlGroup>
-
           <ViewportControlGroup>
             <ViewportSettingDropdown name="Show" />
           </ViewportControlGroup>
-
+          <div id="fpsCounter">FPS: asdf</div>
           <div style={{ flexGrow: 1 }}></div>
-
           <ViewportControlGroup>
             <ViewportSettingToggle icon={faUpDownLeftRight} />
             <ViewportSettingToggle icon={faArrowsSpin} />
