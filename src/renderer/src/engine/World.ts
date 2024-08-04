@@ -10,10 +10,8 @@ import { StaticMesh } from './StaticMesh';
 import Texture2d from './Texture2d';
 import Message from './Message';
 import PostProcessVolume from './PostProcessVolume';
-import TransformGizmoActor from './TransformGizmo';
 import IHitResult from './HitResult';
 import SceneComponent from './SceneComponent';
-import { RGBELoader } from 'three/examples/jsm/addons';
 
 export default class World {
   protected _name: string;
@@ -33,8 +31,6 @@ export default class World {
 
     this._scene = new THREE.Scene();
 
-    //this._scene.background = new THREE.Color('#333333');
-
     this._testCube = this.Spawn(TestCubeActor);
 
     const gridTexture = new Texture2d('src/assets/textures/default_grid.png');
@@ -43,13 +39,6 @@ export default class World {
     const smc = this._floor.GetComponentOfType(StaticMeshComponent);
     smc?.SetStaticMesh(StaticMesh.FromBox(10, 1, 10, floorMaterial));
     smc?.GetStaticMesh()?.GetRenderMesh().position.setY(-0.51);
-
-    // const loader = new GLTFLoader();
-    // loader.load('src/assets/models/gizmo.glb', (data) => {
-    //   this._scene.add(data.scene);
-    // });
-
-    //const gizmo = this.Spawn(TransformGizmoActor);
 
     this._sun = this.Spawn(DirectionalLightActor, 'Sun');
 

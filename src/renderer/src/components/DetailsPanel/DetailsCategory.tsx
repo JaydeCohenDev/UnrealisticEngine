@@ -37,6 +37,7 @@ export default function DetailsCategory(props: IDetailsCategoryProps) {
                 component={props.component}
               />
             );
+          return <></>;
         })}
       </div>
     </div>

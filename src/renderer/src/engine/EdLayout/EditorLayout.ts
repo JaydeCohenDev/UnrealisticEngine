@@ -1,4 +1,3 @@
-import { stringify, parse } from 'flatted';
 import ISerializable from '../ISerializable';
 
 export class EditorLayout implements ISerializable {

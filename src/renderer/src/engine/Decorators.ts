@@ -8,9 +8,9 @@ export function UProperty(specifiers?: UPropertySpecifiers) {
 }
 
 export function UClass() {
-  return function UClass(constructor: Function) {};
+  return function UClass(_constructor: Function) {};
 }
 
 export function UFunction() {
-  return function UFunction(originalMethod: any, _context: any) {};
+  return function UFunction(_originalMethod: any, _context: any) {};
 }
