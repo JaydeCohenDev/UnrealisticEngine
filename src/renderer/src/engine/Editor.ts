@@ -60,6 +60,10 @@ export default class Editor {
     });
   }
 
+  public get TransformGizmo(): EditorTransformGizmo | undefined {
+    return this._transformGizmo;
+  }
+
   public async Load() {
     const loadedLayoutString = localStorage.getItem('edLayout');
     let forceReset = false;

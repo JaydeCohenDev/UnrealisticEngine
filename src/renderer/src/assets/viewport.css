@@ -42,6 +42,10 @@
   background-color: rgba(255, 255, 255, 0.1);
 }
 
+.viewportSettingToggle.toggleEnabled {
+  background-color: #2d5bcb;
+}
+
 .viewportSettingDropdown {
   padding: 5px;
   background-color: transparent;

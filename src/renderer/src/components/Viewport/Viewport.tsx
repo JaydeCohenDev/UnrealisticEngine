@@ -92,7 +92,9 @@ export default function Viewport() {
           <ViewportControlGroup>
             <ViewportSettingDropdown name="Show" />
           </ViewportControlGroup>
-          <div id="fpsCounter">FPS: asdf</div>
+          <div id="fpsCounter" style={{ fontSize: 16 }}>
+            FPS: asdf
+          </div>
           <div style={{ flexGrow: 1 }}></div>
           <ViewportControlGroup>
             <ViewportSettingToggle icon={faUpDownLeftRight} />
@@ -100,7 +102,13 @@ export default function Viewport() {
             <ViewportSettingToggle icon={faUpRightAndDownLeftFromCenter} />
           </ViewportControlGroup>
           <ViewportControlGroup>
-            <ViewportSettingToggle icon={faGlobe} />
+            <ViewportSettingToggle
+              icon={faGlobe}
+              enabled={window.Editor.TransformGizmo?.IsLocalSpace()}
+              toggleCallback={(enabled) => {
+                window.Editor.TransformGizmo?.SetIsLocalSpace(enabled);
+              }}
+            />
           </ViewportControlGroup>
           <ViewportControlGroup>
             <ViewportSettingToggle icon={faTableCells} />

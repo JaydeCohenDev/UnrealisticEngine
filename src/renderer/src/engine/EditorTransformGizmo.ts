@@ -26,6 +26,14 @@ export default class EditorTransformGizmo extends Actor {
     this._transformGizmo['noEdHighlight'] = true;
   }
 
+  public IsLocalSpace(): boolean {
+    return this._transformGizmo.space === 'local';
+  }
+
+  public SetIsLocalSpace(setLocalSpace: boolean): void {
+    this._transformGizmo.space = setLocalSpace ? 'local' : 'world';
+  }
+
   public ShowInOutliner(): boolean {
     return false;
   }
