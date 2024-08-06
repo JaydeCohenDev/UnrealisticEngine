@@ -21,6 +21,13 @@ export class StaticMesh extends Asset {
     return mesh;
   }
 
+  public static FromCylinder(radius: number, height: number, material: THREE.Material): StaticMesh {
+    const mesh = new StaticMesh();
+    mesh._geometry = new THREE.CylinderGeometry(radius, radius, height);
+    mesh._mesh = new THREE.Mesh(mesh._geometry, material);
+    return mesh;
+  }
+
   public static FromGLTF(path: string, callback: (staticMesh: StaticMesh) => void): void {
     const mesh = new StaticMesh();
 

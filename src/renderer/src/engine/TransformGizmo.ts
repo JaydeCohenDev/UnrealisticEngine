@@ -53,8 +53,8 @@ export default class TransformGizmoActor extends Actor {
   }
 
   public Tick(_deltaTime: number): void {
-    // document.body.style.cursor =
-    //   this._hoveredGizmoElement !== null || this._isTranslating ? 'grab' : 'default';
+    document.body.style.cursor =
+      this._hoveredGizmoElement !== null || this._isTranslating ? 'grab' : 'default';
 
     if (this._isTranslating) {
       this.DoTranslation();

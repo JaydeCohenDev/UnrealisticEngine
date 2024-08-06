@@ -42,7 +42,7 @@ export default function Viewport() {
     }
 
     // Editor actor selection
-    if (e.button === 0) {
+    if (e.button === 0 && window.Editor.AllowActorSelection) {
       const castPos = window.Editor.GetMousePositionInViewport();
       const world = window.Editor.GetWorld();
       const hit = world.LineTraceSingle(castPos);

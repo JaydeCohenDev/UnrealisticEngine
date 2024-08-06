@@ -12,6 +12,7 @@ import Message from './Message';
 import PostProcessVolume from './PostProcessVolume';
 import IHitResult from './HitResult';
 import SceneComponent from './SceneComponent';
+import TestCylinder from './TestCylinder';
 
 export default class World {
   protected _name: string;
@@ -39,6 +40,8 @@ export default class World {
     const smc = this._floor.GetComponentOfType(StaticMeshComponent);
     smc?.SetStaticMesh(StaticMesh.FromBox(10, 1, 10, floorMaterial));
     smc?.GetStaticMesh()?.GetRenderMesh().position.setY(-0.51);
+
+    this.Spawn(TestCylinder);
 
     this._sun = this.Spawn(DirectionalLightActor, 'Sun');
 
@@ -73,7 +76,7 @@ export default class World {
     this._actors = this._actors.filter((a) => a !== actor);
   }
 
-  public MultiLineTrace(viewportPos: THREE.Vector2): IHitResult[] {
+  public MultiLineTrace(viewportPos: THREE.Vector2, strictMode: boolean = true): IHitResult[] {
     const raycaster = new THREE.Raycaster();
 
     const ndcPos = window.Editor.ToViewportNDC(viewportPos);
@@ -85,17 +88,24 @@ export default class World {
     const hitResults: IHitResult[] = [];
 
     for (let intersect of intersects) {
-      const hitOwner = intersect.object['owner'] as SceneComponent;
-      if (hitOwner !== undefined) {
-        const hitActor = hitOwner.GetOwner();
-        if (hitActor !== undefined && hitActor !== null) {
-          hitResults.push({
-            actor: hitActor,
-            component: hitOwner,
-            position: intersect.point,
-            distance: intersect.distance,
-            renderObject: intersect.object
-          });
+      if (!intersect['object']['visible']) {
+        continue;
+      }
+
+      const hitOwnerComponent = intersect.object['owner'] as SceneComponent;
+
+      if (hitOwnerComponent.AllowHitTesting() || !strictMode) {
+        if (hitOwnerComponent !== undefined) {
+          const hitActor = hitOwnerComponent.GetOwner();
+          if (hitActor !== undefined && hitActor !== null) {
+            hitResults.push({
+              actor: hitActor,
+              component: hitOwnerComponent,
+              position: intersect.point,
+              distance: intersect.distance,
+              renderObject: intersect.object
+            });
+          }
         }
       }
     }

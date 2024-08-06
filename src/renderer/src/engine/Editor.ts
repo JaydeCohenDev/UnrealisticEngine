@@ -30,6 +30,8 @@ export default class Editor {
 
   protected _viewportPawn: ViewportEditorPawn;
 
+  protected _allowActorSelection: boolean = true;
+
   protected _transformActor?: Actor;
   protected _transformGizmo?: EditorTransformGizmo;
 
@@ -41,8 +43,6 @@ export default class Editor {
   constructor() {
     this._world = new World('editor world');
     this._layout = new EditorLayout();
-
-    //this._world.GetRenderScene().add(new THREE.GridHelper(50, 50, 0x888888, 0x444444));
 
     this._viewportPawn = this._world.Spawn(ViewportEditorPawn);
 
@@ -58,6 +58,14 @@ export default class Editor {
         this.SetSelectedActors([]);
       }
     });
+  }
+
+  public get AllowActorSelection(): boolean {
+    return this._allowActorSelection;
+  }
+
+  public set AllowActorSelection(newVal: boolean) {
+    this._allowActorSelection = newVal;
   }
 
   public get TransformGizmo(): EditorTransformGizmo | undefined {
@@ -79,6 +87,7 @@ export default class Editor {
 
   public SetTransformActor(actor?: Actor) {
     if (actor === this._transformActor) return;
+
     this.ClearTransformActor();
     if (actor === undefined) return;
 

@@ -42,7 +42,11 @@ export default class Input {
   }
 
   public static IsMouseButtonDown(mouseButton: MouseButton): boolean {
-    return Input.Keys[mouseButton] ?? false;
+    if (Input.Keys[mouseButton] === undefined) return false;
+
+    // TODO BUGGED
+
+    return Input.Keys[mouseButton];
   }
 
   public static GetMousePosition(): THREE.Vector2 {
