@@ -18,11 +18,13 @@ import Input from './Input';
 import FMath from './FMath';
 import RectBounds from './RectBounds';
 import EditorTransformGizmo from './EditorTransformGizmo';
+import { ViewportSettings } from './ViewportOptions';
 
 type ReactComponent = () => JSX.Element;
 
 export default class Editor {
   public OnActorSelectionSetChanged: UEvent = new UEvent();
+  public OnTransformSpaceChanged: UEvent = new UEvent();
 
   protected _layout: EditorLayout;
   protected _registeredEditorPanels: { [id: string]: () => JSX.Element } = {};
@@ -39,6 +41,13 @@ export default class Editor {
     {};
 
   protected _selectedActors: Actor[] = [];
+
+  public ViewportSettings: ViewportSettings = {
+    transformSpace: 'world',
+    enablePositionSnapping: false,
+    enableRotationSnapping: false,
+    enableScaleSnapping: false
+  };
 
   constructor() {
     this._world = new World('editor world');
@@ -90,11 +99,13 @@ export default class Editor {
 
     this.ClearTransformActor();
     if (actor === undefined) return;
-
     this._transformActor = actor;
 
     this._transformGizmo = this.GetWorld().Spawn(EditorTransformGizmo);
     this._transformGizmo.AttachTo(actor);
+    this._transformGizmo.OnTransformSpaceChanged.AddListener((e) => {
+      this.OnTransformSpaceChanged.Invoke(e);
+    });
   }
 
   public ClearTransformActor() {

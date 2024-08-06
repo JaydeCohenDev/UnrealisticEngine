@@ -11,20 +11,29 @@ interface IViewportSettingToggle {
 export default function ViewportSettingToggle(props: IViewportSettingToggle) {
   const [enabled, setEnabled] = useState(props.enabled ?? false);
 
+  const getEnabled = (): boolean => {
+    if (props.enabled !== undefined) {
+      return props.enabled;
+    }
+
+    return enabled;
+  };
+
   useEffect(() => {
     if (props.toggleCallback) {
-      props.toggleCallback(enabled);
+      props.toggleCallback(getEnabled());
     }
-  }, [enabled]);
+  }, [getEnabled()]);
 
   const handleOnClick = () => {
-    setEnabled(!enabled);
+    if (props.toggleCallback === undefined) setEnabled(!getEnabled());
+    else props.toggleCallback(!getEnabled());
   };
 
   return (
     <div
       onClick={handleOnClick}
-      className={'viewportSettingToggle ' + (enabled ? 'toggleEnabled' : '')}
+      className={'viewportSettingToggle ' + (getEnabled() ? 'toggleEnabled' : '')}
     >
       <FontAwesomeIcon icon={props.icon} />
     </div>

@@ -1,23 +1,10 @@
 import * as Engine from '@renderer/engine/Engine';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import * as THREE from 'three';
 
 import '../../assets/viewport.css';
-import ViewportControlGroup from './ViewportControlGroup';
-import ViewportSettingToggle from './ViewportSettingToggle';
-import {
-  faArrowsSpin,
-  faCamera,
-  faCompassDrafting,
-  faExpand,
-  faEye,
-  faGlobe,
-  faSortDown,
-  faTableCells,
-  faUpDownLeftRight,
-  faUpRightAndDownLeftFromCenter
-} from '@fortawesome/free-solid-svg-icons';
-import ViewportSettingDropdown from './ViewportSettingDropdown';
+
+import ViewportSettings from './ViewportSettings';
 
 export default function Viewport() {
   useEffect(() => {
@@ -70,7 +57,6 @@ export default function Viewport() {
       window.Camera.rotateOnWorldAxis(rightVector, -yDelta);
     }
   }
-
   useEffect(() => {
     document.addEventListener('mousemove', UpdatePosition, false);
   }, []);
@@ -79,47 +65,7 @@ export default function Viewport() {
     <div className="viewport">
       <canvas id="viewport" onMouseDown={OnMouseDown} onMouseUp={OnMouseUp}></canvas>
       <div className="viewportOverlay">
-        <div className="viewportControls">
-          <ViewportControlGroup>
-            <ViewportSettingDropdown icon={faSortDown} />
-          </ViewportControlGroup>
-          <ViewportControlGroup>
-            <ViewportSettingDropdown icon={faEye} name="View Mode" />
-          </ViewportControlGroup>
-          <ViewportControlGroup>
-            <ViewportSettingDropdown icon={faCamera} name="Render Mode" />
-          </ViewportControlGroup>
-          <ViewportControlGroup>
-            <ViewportSettingDropdown name="Show" />
-          </ViewportControlGroup>
-          <div id="fpsCounter" style={{ fontSize: 16 }}>
-            FPS: asdf
-          </div>
-          <div style={{ flexGrow: 1 }}></div>
-          <ViewportControlGroup>
-            <ViewportSettingToggle icon={faUpDownLeftRight} />
-            <ViewportSettingToggle icon={faArrowsSpin} />
-            <ViewportSettingToggle icon={faUpRightAndDownLeftFromCenter} />
-          </ViewportControlGroup>
-          <ViewportControlGroup>
-            <ViewportSettingToggle
-              icon={faGlobe}
-              enabled={window.Editor.TransformGizmo?.IsLocalSpace()}
-              toggleCallback={(enabled) => {
-                window.Editor.TransformGizmo?.SetIsLocalSpace(enabled);
-              }}
-            />
-          </ViewportControlGroup>
-          <ViewportControlGroup>
-            <ViewportSettingToggle icon={faTableCells} />
-          </ViewportControlGroup>
-          <ViewportControlGroup>
-            <ViewportSettingToggle icon={faCompassDrafting} />
-          </ViewportControlGroup>
-          <ViewportControlGroup>
-            <ViewportSettingToggle icon={faExpand} />
-          </ViewportControlGroup>
-        </div>
+        <ViewportSettings />
       </div>
     </div>
   );

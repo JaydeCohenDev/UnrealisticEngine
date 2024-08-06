@@ -22,6 +22,17 @@ export default class EditorTransformGizmoComponent extends SceneComponent {
     this._transformGizmo.traverse((child) => {
       child['owner'] = this;
     });
+
+    this._transformGizmo.space = window.Editor.ViewportSettings.transformSpace;
+    this._transformGizmo.translationSnap = window.Editor.ViewportSettings.enablePositionSnapping
+      ? 1
+      : 0;
+    this._transformGizmo.rotationSnap = window.Editor.ViewportSettings.enableRotationSnapping
+      ? Math.PI / 4
+      : 0;
+    this._transformGizmo.setScaleSnap(
+      window.Editor.ViewportSettings.enableScaleSnapping ? 0.25 : 0
+    );
   }
 
   public AllowHitTesting(): boolean {
