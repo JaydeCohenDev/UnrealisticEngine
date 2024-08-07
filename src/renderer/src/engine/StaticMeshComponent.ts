@@ -1,3 +1,4 @@
+import { Object3D } from 'three';
 import SceneComponent from './SceneComponent';
 import { StaticMesh } from './StaticMesh';
 
@@ -24,6 +25,10 @@ export default class StaticMeshComponent extends SceneComponent {
 
   public GetStaticMesh(): StaticMesh | undefined {
     return this._staticMesh;
+  }
+
+  public GetRenderObject(): Object3D {
+    return this._staticMesh!.GetRenderMesh();
   }
 
   public BeginPlay(): void {

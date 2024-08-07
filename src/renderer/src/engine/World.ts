@@ -13,6 +13,7 @@ import PostProcessVolume from './PostProcessVolume';
 import IHitResult from './HitResult';
 import SceneComponent from './SceneComponent';
 import TestCylinder from './TestCylinder';
+import BillboardActor from './BillboardActor';
 
 export default class World {
   protected _name: string;
@@ -35,11 +36,14 @@ export default class World {
     this._testCube = this.Spawn(TestCubeActor);
 
     const gridTexture = new Texture2d('src/assets/textures/default_grid.png');
+    gridTexture.SetRepeat(4, 4);
     const floorMaterial = new THREE.MeshStandardMaterial({ map: gridTexture.Data });
     this._floor = this.Spawn(StaticMeshActor, 'floor');
     const smc = this._floor.GetComponentOfType(StaticMeshComponent);
     smc?.SetStaticMesh(StaticMesh.FromBox(10, 1, 10, floorMaterial));
     smc?.GetStaticMesh()?.GetRenderMesh().position.setY(-0.51);
+
+    this.Spawn(BillboardActor);
 
     this.Spawn(TestCylinder);
 
@@ -88,10 +92,6 @@ export default class World {
     const hitResults: IHitResult[] = [];
 
     for (let intersect of intersects) {
-      if (!intersect['object']['visible']) {
-        continue;
-      }
-
       const hitOwnerComponent = intersect.object['owner'] as SceneComponent;
 
       if (hitOwnerComponent.AllowHitTesting() || !strictMode) {

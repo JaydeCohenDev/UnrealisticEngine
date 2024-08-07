@@ -1,3 +1,4 @@
+import { Object3D } from 'three';
 import EditorTransformGizmo from './EditorTransformGizmo';
 import Input from './Input';
 import SceneComponent from './SceneComponent';
@@ -37,6 +38,10 @@ export default class EditorTransformGizmoComponent extends SceneComponent {
 
   public AllowHitTesting(): boolean {
     return false;
+  }
+
+  public GetRenderObject(): Object3D {
+    return this._transformGizmo;
   }
 
   protected IsHoveringTransformGizmo(): boolean {

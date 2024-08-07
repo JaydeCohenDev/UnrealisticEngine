@@ -33,6 +33,10 @@ export default class DirectionalLightComponent extends SceneComponent {
     // TODO expose params
   }
 
+  public GetRenderObject(): THREE.Object3D {
+    return this._light;
+  }
+
   public Tick(_deltaTime: number): void {
     this._light.color = this.LightColor;
     this._light.intensity = this.Intensity;

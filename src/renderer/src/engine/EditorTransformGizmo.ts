@@ -1,7 +1,7 @@
 import Actor from './Actor';
-import StaticMeshComponent from './StaticMeshComponent';
 import EditorTransformGizmoComponent from './EditorTransformGizmoComponent';
 import UEvent from './UEvent';
+import SceneComponent from './SceneComponent';
 
 export default class EditorTransformGizmo extends Actor {
   public OnTransformSpaceChanged: UEvent = new UEvent();
@@ -38,9 +38,11 @@ export default class EditorTransformGizmo extends Actor {
   }
 
   public AttachTo(actor: Actor) {
-    const smc = actor.GetComponentOfType(StaticMeshComponent);
-    if (smc) {
-      this._transformGizmoComponent.TransformGizmo.attach(smc.GetStaticMesh()!.GetRenderMesh());
+    const rootComponent = actor.GetRootComponent() as SceneComponent;
+
+    if (rootComponent !== undefined) {
+      const thing = rootComponent.GetRenderObject();
+      this._transformGizmoComponent.TransformGizmo.attach(thing);
     }
   }
 }

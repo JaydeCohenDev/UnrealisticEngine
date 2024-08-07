@@ -23,6 +23,10 @@ export default class SkyLightComponent extends SceneComponent {
     this._skylight.intensity = this.Intensity;
   }
 
+  public GetRenderObject(): THREE.Object3D {
+    return this._skylight;
+  }
+
   @UFunction()
   public BeginPlay(): void {
     super.BeginPlay();

@@ -18,6 +18,9 @@ export default class Texture2d extends Asset {
     this._data = new THREE.TextureLoader().load(this._path);
     this._data.wrapS = THREE.RepeatWrapping;
     this._data.wrapT = THREE.RepeatWrapping;
-    this._data.repeat.set(4, 4);
+  }
+
+  public SetRepeat(x: number, y: number): void {
+    this._data.repeat.set(x, y);
   }
 }
