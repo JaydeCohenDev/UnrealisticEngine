@@ -52,11 +52,17 @@ export default class EditorTransformGizmoComponent extends SceneComponent {
     return false;
   }
 
+  public Tick(_deltaTime: number): void {
+    super.Tick(_deltaTime);
+
+    window.Editor.AllowActorSelection = !this._transformGizmo.dragging;
+  }
+
   public BeginPlay(): void {
+    super.BeginPlay();
+
     const scene = this.GetWorld()!.GetRenderScene();
     scene.add(this._transformGizmo);
-
-    window.Editor.AllowActorSelection = false;
 
     Input.OnKeyPressed.AddListener((keyCode) => {
       if (this._transformGizmo) {
@@ -77,6 +83,8 @@ export default class EditorTransformGizmoComponent extends SceneComponent {
   }
 
   public EndPlay(): void {
+    super.EndPlay();
+
     window.Editor.AllowActorSelection = true;
 
     this.GetWorld()!.GetRenderScene().remove(this._transformGizmo);

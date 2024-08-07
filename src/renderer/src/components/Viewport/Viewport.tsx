@@ -1,5 +1,5 @@
 import * as Engine from '@renderer/engine/Engine';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import * as THREE from 'three';
 
 import '../../assets/viewport.css';
@@ -27,16 +27,6 @@ export default function Viewport() {
       isAiming = true;
       return;
     }
-
-    // Editor actor selection
-    if (e.button === 0 && window.Editor.AllowActorSelection) {
-      const castPos = window.Editor.GetMousePositionInViewport();
-      const world = window.Editor.GetWorld();
-      const hit = world.LineTraceSingle(castPos);
-      console.log(hit);
-
-      window.Editor.SetSelectedActors(hit.actor !== undefined ? [hit.actor] : []);
-    }
   }
 
   function OnMouseUp(e: React.MouseEvent) {
@@ -44,6 +34,15 @@ export default function Viewport() {
       e.preventDefault();
       document.exitPointerLock();
       isAiming = false;
+    }
+
+    // Editor actor selection
+    if (e.button === 0 && window.Editor.AllowActorSelection) {
+      const castPos = window.Editor.GetMousePositionInViewport();
+      const world = window.Editor.GetWorld();
+      const hit = world.LineTraceSingle(castPos);
+
+      window.Editor.SetSelectedActors(hit.actor !== undefined ? [hit.actor] : []);
     }
   }
 
