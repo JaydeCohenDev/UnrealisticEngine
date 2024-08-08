@@ -19,6 +19,10 @@ export default class BillboardComponent extends SceneComponent {
     return this._sprite;
   }
 
+  public SetTexture(texture: Texture2d) {
+    (this._sprite.material as SpriteMaterial).map = texture.Data;
+  }
+
   public BeginPlay(): void {
     super.BeginPlay();
 
