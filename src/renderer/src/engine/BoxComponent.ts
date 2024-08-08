@@ -20,6 +20,7 @@ export default class BoxComponent extends SceneComponent {
       side: DoubleSide
     });
     this._boxMesh = new Mesh(geo, mat);
+    this._boxMesh['owner'] = this;
   }
 
   public GetRenderObject(): Object3D {
