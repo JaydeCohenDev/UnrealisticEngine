@@ -3,6 +3,7 @@ import ActorComponent from './ActorComponent';
 import { SubclassOf } from './Class';
 import World from './World';
 import SceneComponent from './SceneComponent';
+import Rotator from './Rotator';
 
 type Constructor<T> = new (...args: any[]) => T;
 
@@ -37,7 +38,7 @@ export default class Actor {
     return this._world;
   }
 
-  public GetActorPosition(): Vector3 {
+  public GetActorLocation(): Vector3 {
     const root = this.GetRootComponent() as SceneComponent;
 
     if (root !== undefined) {
@@ -45,6 +46,22 @@ export default class Actor {
     }
 
     return new Vector3(0, 0, 0);
+  }
+
+  public SetActorLocation(newLocation: Vector3) {
+    const root = this.GetRootComponent() as SceneComponent;
+
+    if (root !== undefined) {
+      return root.SetWorldLocation(newLocation);
+    }
+  }
+
+  public SetActorRotation(newRotation: Rotator) {
+    const root = this.GetRootComponent() as SceneComponent;
+
+    if (root !== undefined) {
+      return root.SetWorldRotation(newRotation);
+    }
   }
 
   public GetForwardVector(): Vector3 {

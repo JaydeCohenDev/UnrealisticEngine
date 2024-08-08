@@ -14,6 +14,7 @@ import IHitResult from './HitResult';
 import SceneComponent from './SceneComponent';
 import TestCylinder from './TestCylinder';
 import BillboardActor from './BillboardActor';
+import Rotator from './Rotator';
 
 export default class World {
   protected _name: string;
@@ -34,6 +35,7 @@ export default class World {
     this._scene = new THREE.Scene();
 
     this._testCube = this.Spawn(TestCubeActor);
+    this._testCube.SetActorLocation(new THREE.Vector3(-2, 0.5, -2));
 
     const gridTexture = new Texture2d('src/assets/textures/default_grid.png');
     gridTexture.SetRepeat(4, 4);
@@ -45,9 +47,12 @@ export default class World {
 
     this.Spawn(BillboardActor);
 
-    this.Spawn(TestCylinder);
+    const cyl = this.Spawn(TestCylinder);
+    cyl.SetActorLocation(new THREE.Vector3(2, 1, 2));
 
     this._sun = this.Spawn(DirectionalLightActor, 'Sun');
+    this._sun.SetActorLocation(new THREE.Vector3(0, 8, 0));
+    this._sun.SetActorRotation(new Rotator(0, 90, 0));
 
     this._skylight = this.Spawn(SkyLightActor, 'SkyLight');
 

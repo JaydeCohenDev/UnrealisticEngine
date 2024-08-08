@@ -22,6 +22,7 @@ export default class DirectionalLightComponent extends SceneComponent {
     super();
 
     this._light = new THREE.DirectionalLight(0xffffff, 1); // TODO expose params
+    this._light.position.set(0, 0, 0);
     this._helper = new THREE.CameraHelper(this._light.shadow.camera);
 
     this._lightDirTarget = new THREE.Object3D();
@@ -45,11 +46,9 @@ export default class DirectionalLightComponent extends SceneComponent {
     this._light.intensity = this.Intensity;
     this._light.castShadow = this.CastShadow;
 
-    //this._sphere.position.copy(this._light.target.position);
-
     const owner = this.GetOwner();
     if (owner !== undefined && owner !== null) {
-      const lightPos = owner.GetActorPosition().add(owner.GetForwardVector());
+      const lightPos = owner.GetActorLocation().add(owner.GetForwardVector());
 
       this._lightDirTarget.position.copy(lightPos);
     }
@@ -61,7 +60,6 @@ export default class DirectionalLightComponent extends SceneComponent {
     const world = this.GetWorld();
     if (world !== undefined) {
       world.GetRenderScene().add(this._light);
-      //world.GetRenderScene().add(this._helper);
       world.GetRenderScene().add(this._lightDirTarget);
     }
   }
@@ -73,7 +71,6 @@ export default class DirectionalLightComponent extends SceneComponent {
     if (world !== undefined) {
       world.GetRenderScene().remove(this._light);
       world.GetRenderScene().remove(this._lightDirTarget);
-      //world.GetRenderScene().remove(this._helper);
     }
   }
 }

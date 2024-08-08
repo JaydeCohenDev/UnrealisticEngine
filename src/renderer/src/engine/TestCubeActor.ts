@@ -12,17 +12,6 @@ export default class TestCubeActor extends StaticMeshActor {
     this._staticMeshComponent.SetStaticMesh(staticMeshAsset);
   }
 
-  public BeginPlay(): void {
-    super.BeginPlay();
-
-    const mesh = this._staticMeshComponent.GetStaticMesh();
-    if (mesh !== undefined) {
-      // TODO: should be set via editor
-      // TODO: should just be able to set actor position
-      mesh.GetRenderMesh().position.y += 2;
-    }
-  }
-
   public Tick(_deltaTime: number): void {
     super.Tick(_deltaTime);
 
