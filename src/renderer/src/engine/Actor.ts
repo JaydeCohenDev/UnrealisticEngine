@@ -1,6 +1,8 @@
+import { Vector3 } from 'three';
 import ActorComponent from './ActorComponent';
 import { SubclassOf } from './Class';
 import World from './World';
+import SceneComponent from './SceneComponent';
 
 type Constructor<T> = new (...args: any[]) => T;
 
@@ -33,6 +35,49 @@ export default class Actor {
 
   public GetWorld(): World | undefined {
     return this._world;
+  }
+
+  public GetActorPosition(): Vector3 {
+    const root = this.GetRootComponent() as SceneComponent;
+
+    if (root !== undefined) {
+      return root.GetWorldLocation();
+    }
+
+    return new Vector3(0, 0, 0);
+  }
+
+  public GetForwardVector(): Vector3 {
+    let forwardVector: Vector3 = new Vector3();
+
+    const root = this.GetRootComponent() as SceneComponent;
+
+    if (root !== undefined) {
+      root.GetRenderObject().getWorldDirection(forwardVector);
+      return forwardVector;
+    }
+
+    return new Vector3(0, 0, 1);
+  }
+
+  public GetRightVector(): Vector3 {
+    const root = this.GetRootComponent() as SceneComponent;
+
+    if (root !== undefined) {
+      return new Vector3(1, 0, 0).applyQuaternion(root.GetRenderObject().quaternion);
+    }
+
+    return new Vector3(1, 0, 0);
+  }
+
+  public GetUpVector(): Vector3 {
+    const root = this.GetRootComponent() as SceneComponent;
+
+    if (root !== undefined) {
+      return new Vector3(0, 1, 0).applyQuaternion(root.GetRenderObject().quaternion);
+    }
+
+    return new Vector3(0, 1, 0);
   }
 
   public Rename(newName: string) {
