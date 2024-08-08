@@ -37,7 +37,13 @@ export default function Toolbar() {
       })
     );
 
-    menu.AddItem(new EdMenuItem('Tools'));
+    const toolsMenu = menu.AddItem(new EdMenuItem('Tools'));
+    toolsMenu.AddItem(
+      new EdMenuItem('Dump render scene', () => {
+        console.log(window.Editor.GetWorld().GetRenderScene());
+      })
+    );
+
     menu.AddItem(new EdMenuItem('Build'));
     menu.AddItem(new EdMenuItem('Select'));
 
