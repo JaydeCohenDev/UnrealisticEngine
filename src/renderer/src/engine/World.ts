@@ -45,8 +45,6 @@ export default class World {
     smc?.SetStaticMesh(StaticMesh.FromBox(10, 1, 10, floorMaterial));
     smc?.GetStaticMesh()?.GetRenderMesh().position.setY(-0.51);
 
-    this.Spawn(BillboardActor);
-
     const cyl = this.Spawn(TestCylinder);
     cyl.SetActorLocation(new THREE.Vector3(2, 1, 2));
 
@@ -55,6 +53,7 @@ export default class World {
     this._sun.SetActorRotation(new Rotator(0, 90, 0));
 
     this._skylight = this.Spawn(SkyLightActor, 'SkyLight');
+    this._skylight.SetActorLocation(new THREE.Vector3(0, 6, 0));
 
     this.Spawn(PostProcessVolume);
   }
