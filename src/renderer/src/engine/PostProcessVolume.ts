@@ -1,19 +1,13 @@
-import Actor from './Actor';
-import BillboardComponent from './BilloardComponent';
+//import BillboardComponent from './BilloardComponent';
 import PostProcessComponent from './PostProcessComponent';
+import VolumeActor from './VolumeActor';
 
-export default class PostProcessVolume extends Actor {
+export default class PostProcessVolume extends VolumeActor {
   protected _postProcessComponent: PostProcessComponent;
-  protected _billboardComponent: BillboardComponent;
 
   constructor() {
     super();
 
-    this._billboardComponent = this.AddComponent(BillboardComponent);
     this._postProcessComponent = this.AddComponent(PostProcessComponent);
-  }
-
-  public BeginPlay(): void {
-    super.BeginPlay();
   }
 }
