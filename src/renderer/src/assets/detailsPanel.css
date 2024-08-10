@@ -1,8 +1,9 @@
 .detailsPanel {
+  overflow-y: scroll;
+  height: 100%;
 }
 
 .detailsWrapper {
-  overflow-y: scroll;
 }
 
 input {
