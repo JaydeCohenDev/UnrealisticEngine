@@ -1,6 +1,6 @@
 import SceneComponent from './SceneComponent';
 
-import { Sprite, SpriteMaterial, Object3D } from 'three';
+import { Sprite, SpriteMaterial, Object3D, Color } from 'three';
 import Texture2d from './Texture2d';
 
 export default class BillboardComponent extends SceneComponent {
@@ -21,6 +21,10 @@ export default class BillboardComponent extends SceneComponent {
 
   public SetTexture(texture: Texture2d) {
     (this._sprite.material as SpriteMaterial).map = texture.Data;
+  }
+
+  public SetColor(color: Color) {
+    (this._sprite.material as SpriteMaterial).color = color;
   }
 
   public BeginPlay(): void {

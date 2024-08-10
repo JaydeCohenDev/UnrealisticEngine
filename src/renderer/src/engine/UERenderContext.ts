@@ -47,6 +47,9 @@ export default class UERenderContext {
     this._renderer.shadowMap.enabled = true;
     this._renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
+    // set false in builds for performance. thanks Darkpouetman <3
+    //this._renderer.debug.checkShaderErrors = false;
+
     const hdriLoader = new RGBELoader();
     hdriLoader.load('src/assets/hdr/quarry_01_1k.hdr', (texture) => {
       texture.mapping = THREE.EquirectangularReflectionMapping;

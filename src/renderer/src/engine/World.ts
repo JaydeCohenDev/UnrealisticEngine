@@ -15,6 +15,8 @@ import SceneComponent from './SceneComponent';
 import TestCylinder from './TestCylinder';
 import BillboardActor from './BillboardActor';
 import Rotator from './Rotator';
+import PointLightActor from './PointLightActor';
+import SpotlightActor from './SpotlightActor';
 
 export default class World {
   protected _name: string;
@@ -55,6 +57,9 @@ export default class World {
     this._skylight = this.Spawn(SkyLightActor, 'SkyLight');
     this._skylight.SetActorLocation(new THREE.Vector3(0, 6, 0));
 
+    this.Spawn(PointLightActor).SetActorLocation(new THREE.Vector3(1, 1, 1));
+    this.Spawn(SpotlightActor).SetActorLocation(new THREE.Vector3(-1, 1, -1));
+
     this.Spawn(PostProcessVolume);
   }
 
@@ -86,7 +91,6 @@ export default class World {
 
   public MultiLineTrace(viewportPos: THREE.Vector2, strictMode: boolean = true): IHitResult[] {
     const raycaster = new THREE.Raycaster();
-
     const ndcPos = window.Editor.ToViewportNDC(viewportPos);
     raycaster.setFromCamera(ndcPos, window.Camera);
 
