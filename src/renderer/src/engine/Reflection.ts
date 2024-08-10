@@ -4,7 +4,7 @@ import UClass, { UClassSpecifiers } from './UClass';
 import UProperty, { UPropertySpecifiers } from './UProperty';
 
 export default class Reflection {
-  protected static _registeredClasses: { [className: string]: UProperty[] } = {};
+  //protected static _registeredClasses: { [className: string]: UProperty[] } = {};
   protected static _registeredUClasses: { [className: string]: UClass } = {};
 
   public static RegisterProperty(
@@ -13,8 +13,6 @@ export default class Reflection {
     specifiers?: UPropertySpecifiers
   ) {
     const className = parentClass.constructor.name;
-
-    const parentTarget = Object.getPrototypeOf(parentClass.constructor.prototype);
 
     const classDefaultObject = new parentClass.constructor();
     let propType: string = typeof classDefaultObject[propertyName];
@@ -28,10 +26,11 @@ export default class Reflection {
 
     const uProp: UProperty = new UProperty(propType, parentClass, propertyName, specifiers);
 
-    if (!(className in Reflection._registeredClasses)) {
-      Reflection._registeredClasses[className] = [];
+    if (Reflection._registeredUClasses[className] === undefined) {
+      Reflection.RegisterClass(parentClass.constructor, {}, true);
     }
-    Reflection._registeredClasses[className].push(uProp);
+
+    Reflection._registeredUClasses[className].AddProperty(uProp);
   }
 
   public static RegisterClass(
@@ -86,13 +85,17 @@ export default class Reflection {
   public static GetPropertiesOf(parentClass: Object): UProperty[] {
     const className = parentClass.constructor.name;
 
-    return this._registeredClasses[className] ?? [];
+    if (this._registeredUClasses[className] === undefined) return [];
+
+    return this._registeredUClasses[className].Properties;
   }
 
   public static GetPropertiesFrom(classType: SubclassOf<Object>): UProperty[] {
     const className = classType.name;
 
-    return this._registeredClasses[className];
+    if (this._registeredUClasses[className] === undefined) return [];
+
+    return this._registeredUClasses[className].Properties;
   }
 
   public static GetPropertyCategoriesOf(parentClass: Object): string[] {

@@ -1,7 +1,8 @@
 import ActorComponent from './ActorComponent';
-import { UProperty } from './Decorators';
+import { UClass, UProperty } from './Decorators';
 import * as THREE from 'three';
 
+@UClass()
 export default class PostProcessComponent extends ActorComponent {
   @UProperty({ category: 'Bloom' })
   protected EnableBloom: boolean = true;

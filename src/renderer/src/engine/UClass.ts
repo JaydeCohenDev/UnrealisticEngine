@@ -32,12 +32,20 @@ export default class UClass {
     return this._parentClass.IsValidated ? this._parentClass : null;
   }
 
+  public get Properties(): UProperty[] {
+    return this._properties;
+  }
+
   public SignalValidation(): void {
     this._isValidated = true;
   }
 
   public get IsValidated(): boolean {
     return this._isValidated;
+  }
+
+  public AddProperty(property: UProperty) {
+    this._properties.push(property);
   }
 
   public UpdateParentClass(parentClass: UClass | null): void {
