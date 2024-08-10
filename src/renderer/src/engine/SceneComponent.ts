@@ -35,4 +35,6 @@ export default class SceneComponent extends ActorComponent {
   ) {
     parent.GetRenderObject().add(this.GetRenderObject());
   }
+
+  nri;
 }

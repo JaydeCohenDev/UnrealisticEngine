@@ -1,4 +1,5 @@
 import Reflection from './Reflection';
+import { UClassSpecifiers } from './UClass';
 import { UPropertySpecifiers } from './UProperty';
 
 export function UProperty(specifiers?: UPropertySpecifiers) {
@@ -7,8 +8,10 @@ export function UProperty(specifiers?: UPropertySpecifiers) {
   };
 }
 
-export function UClass() {
-  return function UClass(_constructor: Function) {};
+export function UClass(specifiers?: UClassSpecifiers) {
+  return function UClass(constructor: Function) {
+    Reflection.RegisterClass(constructor, specifiers);
+  };
 }
 
 export function UFunction() {
