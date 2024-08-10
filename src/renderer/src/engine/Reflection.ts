@@ -85,17 +85,31 @@ export default class Reflection {
   public static GetPropertiesOf(parentClass: Object): UProperty[] {
     const className = parentClass.constructor.name;
 
-    if (this._registeredUClasses[className] === undefined) return [];
+    const properties: UProperty[] = [];
 
-    return this._registeredUClasses[className].Properties;
+    let currentClass: UClass | null = this._registeredUClasses[className];
+    while (currentClass !== undefined && currentClass !== null && currentClass.IsValidated) {
+      properties.push(...currentClass.Properties);
+
+      currentClass = currentClass.ParentClass;
+    }
+
+    return properties;
   }
 
   public static GetPropertiesFrom(classType: SubclassOf<Object>): UProperty[] {
     const className = classType.name;
 
-    if (this._registeredUClasses[className] === undefined) return [];
+    const properties: UProperty[] = [];
 
-    return this._registeredUClasses[className].Properties;
+    let currentClass: UClass | null = this._registeredUClasses[className];
+    while (currentClass !== undefined && currentClass !== null && currentClass.IsValidated) {
+      properties.push(...currentClass.Properties);
+
+      currentClass = currentClass.ParentClass;
+    }
+
+    return properties;
   }
 
   public static GetPropertyCategoriesOf(parentClass: Object): string[] {

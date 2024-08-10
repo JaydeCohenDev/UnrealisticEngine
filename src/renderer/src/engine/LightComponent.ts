@@ -10,6 +10,9 @@ export default class LightComponent extends SceneComponent {
   @UProperty()
   public Intensity: number = 1;
 
+  @UProperty()
+  protected CastShadow: boolean = true;
+
   public GetLightComponent(): Light {
     return this.GetRenderObject() as Light;
   }
@@ -25,6 +28,7 @@ export default class LightComponent extends SceneComponent {
 
     this.GetLightComponent().color = this.Color;
     this.GetLightComponent().intensity = this.Intensity;
+    this.GetLightComponent().castShadow = this.CastShadow;
   }
 
   public EndPlay(): void {

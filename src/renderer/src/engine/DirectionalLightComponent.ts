@@ -1,20 +1,11 @@
 import { UClass, UProperty } from './Decorators';
-import SceneComponent from './SceneComponent';
+import LightComponent from './LightComponent';
 import * as THREE from 'three';
 
 @UClass()
-export default class DirectionalLightComponent extends SceneComponent {
+export default class DirectionalLightComponent extends LightComponent {
   protected _light: THREE.DirectionalLight;
   protected _helper: THREE.CameraHelper;
-
-  @UProperty()
-  protected Intensity: number = 1;
-
-  @UProperty()
-  protected LightColor: THREE.Color = new THREE.Color(0xffffff);
-
-  @UProperty()
-  protected CastShadow: boolean = true;
 
   protected _lightDirTarget: THREE.Object3D;
 
@@ -42,9 +33,7 @@ export default class DirectionalLightComponent extends SceneComponent {
   }
 
   public Tick(_deltaTime: number): void {
-    this._light.color = this.LightColor;
-    this._light.intensity = this.Intensity;
-    this._light.castShadow = this.CastShadow;
+    super.Tick(_deltaTime);
 
     const owner = this.GetOwner();
     if (owner !== undefined && owner !== null) {
@@ -59,7 +48,6 @@ export default class DirectionalLightComponent extends SceneComponent {
 
     const world = this.GetWorld();
     if (world !== undefined) {
-      world.GetRenderScene().add(this._light);
       world.GetRenderScene().add(this._lightDirTarget);
     }
   }
@@ -69,7 +57,6 @@ export default class DirectionalLightComponent extends SceneComponent {
 
     const world = this.GetWorld();
     if (world !== undefined) {
-      world.GetRenderScene().remove(this._light);
       world.GetRenderScene().remove(this._lightDirTarget);
     }
   }

@@ -1,15 +1,10 @@
-import { Color, Object3D, PointLight } from 'three';
-import SceneComponent from './SceneComponent';
-import { UProperty } from './Decorators';
+import { Object3D, PointLight } from 'three';
+import { UClass } from './Decorators';
+import LightComponent from './LightComponent';
 
-export default class PointLightComponent extends SceneComponent {
+@UClass()
+export default class PointLightComponent extends LightComponent {
   protected _light: PointLight;
-
-  @UProperty()
-  public Color: Color = new Color(0xffffff);
-
-  @UProperty({ minVal: 0 })
-  public Intensity: number = 1;
 
   constructor() {
     super();
@@ -20,24 +15,5 @@ export default class PointLightComponent extends SceneComponent {
 
   public GetRenderObject(): Object3D {
     return this._light;
-  }
-
-  public BeginPlay(): void {
-    super.BeginPlay();
-
-    this.GetWorld()?.GetRenderScene().add(this._light);
-  }
-
-  public EndPlay(): void {
-    super.EndPlay();
-
-    this.GetWorld()?.GetRenderScene().remove(this._light);
-  }
-
-  public Tick(_deltaTime: number): void {
-    super.Tick(_deltaTime);
-
-    this._light.intensity = this.Intensity;
-    this._light.color = this.Color;
   }
 }
