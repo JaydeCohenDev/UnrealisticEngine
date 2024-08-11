@@ -33,6 +33,10 @@ export default class BoxComponent extends SceneComponent {
     this.GetWorld()?.GetRenderScene().add(this._boxMesh);
   }
 
+  public DeselectedInEdtior(): void {
+    console.log('boxcomponent deselect');
+  }
+
   public EndPlay(): void {
     super.EndPlay();
 

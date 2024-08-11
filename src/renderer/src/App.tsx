@@ -1,4 +1,3 @@
-import EditorPane from './components/EditorPane';
 import Toolbar from './components/Toolbar/Toolbar';
 
 import './assets/edLayout.css';
@@ -11,8 +10,6 @@ import UERenderContext from './engine/UERenderContext';
 
 import 'dockview/dist/styles/dockview.css';
 import {
-  DockviewApi,
-  DockviewDefaultTab,
   DockviewReact,
   DockviewReadyEvent,
   IDockviewPanelHeaderProps,
@@ -120,10 +117,6 @@ function App(): JSX.Element {
         <div className="my-custom-tab">
           <span>{props.params.title}</span>
           <span style={{ flexGrow: 1 }} />
-
-          {/* <span className="my-custom-tab-icon material-symbols-outlined">minimize</span>
-          <span className="my-custom-tab-icon material-symbols-outlined">maximize</span>
-          <span className="my-custom-tab-icon material-symbols-outlined">close</span> */}
         </div>
       );
     }

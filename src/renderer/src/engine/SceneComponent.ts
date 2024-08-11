@@ -26,7 +26,10 @@ export default class SceneComponent extends ActorComponent {
   }
 
   public SelectedInEditor(): void {}
-  public DeselectedInEdtior(): void {}
+
+  public DeselectedInEdtior(): void {
+    console.log('boxcomponent deselect');
+  }
 
   public AttachTo(
     parent: SceneComponent,
@@ -38,6 +41,4 @@ export default class SceneComponent extends ActorComponent {
   ) {
     parent.GetRenderObject().add(this.GetRenderObject());
   }
-
-  nri;
 }

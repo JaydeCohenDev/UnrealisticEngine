@@ -125,15 +125,17 @@ export default class Actor {
 
   public SelectedInEditor(): void {
     this._components.forEach((component) => {
-      const sceneComponent = component as SceneComponent;
-      if (sceneComponent !== undefined) sceneComponent.SelectedInEditor();
+      if (component instanceof SceneComponent) {
+        (component as SceneComponent).SelectedInEditor();
+      }
     });
   }
 
   public DeselectedInEditor(): void {
     this._components.forEach((component) => {
-      const sceneComponent = component as SceneComponent;
-      if (sceneComponent !== undefined) sceneComponent.DeselectedInEdtior();
+      if (component instanceof SceneComponent) {
+        (component as SceneComponent).DeselectedInEdtior();
+      }
     });
   }
 
