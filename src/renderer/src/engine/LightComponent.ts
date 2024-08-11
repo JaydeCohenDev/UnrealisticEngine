@@ -28,12 +28,16 @@ export default class LightComponent extends SceneComponent {
 
     this.GetLightComponent().color = this.Color;
     this.GetLightComponent().intensity = this.Intensity;
-    this.GetLightComponent().castShadow = this.CastShadow;
+    this.GetLightComponent().castShadow = this.CastShadow && this.AllowShadowCasting();
   }
 
   public EndPlay(): void {
     super.EndPlay();
 
     this.GetWorld()?.GetRenderScene().remove(this.GetLightComponent());
+  }
+
+  public AllowShadowCasting(): boolean {
+    return true;
   }
 }

@@ -16,4 +16,8 @@ export default class SkyLightComponent extends LightComponent {
   public GetRenderObject(): THREE.Object3D {
     return this._skylight;
   }
+
+  public AllowShadowCasting(): boolean {
+    return false;
+  }
 }
