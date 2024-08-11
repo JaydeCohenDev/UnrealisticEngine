@@ -19,12 +19,15 @@ import FMath from './FMath';
 import RectBounds from './RectBounds';
 import EditorTransformGizmo from './EditorTransformGizmo';
 import { ViewportSettings } from './ViewportOptions';
+import Reflection from './Reflection';
+import UClass from './UClass';
 
 type ReactComponent = () => JSX.Element;
 
 export default class Editor {
   public OnActorSelectionSetChanged: UEvent = new UEvent();
   public OnTransformSpaceChanged: UEvent = new UEvent();
+  public OnSpawnableActorsUpdated: UEvent = new UEvent();
 
   protected _layout: EditorLayout;
   protected _registeredEditorPanels: { [id: string]: () => JSX.Element } = {};
@@ -66,6 +69,10 @@ export default class Editor {
       if (e === 'Escape') {
         this.SetSelectedActors([]);
       }
+    });
+
+    Reflection.OnUClassRegistryUpdate.AddListener((e) => {
+      this.OnSpawnableActorsUpdated.Invoke(undefined);
     });
   }
 
@@ -167,6 +174,12 @@ export default class Editor {
       (pos.x / viewportBounds.Width) * 2 - 1,
       -(pos.y / viewportBounds.Height) * 2 + 1
     );
+  }
+
+  public GetSpawnableActorClasses(): UClass[] {
+    return Reflection.GetClasses().filter((uclass) => {
+      return uclass.IsChildClassOf(Actor);
+    });
   }
 
   public SetSelectedActors(actors: Actor[]): void {

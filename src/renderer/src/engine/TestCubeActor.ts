@@ -1,7 +1,9 @@
 import { MeshStandardMaterial } from 'three';
 import { StaticMesh } from './StaticMesh';
 import StaticMeshActor from './StaticMeshActor';
+import { UClass } from './Decorators';
 
+@UClass()
 export default class TestCubeActor extends StaticMeshActor {
   protected hue: number = 0;
 

@@ -3,6 +3,9 @@ import { EdMenu, EdMenuItem } from '@renderer/engine/EdLayout/EdMenu';
 import './../../assets/toolbar.css';
 import ToolbarMenuItem from './ToolbarMenuItem';
 import StaticMeshActor from '@renderer/engine/StaticMeshActor';
+import Reflection from '@renderer/engine/Reflection';
+import Actor from '@renderer/engine/Actor';
+import { useEffect, useState } from 'react';
 
 export default function Toolbar() {
   function CreateMenu(): EdMenu {
@@ -47,10 +50,20 @@ export default function Toolbar() {
     menu.AddItem(new EdMenuItem('Build'));
     menu.AddItem(new EdMenuItem('Select'));
 
-    const actorMenu = menu.AddItem(new EdMenuItem('Actor'));
-    actorMenu.AddItem(
-      new EdMenuItem('Spawn Cube', () => {
-        window.Editor.GetWorld().Spawn(StaticMeshActor, 'testStaticMeshActor');
+    const actorMenu = menu.AddItem(
+      new EdMenuItem('Actor', () => {
+        actorMenu.ClearItems();
+
+        const classes = window.Editor.GetSpawnableActorClasses();
+        console.log(classes);
+        classes.forEach((spawnableActorClass) => {
+          actorMenu.AddItem(
+            new EdMenuItem(spawnableActorClass.DisplayName, () => {
+              const actor = spawnableActorClass.NewInstance<Actor>();
+              window.Editor.GetWorld().SpawnExisting(actor);
+            })
+          );
+        });
       })
     );
 
@@ -61,11 +74,21 @@ export default function Toolbar() {
     return menu;
   }
 
-  const menu = CreateMenu();
+  const [menu, setMenu] = useState<EdMenu>();
+
+  useEffect(() => {
+    const m = CreateMenu();
+    setMenu(m);
+
+    window.Editor.OnSpawnableActorsUpdated.AddListener((e) => {
+      const m = CreateMenu();
+      setMenu(m);
+    });
+  }, []);
 
   return (
     <div className="toolbar">
-      {menu.GetItems().map((item, index) => {
+      {menu?.GetItems().map((item, index) => {
         return <ToolbarMenuItem item={item} key={index} />;
       })}
     </div>

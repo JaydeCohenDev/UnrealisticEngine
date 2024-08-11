@@ -28,6 +28,10 @@ export class EdMenuItem {
     return newItem;
   }
 
+  public ClearItems(): void {
+    this._items = [];
+  }
+
   public GetItems(): EdMenuItem[] {
     return this._items;
   }

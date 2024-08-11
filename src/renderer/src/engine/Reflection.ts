@@ -1,11 +1,13 @@
 import { ArrayContains } from './Array';
 import { SubclassOf } from './Class';
 import UClass, { UClassSpecifiers } from './UClass';
+import UEvent from './UEvent';
 import UProperty, { UPropertySpecifiers } from './UProperty';
 
 export default class Reflection {
-  //protected static _registeredClasses: { [className: string]: UProperty[] } = {};
-  protected static _registeredUClasses: { [className: string]: UClass } = {};
+  public static OnUClassRegistryUpdate: UEvent = new UEvent();
+
+  protected static _registeredClasses: { [className: string]: UClass } = {};
 
   public static RegisterProperty(
     parentClass: any,
@@ -26,11 +28,11 @@ export default class Reflection {
 
     const uProp: UProperty = new UProperty(propType, parentClass, propertyName, specifiers);
 
-    if (Reflection._registeredUClasses[className] === undefined) {
+    if (Reflection._registeredClasses[className] === undefined) {
       Reflection.RegisterClass(parentClass.constructor, {}, true);
     }
 
-    Reflection._registeredUClasses[className].AddProperty(uProp);
+    Reflection._registeredClasses[className].AddProperty(uProp);
   }
 
   public static RegisterClass(
@@ -44,18 +46,18 @@ export default class Reflection {
       const parentClassConstructor = parentClassPrototype.constructor;
       const parentClassName = parentClassConstructor.name;
 
-      if (Reflection._registeredUClasses[parentClassName] === undefined) {
+      if (Reflection._registeredClasses[parentClassName] === undefined) {
         this.RegisterClass(parentClassConstructor, {}, true);
       }
 
-      parentClass = Reflection._registeredUClasses[parentClassName];
+      parentClass = Reflection._registeredClasses[parentClassName];
     }
 
-    const classToRegister = Reflection._registeredUClasses[constructor.name];
+    const classToRegister = Reflection._registeredClasses[constructor.name];
 
     if (classToRegister === undefined) {
       const uclass = new UClass(constructor, specifiers || {}, parentClass, [], []);
-      Reflection._registeredUClasses[constructor.name] = uclass;
+      Reflection._registeredClasses[constructor.name] = uclass;
       if (!isParentProjection) uclass.SignalValidation();
       console.log(`UCLASS REGISTERED: ${constructor.name}`);
       console.log(uclass);
@@ -67,19 +69,22 @@ export default class Reflection {
       console.log(classToRegister);
     }
 
-    const classes = this.GetClasses();
-    console.log(classes);
+    Reflection.OnUClassRegistryUpdate.Invoke(undefined);
   }
 
   public static GetClasses(): UClass[] {
     const classes: UClass[] = [];
 
-    for (let key in Reflection._registeredUClasses) {
-      const uclass = Reflection._registeredUClasses[key];
+    for (let key in Reflection._registeredClasses) {
+      const uclass = Reflection._registeredClasses[key];
       if (uclass.IsValidated) classes.push(uclass);
     }
 
     return classes;
+  }
+
+  public static GetClassByName(className: string): UClass | undefined {
+    return Reflection._registeredClasses[className];
   }
 
   public static GetPropertiesOf(parentClass: Object): UProperty[] {
@@ -87,7 +92,7 @@ export default class Reflection {
 
     const properties: UProperty[] = [];
 
-    let currentClass: UClass | null = this._registeredUClasses[className];
+    let currentClass: UClass | null = this._registeredClasses[className];
     while (currentClass !== undefined && currentClass !== null && currentClass.IsValidated) {
       properties.push(...currentClass.Properties);
 
@@ -102,7 +107,7 @@ export default class Reflection {
 
     const properties: UProperty[] = [];
 
-    let currentClass: UClass | null = this._registeredUClasses[className];
+    let currentClass: UClass | null = this._registeredClasses[className];
     while (currentClass !== undefined && currentClass !== null && currentClass.IsValidated) {
       properties.push(...currentClass.Properties);
 

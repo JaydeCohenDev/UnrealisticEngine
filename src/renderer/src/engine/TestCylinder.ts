@@ -1,9 +1,11 @@
 import Actor from './Actor';
+import { UClass } from './Decorators';
 import { StaticMesh } from './StaticMesh';
 import StaticMeshComponent from './StaticMeshComponent';
 
 import * as THREE from 'three';
 
+@UClass()
 export default class TestCylinder extends Actor {
   protected _staticMeshComponent: StaticMeshComponent;
 

@@ -2,9 +2,10 @@ import { Vector2, Vector3 } from 'three';
 import CameraComponent from './CameraComponent';
 import Input from './Input';
 import Pawn from './Pawn';
-import Message from './Message';
 import FMath from './FMath';
+import { UClass } from './Decorators';
 
+@UClass()
 export default class ViewportEditorPawn extends Pawn {
   protected _camera: CameraComponent;
   protected _moveSpeed: number = 5;

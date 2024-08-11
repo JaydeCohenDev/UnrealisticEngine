@@ -1,3 +1,4 @@
+import Reflection from './Reflection';
 import UFunction from './UFunction';
 import UProperty from './UProperty';
 
@@ -9,6 +10,7 @@ export default class UClass {
   protected _parentClass: UClass | null;
   protected _properties: UProperty[];
   protected _functions: UFunction[];
+  protected _constructor: any;
 
   protected _isValidated: boolean = false;
 
@@ -19,12 +21,39 @@ export default class UClass {
     properties: UProperty[],
     functions: UFunction[]
   ) {
+    this._constructor = constructor;
     this._specifiers = specifiers;
     this._properties = properties;
     this._functions = functions;
     this._parentClass = parentClass;
 
     this._name = constructor.name;
+  }
+
+  public IsChildClassOf<T extends Object>(object: T): boolean {
+    const anscestorClassName = object['name'];
+    const anscestorClass: UClass | undefined = Reflection.GetClassByName(anscestorClassName);
+
+    if (anscestorClass === undefined) return false;
+
+    let parent = this.ParentClass;
+    while (parent !== undefined && parent !== null) {
+      if (parent === anscestorClass) {
+        return true;
+      }
+
+      parent = parent.ParentClass;
+    }
+
+    return false;
+  }
+
+  public NewInstance<T extends Object>() {
+    return new this._constructor() as T;
+  }
+
+  public get DisplayName(): string {
+    return this._name;
   }
 
   public get ParentClass(): UClass | null {

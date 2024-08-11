@@ -2,7 +2,9 @@ import Actor from './Actor';
 import EditorTransformGizmoComponent from './EditorTransformGizmoComponent';
 import UEvent from './UEvent';
 import SceneComponent from './SceneComponent';
+import { UClass } from './Decorators';
 
+@UClass()
 export default class EditorTransformGizmo extends Actor {
   public OnTransformSpaceChanged: UEvent = new UEvent();
 

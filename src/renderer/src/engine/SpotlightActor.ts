@@ -1,8 +1,10 @@
 import Actor from './Actor';
 import BillboardComponent from './BilloardComponent';
+import { UClass } from './Decorators';
 import SpotlightComponent from './SpotlightComponent';
 import Texture2d from './Texture2d';
 
+@UClass()
 export default class SpotlightActor extends Actor {
   protected _spotlightComponent: SpotlightComponent;
   protected _billboard: BillboardComponent;

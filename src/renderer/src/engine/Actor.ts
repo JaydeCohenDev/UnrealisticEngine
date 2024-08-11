@@ -4,9 +4,11 @@ import { SubclassOf } from './Class';
 import World from './World';
 import SceneComponent from './SceneComponent';
 import Rotator from './Rotator';
+import { UClass } from './Decorators';
 
 type Constructor<T> = new (...args: any[]) => T;
 
+@UClass()
 export default class Actor {
   private static NEXT_ACTOR_ID = 1;
   protected UID: number;

@@ -1,8 +1,10 @@
 import Actor from './Actor';
 import BillboardComponent from './BilloardComponent';
+import { UClass } from './Decorators';
 import DirectionalLightComponent from './DirectionalLightComponent';
 import Texture2d from './Texture2d';
 
+@UClass()
 export class DirectionalLightActor extends Actor {
   protected _directionalLightComponent: DirectionalLightComponent;
   protected _billboard: BillboardComponent;

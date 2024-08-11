@@ -69,6 +69,10 @@ export default class World {
 
   public Spawn<T extends Actor>(actorClass: SubclassOf<T>, name?: string): T {
     const actor = new actorClass();
+    return this.SpawnExisting(actor, name) as T;
+  }
+
+  public SpawnExisting(actor: Actor, name?: string): Actor {
     this._actors.push(actor);
     actor.SetWorld(this);
 

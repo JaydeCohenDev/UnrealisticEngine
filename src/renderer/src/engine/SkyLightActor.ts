@@ -1,8 +1,10 @@
 import Actor from './Actor';
 import BillboardComponent from './BilloardComponent';
+import { UClass } from './Decorators';
 import SkyLightComponent from './SkyLightComponent';
 import Texture2d from './Texture2d';
 
+@UClass()
 export default class SkyLightActor extends Actor {
   protected _skyLightComponent: SkyLightComponent;
   protected _billboardComponent: BillboardComponent;

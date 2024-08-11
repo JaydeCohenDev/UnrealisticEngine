@@ -1,4 +1,5 @@
 import Actor from './Actor';
+import { UClass } from './Decorators';
 import Input, { MouseButton } from './Input';
 import { StaticMesh } from './StaticMesh';
 import StaticMeshComponent from './StaticMeshComponent';
@@ -13,6 +14,7 @@ type GizmoElementData = {
   axis: TranslationAxis[];
 };
 
+@UClass()
 export default class TransformGizmoActor extends Actor {
   protected _gizmoMeshComponent: StaticMeshComponent;
   protected _hoveredGizmoElement: THREE.Mesh | null = null;

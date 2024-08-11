@@ -10,6 +10,7 @@ export default function ToolbarMenuItem(props: IToolbarMenuItemProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   function WhenClicked() {
+    props.item.OnClick();
     setIsOpen(!isOpen);
   }
 
