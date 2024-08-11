@@ -52,6 +52,18 @@ export default class DirectionalLightComponent extends LightComponent {
     }
   }
 
+  public SelectedInEditor(): void {
+    super.SelectedInEditor();
+
+    this.AddToRenderScene(this._helper);
+  }
+
+  public DeselectedInEdtior(): void {
+    super.DeselectedInEdtior();
+
+    this.RemoveFromRenderScene(this._helper);
+  }
+
   public EndPlay(): void {
     super.EndPlay();
 

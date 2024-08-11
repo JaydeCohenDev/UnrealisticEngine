@@ -66,8 +66,13 @@ export default class Editor {
     this.RegisterPropertyView('boolean', BooleanPropertyView);
 
     Input.OnKeyPressed.AddListener((e) => {
-      if (e === 'Escape') {
-        this.SetSelectedActors([]);
+      switch (e) {
+        case 'Escape':
+          this.SetSelectedActors([]);
+          break;
+        case 'Delete':
+          this.DeleteSelectedActors();
+          break;
       }
     });
 
@@ -118,6 +123,13 @@ export default class Editor {
   public ClearTransformActor() {
     this._transformActor = undefined;
     this._transformGizmo?.Destroy();
+  }
+
+  public DeleteSelectedActors(): void {
+    this._selectedActors.forEach((selectedActor) => {
+      this._world.Remove(selectedActor);
+    });
+    this.SetSelectedActors([]);
   }
 
   public GetViewportBounds(): RectBounds {

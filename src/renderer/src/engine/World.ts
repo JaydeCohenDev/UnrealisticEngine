@@ -90,6 +90,8 @@ export default class World {
   }
 
   public Remove(actor: Actor) {
+    actor.EndPlay();
+
     this._actors = this._actors.filter((a) => a !== actor);
   }
 
