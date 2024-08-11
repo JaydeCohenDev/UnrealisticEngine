@@ -13,7 +13,6 @@ import PostProcessVolume from './PostProcessVolume';
 import IHitResult from './HitResult';
 import SceneComponent from './SceneComponent';
 import TestCylinder from './TestCylinder';
-import BillboardActor from './BillboardActor';
 import Rotator from './Rotator';
 import PointLightActor from './PointLightActor';
 import SpotlightActor from './SpotlightActor';

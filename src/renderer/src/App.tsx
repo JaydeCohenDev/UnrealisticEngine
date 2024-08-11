@@ -13,7 +13,6 @@ import {
   DockviewApi,
   DockviewReact,
   DockviewReadyEvent,
-  IDockviewPanelHeaderProps,
   IDockviewPanelProps,
   SerializedDockview
 } from 'dockview';
@@ -74,7 +73,7 @@ function App(): JSX.Element {
       }
     });
 
-    const outliner = api?.addPanel({
+    api?.addPanel({
       id: 'Outliner',
       component: 'outliner',
       params: {
@@ -86,7 +85,7 @@ function App(): JSX.Element {
       }
     });
 
-    const ContentBrowser = api?.addPanel({
+    api?.addPanel({
       id: 'Content Browser',
       component: 'contentBrowser',
       params: {
@@ -143,16 +142,16 @@ function App(): JSX.Element {
     contentBrowser: ContentBrowser
   };
 
-  const tabComponents = {
-    custom: (props: IDockviewPanelHeaderProps<{ title: string }>) => {
-      return (
-        <div className="my-custom-tab">
-          <span>{props.params.title}</span>
-          <span style={{ flexGrow: 1 }} />
-        </div>
-      );
-    }
-  };
+  // const tabComponents = {
+  //   custom: (props: IDockviewPanelHeaderProps<{ title: string }>) => {
+  //     return (
+  //       <div className="my-custom-tab">
+  //         <span>{props.params.title}</span>
+  //         <span style={{ flexGrow: 1 }} />
+  //       </div>
+  //     );
+  //   }
+  // };
 
   return (
     <div className="edWindow">

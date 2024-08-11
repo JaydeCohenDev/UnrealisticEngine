@@ -31,7 +31,7 @@ export default function ViewportSettings() {
   );
 
   useEffect(() => {
-    window.Editor.OnTransformSpaceChanged.AddListener((e) => {
+    window.Editor.OnTransformSpaceChanged.AddListener((_e) => {
       setTransformSpace(window.Editor.TransformGizmo!.IsLocalSpace());
     });
   }, []);

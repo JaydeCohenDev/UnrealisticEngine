@@ -1,4 +1,4 @@
-import { EditorLayout, EditorLayoutPane } from './EdLayout/EditorLayout';
+import { EditorLayout } from './EdLayout/EditorLayout';
 import Viewport from '@renderer/components/Viewport/Viewport';
 import ContentBrowser from '@renderer/components/ContentBrowser';
 import Outliner from '@renderer/components/Outliner/Outliner';
@@ -76,7 +76,7 @@ export default class Editor {
       }
     });
 
-    Reflection.OnUClassRegistryUpdate.AddListener((e) => {
+    Reflection.OnUClassRegistryUpdate.AddListener((_e) => {
       this.OnSpawnableActorsUpdated.Invoke(undefined);
     });
   }

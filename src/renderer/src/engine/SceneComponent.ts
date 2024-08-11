@@ -68,7 +68,7 @@ export default class SceneComponent extends ActorComponent {
 
   public AttachTo(
     parent: SceneComponent,
-    attachRules: TransformAttachmentRules = {
+    _attachRules: TransformAttachmentRules = {
       position: 'SnapToTarget',
       rotation: 'SnapToTarget',
       scale: 'SnapToTarget'

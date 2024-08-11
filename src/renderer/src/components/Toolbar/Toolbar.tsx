@@ -2,8 +2,6 @@ import { EdMenu, EdMenuItem } from '@renderer/engine/EdLayout/EdMenu';
 
 import './../../assets/toolbar.css';
 import ToolbarMenuItem from './ToolbarMenuItem';
-import StaticMeshActor from '@renderer/engine/StaticMeshActor';
-import Reflection from '@renderer/engine/Reflection';
 import Actor from '@renderer/engine/Actor';
 import { useEffect, useState } from 'react';
 
@@ -80,7 +78,7 @@ export default function Toolbar() {
     const m = CreateMenu();
     setMenu(m);
 
-    window.Editor.OnSpawnableActorsUpdated.AddListener((e) => {
+    window.Editor.OnSpawnableActorsUpdated.AddListener((_e) => {
       const m = CreateMenu();
       setMenu(m);
     });

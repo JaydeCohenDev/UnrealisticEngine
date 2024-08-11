@@ -1,4 +1,4 @@
-import { UClass, UProperty } from './Decorators';
+import { UClass } from './Decorators';
 import LightComponent from './LightComponent';
 import * as THREE from 'three';
 
