@@ -31,6 +31,41 @@ export default class SceneComponent extends ActorComponent {
     console.log('boxcomponent deselect');
   }
 
+  public BeginPlay(): void {
+    super.BeginPlay();
+
+    const renderObj = this.GetRenderObject();
+    if (renderObj !== undefined) {
+      this.AddToRenderScene(renderObj);
+    }
+  }
+
+  public EndPlay(): void {
+    super.EndPlay();
+
+    const renderObj = this.GetRenderObject();
+    if (renderObj !== undefined) {
+      this.RemoveFromRenderScene(renderObj);
+    }
+  }
+
+  public AddToRenderScene(renderObject: THREE.Object3D): void {
+    const world = this.GetWorld();
+
+    if (world !== undefined) {
+      world.GetRenderScene().add(renderObject);
+      renderObject['owner'] = this;
+    }
+  }
+
+  public RemoveFromRenderScene(renderObject: THREE.Object3D): void {
+    const world = this.GetWorld();
+
+    if (world !== undefined) {
+      world.GetRenderScene().remove(renderObject);
+    }
+  }
+
   public AttachTo(
     parent: SceneComponent,
     attachRules: TransformAttachmentRules = {

@@ -12,8 +12,6 @@ export default class PointLightComponent extends LightComponent {
 
     this._light = new PointLight(this.Color, this.Intensity);
     this._helper = new PointLightHelper(this._light);
-
-    this._light['owner'] = this;
   }
 
   public GetRenderObject(): Object3D {

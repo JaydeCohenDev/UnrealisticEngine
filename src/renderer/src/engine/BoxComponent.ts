@@ -20,27 +20,14 @@ export default class BoxComponent extends SceneComponent {
       side: DoubleSide
     });
     this._boxMesh = new Mesh(geo, mat);
-    this._boxMesh['owner'] = this;
   }
 
   public GetRenderObject(): Object3D {
     return this._boxMesh;
   }
 
-  public BeginPlay(): void {
-    super.BeginPlay();
-
-    this.GetWorld()?.GetRenderScene().add(this._boxMesh);
-  }
-
   public DeselectedInEdtior(): void {
     console.log('boxcomponent deselect');
-  }
-
-  public EndPlay(): void {
-    super.EndPlay();
-
-    this.GetWorld()?.GetRenderScene().remove(this._boxMesh);
   }
 
   public Tick(_deltaTime: number): void {

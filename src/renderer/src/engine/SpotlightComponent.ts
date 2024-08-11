@@ -10,7 +10,6 @@ export default class SpotlightComponent extends LightComponent {
     super();
 
     this._spotlight = new SpotLight(this.Color, this.Intensity);
-    this._spotlight['owner'] = this;
   }
 
   public GetRenderObject(): Object3D {

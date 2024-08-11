@@ -36,6 +36,7 @@ export default abstract class ActorComponent {
   }
 
   public BeginPlay(): void {}
+
   public EndPlay(): void {}
 
   public Tick(_deltaTime: number): void {}

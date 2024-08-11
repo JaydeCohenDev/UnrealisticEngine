@@ -17,24 +17,12 @@ export default class LightComponent extends SceneComponent {
     return this.GetRenderObject() as Light;
   }
 
-  public BeginPlay(): void {
-    super.BeginPlay();
-
-    this.GetWorld()?.GetRenderScene().add(this.GetLightComponent());
-  }
-
   public Tick(_deltaTime: number): void {
     super.Tick(_deltaTime);
 
     this.GetLightComponent().color = this.Color;
     this.GetLightComponent().intensity = this.Intensity;
     this.GetLightComponent().castShadow = this.CastShadow && this.AllowShadowCasting();
-  }
-
-  public EndPlay(): void {
-    super.EndPlay();
-
-    this.GetWorld()?.GetRenderScene().remove(this.GetLightComponent());
   }
 
   public AllowShadowCasting(): boolean {

@@ -10,7 +10,6 @@ export default class SkyLightComponent extends LightComponent {
     super();
 
     this._skylight = new THREE.AmbientLight(0xffffff, 0.5);
-    this._skylight['owner'] = this;
   }
 
   public GetRenderObject(): THREE.Object3D {
