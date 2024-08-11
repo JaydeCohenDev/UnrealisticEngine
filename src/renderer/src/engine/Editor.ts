@@ -245,29 +245,30 @@ export default class Editor {
   }
 
   public SaveLayout(): void {
-    const layoutData = this._layout.Serialize();
-    localStorage.setItem('edLayout', layoutData);
-    alert('layout saved!');
+    // const layoutData = this._layout.Serialize();
+    // localStorage.setItem('edLayout', layoutData);
+    // alert('layout saved!');
   }
 
   public ResetLayout(): void {
-    this._layout = new EditorLayout();
-    this._layout
-      .GetRootPane()
-      .Split(
-        'horizontal',
-        new EditorLayoutPane().Split(
-          'vertical',
-          new EditorLayoutPane(Viewport),
-          new EditorLayoutPane(ContentBrowser)
-        ),
-        new EditorLayoutPane().Split(
-          'vertical',
-          new EditorLayoutPane(Outliner),
-          new EditorLayoutPane(DetailsPanel)
-        )
-      );
+    return;
+    // this._layout = new EditorLayout();
+    // this._layout
+    //   .GetRootPane()
+    //   .Split(
+    //     'horizontal',
+    //     new EditorLayoutPane().Split(
+    //       'vertical',
+    //       new EditorLayoutPane(Viewport),
+    //       new EditorLayoutPane(ContentBrowser)
+    //     ),
+    //     new EditorLayoutPane().Split(
+    //       'vertical',
+    //       new EditorLayoutPane(Outliner),
+    //       new EditorLayoutPane(DetailsPanel)
+    //     )
+    //   );
 
-    window.ForceUpdate(); // doesnt work?
+    // window.ForceUpdate(); // doesnt work?
   }
 }

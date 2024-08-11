@@ -2,7 +2,7 @@ import Toolbar from './components/Toolbar/Toolbar';
 
 import './assets/edLayout.css';
 import Editor from './engine/Editor';
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 
 import * as THREE from 'three';
 import Input from './engine/Input';
@@ -10,10 +10,12 @@ import UERenderContext from './engine/UERenderContext';
 
 import 'dockview/dist/styles/dockview.css';
 import {
+  DockviewApi,
   DockviewReact,
   DockviewReadyEvent,
   IDockviewPanelHeaderProps,
-  IDockviewPanelProps
+  IDockviewPanelProps,
+  SerializedDockview
 } from 'dockview';
 import Viewport from './components/Viewport/Viewport';
 import ContentBrowser from './components/ContentBrowser';
@@ -32,6 +34,8 @@ declare global {
 function App(): JSX.Element {
   //const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
 
+  const [api, setApi] = useState<DockviewApi>();
+
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
   window.ForceUpdate = forceUpdate;
 
@@ -43,8 +47,15 @@ function App(): JSX.Element {
     };
   });
 
-  const onReady = (event: DockviewReadyEvent) => {
-    const viewport = event.api.addPanel({
+  useEffect(() => {
+    api?.onDidLayoutChange(() => {
+      const layout = api.toJSON();
+      localStorage.setItem('edLayout', JSON.stringify(layout));
+    });
+  }, [api]);
+
+  const resetLayout = () => {
+    const viewport = api?.addPanel({
       id: 'Viewport',
       component: 'viewport',
       params: {
@@ -52,7 +63,7 @@ function App(): JSX.Element {
       }
     });
 
-    const detailsPanel = event.api.addPanel({
+    const detailsPanel = api?.addPanel({
       id: 'Details Panel',
       component: 'detailsPanel',
       params: {
@@ -63,7 +74,7 @@ function App(): JSX.Element {
       }
     });
 
-    const outliner = event.api.addPanel({
+    const outliner = api?.addPanel({
       id: 'Outliner',
       component: 'outliner',
       params: {
@@ -75,7 +86,7 @@ function App(): JSX.Element {
       }
     });
 
-    const ContentBrowser = event.api.addPanel({
+    const ContentBrowser = api?.addPanel({
       id: 'Content Browser',
       component: 'contentBrowser',
       params: {
@@ -86,6 +97,27 @@ function App(): JSX.Element {
         referencePanel: viewport
       }
     });
+  };
+
+  const onReady = (event: DockviewReadyEvent) => {
+    setApi(event.api);
+
+    const layoutData = localStorage.getItem('edLayout');
+
+    let loadedLayout = false;
+    if (layoutData) {
+      try {
+        const layout: SerializedDockview = JSON.parse(layoutData);
+        event.api.fromJSON(layout);
+        loadedLayout = true;
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    if (!loadedLayout) {
+      resetLayout();
+    }
   };
 
   const components = {
