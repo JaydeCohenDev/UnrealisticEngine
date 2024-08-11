@@ -1,7 +1,7 @@
 .toolbar {
   display: flex;
   background-color: #0f0f10;
-  position: relative;
+
   z-index: 1;
 }
 

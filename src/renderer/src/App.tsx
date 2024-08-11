@@ -48,7 +48,7 @@ function App(): JSX.Element {
 
   const onReady = (event: DockviewReadyEvent) => {
     const viewport = event.api.addPanel({
-      id: 'viewport',
+      id: 'Viewport',
       component: 'viewport',
       params: {
         title: 'Viewport'
@@ -56,7 +56,7 @@ function App(): JSX.Element {
     });
 
     const detailsPanel = event.api.addPanel({
-      id: 'detailsPanel',
+      id: 'Details Panel',
       component: 'detailsPanel',
       params: {
         title: 'Details Panel'
@@ -67,13 +67,26 @@ function App(): JSX.Element {
     });
 
     const outliner = event.api.addPanel({
-      id: 'outliner',
+      id: 'Outliner',
       component: 'outliner',
       params: {
         title: 'Outliner'
       },
       position: {
-        direction: 'below'
+        direction: 'above',
+        referencePanel: detailsPanel
+      }
+    });
+
+    const ContentBrowser = event.api.addPanel({
+      id: 'Content Browser',
+      component: 'contentBrowser',
+      params: {
+        title: 'Content Browser'
+      },
+      position: {
+        direction: 'below',
+        referencePanel: viewport
       }
     });
   };
@@ -97,7 +110,8 @@ function App(): JSX.Element {
     },
     viewport: Viewport,
     detailsPanel: DetailsPanel,
-    outliner: Outliner
+    outliner: Outliner,
+    contentBrowser: ContentBrowser
   };
 
   const tabComponents = {
@@ -116,9 +130,12 @@ function App(): JSX.Element {
   };
 
   return (
-    <>
-      <DockviewReact components={components} onReady={onReady} className="dockview-theme-dark" />
-    </>
+    <div className="edWindow">
+      <Toolbar />
+      <div className="edWindowContent">
+        <DockviewReact components={components} onReady={onReady} className="dockview-theme-dark" />
+      </div>
+    </div>
   );
 }
 
