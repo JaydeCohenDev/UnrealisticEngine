@@ -123,6 +123,20 @@ export default class Actor {
     return this;
   }
 
+  public SelectedInEditor(): void {
+    this._components.forEach((component) => {
+      const sceneComponent = component as SceneComponent;
+      if (sceneComponent !== undefined) sceneComponent.SelectedInEditor();
+    });
+  }
+
+  public DeselectedInEditor(): void {
+    this._components.forEach((component) => {
+      const sceneComponent = component as SceneComponent;
+      if (sceneComponent !== undefined) sceneComponent.DeselectedInEdtior();
+    });
+  }
+
   public GetAllComponents(): ActorComponent[] {
     return this._components;
   }

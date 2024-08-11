@@ -170,8 +170,16 @@ export default class Editor {
   }
 
   public SetSelectedActors(actors: Actor[]): void {
+    this._selectedActors.forEach((actor) => {
+      actor.DeselectedInEditor();
+    });
+
     this._selectedActors = actors.filter((actor) => {
       return actor.AllowEditorSelection();
+    });
+
+    this._selectedActors.forEach((actor) => {
+      actor.SelectedInEditor();
     });
 
     const selectedObjs: THREE.Object3D[] = [];

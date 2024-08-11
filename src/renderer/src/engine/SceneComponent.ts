@@ -25,6 +25,9 @@ export default class SceneComponent extends ActorComponent {
     this.GetRenderObject().rotation.copy(newRotation.Euler);
   }
 
+  public SelectedInEditor(): void {}
+  public DeselectedInEdtior(): void {}
+
   public AttachTo(
     parent: SceneComponent,
     attachRules: TransformAttachmentRules = {
