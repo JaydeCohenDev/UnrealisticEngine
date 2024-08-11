@@ -141,6 +141,8 @@ export default class UERenderContext {
 
     this._camera.aspect = aspectRatio;
     this._camera.updateProjectionMatrix();
+
+    this._composer.render();
   }
 
   protected Render(timestamp: number = 0): void {
