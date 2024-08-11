@@ -1,6 +1,6 @@
 # unrealistic-engine
 
-An Electron application with React and TypeScript
+Follow the development: [Youtube](https://www.youtube.com/playlist?list=PLyJRgNGLgSoWKAOXlVSEuaoGa7TgtHbqL)
 
 ## Recommended IDE Setup
 
