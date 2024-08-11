@@ -12,8 +12,13 @@ export default class Input {
 
   protected static Keys: { [id: string]: boolean } = {};
   protected static _mousePosition: THREE.Vector2 = new THREE.Vector2();
+  protected static _mouseWheelDelta: number = 0;
 
   protected static MouseButtons: MouseButton[] = ['MOUSE_LEFT', 'MOUSE_MIDDLE', 'MOUSE_RIGHT'];
+
+  public static get MouseWheelDelta(): number {
+    return Input._mouseWheelDelta;
+  }
 
   public static StartListening() {
     Input.Keys = {};
@@ -83,13 +88,13 @@ export default class Input {
     Input.Keys[keyCode] = true;
     Input.OnKeyPressed.Invoke(keyCode);
   }
-
   protected static OnMouseWheel(e): void {
     const wheelDelta: number = e.wheelDeltaY;
 
     Message.Send('MOUSE_WHEEL', {
       wheelDelta: wheelDelta
     });
+    Input._mouseWheelDelta = wheelDelta;
   }
 
   protected static OnKeyUp(e: KeyboardEvent): void {

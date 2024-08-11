@@ -3,6 +3,7 @@ import CameraComponent from './CameraComponent';
 import Input from './Input';
 import Pawn from './Pawn';
 import Message from './Message';
+import FMath from './FMath';
 
 export default class ViewportEditorPawn extends Pawn {
   protected _camera: CameraComponent;
@@ -12,10 +13,6 @@ export default class ViewportEditorPawn extends Pawn {
     super();
 
     this._camera = this.AddComponent(CameraComponent);
-
-    Message.AddListener('MOUSE_WHEEL', (data) => {
-      this._moveSpeed += data.wheelDelta / 1000;
-    });
   }
 
   public ShowInOutliner(): boolean {
@@ -51,5 +48,8 @@ export default class ViewportEditorPawn extends Pawn {
 
     window.Camera.position.add(forwardVector.multiplyScalar(moveVector.x));
     window.Camera.position.add(rightVector.multiplyScalar(moveVector.y));
+
+    const wheelDelta = Input.MouseWheelDelta / 1000;
+    this._moveSpeed = FMath.Clamp(this._moveSpeed + wheelDelta, 1, 25);
   }
 }
