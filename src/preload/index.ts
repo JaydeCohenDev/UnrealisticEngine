@@ -1,9 +1,12 @@
-import { contextBridge, ipcRenderer } from 'electron';
+import { contextBridge, FileFilter, ipcRenderer } from 'electron';
 import { electronAPI } from '@electron-toolkit/preload';
 
 // Custom APIs for renderer
 const api = {
-  refresh: () => ipcRenderer.send('refresh')
+  refresh: () => ipcRenderer.send('refresh'),
+  importAsset: (filters: FileFilter[]) => ipcRenderer.send('importAsset', filters),
+  assetImportsRequest: (callback) =>
+    ipcRenderer.on('assetImportsRequest', (_e, filePaths) => callback(filePaths))
 };
 
 // Use `contextBridge` APIs to expose Electron APIs to

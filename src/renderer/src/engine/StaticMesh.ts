@@ -1,9 +1,9 @@
 import { GLTFLoader } from 'three/examples/jsm/addons';
-import Asset from './Asset';
+import AssetBase from './Asset';
 
 import * as THREE from 'three';
 
-export class StaticMesh extends Asset {
+export class StaticMesh extends AssetBase {
   protected _mesh: THREE.Mesh;
   protected _geometry: THREE.BufferGeometry;
   protected _material: THREE.Material;

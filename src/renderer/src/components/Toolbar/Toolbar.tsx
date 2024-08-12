@@ -27,6 +27,7 @@ export default function Toolbar() {
         window.Editor.SaveLayout();
       })
     );
+
     windowMenu.AddItem(
       new EdMenuItem('Reset Layout', () => {
         window.Editor.ResetLayout();

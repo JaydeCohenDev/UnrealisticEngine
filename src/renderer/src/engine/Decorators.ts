@@ -1,5 +1,6 @@
 import Reflection from './Reflection';
 import { UClassSpecifiers } from './UClass';
+import { UFunctionSpecifiers } from './UFunction';
 import { UPropertySpecifiers } from './UProperty';
 
 export function UProperty(specifiers?: UPropertySpecifiers) {
@@ -14,6 +15,6 @@ export function UClass(specifiers?: UClassSpecifiers) {
   };
 }
 
-export function UFunction() {
+export function UFunction(specifiers?: UFunctionSpecifiers) {
   return function UFunction(_originalMethod: any, _context: any) {};
 }

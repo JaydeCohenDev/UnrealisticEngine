@@ -21,6 +21,9 @@ import EditorTransformGizmo from './EditorTransformGizmo';
 import { ViewportSettings } from './ViewportOptions';
 import Reflection from './Reflection';
 import UClass from './UClass';
+import AssetManager from './AssetManager/AssetManager';
+import TextureLoader from './AssetManager/Loaders/TextureLoader';
+import AudioLoader from './AssetManager/Loaders/AudioLoader';
 
 type ReactComponent = () => JSX.Element;
 
@@ -78,6 +81,15 @@ export default class Editor {
 
     Reflection.OnUClassRegistryUpdate.AddListener((_e) => {
       this.OnSpawnableActorsUpdated.Invoke(undefined);
+    });
+
+    AssetManager.RegisterLoader(TextureLoader);
+    AssetManager.RegisterLoader(AudioLoader);
+
+    window.api.assetImportsRequest((filePaths) => {
+      filePaths.forEach((importAssetFilePath) => {
+        AssetManager.ImportAssetFromPath(importAssetFilePath);
+      });
     });
   }
 

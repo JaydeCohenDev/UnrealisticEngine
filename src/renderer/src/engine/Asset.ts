@@ -1,1 +1,1 @@
-export default class Asset {}
+export default class AssetBase {}

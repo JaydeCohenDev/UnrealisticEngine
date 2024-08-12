@@ -1,7 +1,7 @@
-import Asset from './Asset';
+import AssetBase from './Asset';
 import * as THREE from 'three';
 
-export default class Texture2d extends Asset {
+export default class Texture2d extends AssetBase {
   protected _path: string;
 
   protected _data: THREE.Texture;
