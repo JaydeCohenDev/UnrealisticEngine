@@ -7,7 +7,10 @@ declare global {
     api: {
       refresh: () => void;
       importAsset: (filters: FileFilter[]) => void;
+      serializeAsset: (data, assetPath: string) => void;
       assetImportsRequest: (callback: (filePaths: string[]) => void) => void;
+      assetsDiscovered: (callback: (assets: any[]) => void) => void;
+      discoverAssets: () => void;
     };
   }
 }

@@ -16,6 +16,7 @@ import TestCylinder from './TestCylinder';
 import Rotator from './Rotator';
 import PointLightActor from './PointLightActor';
 import SpotlightActor from './SpotlightActor';
+import AssetManager from './AssetManager/AssetManager';
 
 export default class World {
   protected _name: string;
@@ -38,9 +39,13 @@ export default class World {
     this._testCube = this.Spawn(TestCubeActor);
     this._testCube.SetActorLocation(new THREE.Vector3(-2, 0.5, -2));
 
-    const gridTexture = new Texture2d('src/assets/textures/default_grid.png');
-    gridTexture.SetRepeat(4, 4);
-    const floorMaterial = new THREE.MeshStandardMaterial({ map: gridTexture.Data });
+    const gridTexture = AssetManager.GetAsset<Texture2d>('default_grid');
+    //const gridTexture = new Texture2d('src/assets/textures/default_grid.png');
+
+    //gridTexture.SetRepeat(4, 4);
+
+    //const floorMaterial = new THREE.MeshStandardMaterial({ map: gridTexture.Data });
+    const floorMaterial = new THREE.MeshStandardMaterial({ color: 0xff00ff });
     this._floor = this.Spawn(StaticMeshActor, 'floor');
     const smc = this._floor.GetComponentOfType(StaticMeshComponent);
     smc?.SetStaticMesh(StaticMesh.FromBox(10, 1, 10, floorMaterial));

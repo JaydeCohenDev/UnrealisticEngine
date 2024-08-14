@@ -5,8 +5,13 @@ import { electronAPI } from '@electron-toolkit/preload';
 const api = {
   refresh: () => ipcRenderer.send('refresh'),
   importAsset: (filters: FileFilter[]) => ipcRenderer.send('importAsset', filters),
+  serializeAsset: (data, assetPath) => ipcRenderer.send('serializeAsset', data, assetPath),
   assetImportsRequest: (callback) =>
-    ipcRenderer.on('assetImportsRequest', (_e, filePaths) => callback(filePaths))
+    ipcRenderer.on('assetImportsRequest', (_e, filePaths) => callback(filePaths)),
+
+  assetsDiscovered: (callback) =>
+    ipcRenderer.on('assetsDiscovered', (_e, assets) => callback(assets)),
+  discoverAssets: () => ipcRenderer.send('discoverAssets')
 };
 
 // Use `contextBridge` APIs to expose Electron APIs to

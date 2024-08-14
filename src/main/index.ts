@@ -3,6 +3,21 @@ import { join } from 'path';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import icon from '../../resources/icon.png?asset';
 import installExtension from 'electron-devtools-installer';
+import * as FS from 'fs';
+import * as Path from 'path';
+
+function GetAllFilesAtPath(path: string): string[] {
+  const files: string[] = [];
+
+  FS.readdirSync(path).forEach((File) => {
+    const Absolute = Path.join(path, File);
+    if (FS.statSync(Absolute).isDirectory()) {
+      return GetAllFilesAtPath(Absolute);
+    } else return files.push(Absolute);
+  });
+
+  return files;
+}
 
 function createWindow(): void {
   // Create the browser window.
@@ -33,6 +48,32 @@ function createWindow(): void {
           mainWindow.webContents.send('assetImportsRequest', result.filePaths);
         }
       });
+  });
+
+  ipcMain.on('discoverAssets', (_e) => {
+    const assetDirectory = join(__dirname, '../../game/content/');
+    const assetFilePaths = GetAllFilesAtPath(assetDirectory);
+
+    const assets: any[] = [];
+
+    assetFilePaths.forEach((assetFilePath) => {
+      const data: string = FS.readFileSync(assetFilePath, { encoding: 'utf8' });
+      const asset = JSON.parse(data);
+      assets.push(asset);
+    });
+
+    mainWindow.webContents.send('assetsDiscovered', assets);
+  });
+
+  ipcMain.on('serializeAsset', (_e, data, assetPath) => {
+    const path = join(__dirname, '../../game/content/', assetPath);
+    const directory = Path.dirname(path);
+
+    FS.mkdirSync(directory, { recursive: true });
+
+    FS.writeFile(path, data, (err) => {
+      console.log(err);
+    });
   });
 
   mainWindow.removeMenu();

@@ -1,21 +1,18 @@
-import AssetBase from './Asset';
+import UAsset from './Asset';
 import * as THREE from 'three';
+import { UClass } from './Decorators';
 
-export default class Texture2d extends AssetBase {
-  protected _path: string;
-
+@UClass()
+export default class Texture2d extends UAsset {
   protected _data: THREE.Texture;
 
   public get Data(): THREE.Texture {
     return this._data;
   }
 
-  constructor(path: string) {
-    super();
-
-    this._path = path;
-
-    this._data = new THREE.TextureLoader().load(this._path);
+  constructor(name: string, data: THREE.Texture) {
+    super(name);
+    this._data = new THREE.TextureLoader().load('');
     this._data.wrapS = THREE.RepeatWrapping;
     this._data.wrapT = THREE.RepeatWrapping;
   }

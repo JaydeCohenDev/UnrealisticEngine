@@ -24,6 +24,7 @@ import UClass from './UClass';
 import AssetManager from './AssetManager/AssetManager';
 import TextureLoader from './AssetManager/Loaders/TextureLoader';
 import AudioLoader from './AssetManager/Loaders/AudioLoader';
+import UAsset from './Asset';
 
 type ReactComponent = () => JSX.Element;
 
@@ -56,6 +57,13 @@ export default class Editor {
   };
 
   constructor() {
+    window.api.discoverAssets();
+    window.api.assetsDiscovered((assets) => {
+      assets.forEach((asset) => {
+        AssetManager.RegiserAsset(asset as UAsset);
+      });
+    });
+
     this._world = new World('editor world');
     this._layout = new EditorLayout();
 

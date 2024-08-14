@@ -1,5 +1,5 @@
 import { FileFilter } from 'electron';
-import AssetBase from '../Asset';
+import UAsset from '../Asset';
 import { UFunction } from '../Decorators';
 import IAssetLoader from './IAssetLoader';
 import { SubclassOf } from '../Class';
@@ -7,7 +7,7 @@ import { SubclassOf } from '../Class';
 export default class AssetManager {
   protected static _loaders: IAssetLoader[] = [];
   protected static _loaderExtensionLookup: { [id: string]: IAssetLoader } = {};
-  protected static _assets: { [id: string]: AssetBase } = {};
+  protected static _loadedAssets: { [id: string]: UAsset } = {};
 
   @UFunction({ meta: ['EditorOnly'] })
   public static ScanForAssets(): void {}
@@ -32,6 +32,11 @@ export default class AssetManager {
     return filters;
   }
 
+  public static GetAsset<T extends UAsset>(assetPath: string): T {
+    console.log(AssetManager._loadedAssets);
+    return AssetManager._loadedAssets[assetPath] as T;
+  }
+
   public static RegisterLoader(loader: SubclassOf<IAssetLoader>) {
     AssetManager._loaders.push(new loader());
   }
@@ -46,12 +51,27 @@ export default class AssetManager {
     }
   }
 
-  public static FindAssetById<T extends AssetBase>(id: string): T | undefined {
-    if (id in AssetManager._assets) {
-      return AssetManager._assets[id] as T;
+  public static FindAssetById<T extends UAsset>(id: string): T | undefined {
+    if (id in AssetManager._loadedAssets) {
+      return AssetManager._loadedAssets[id] as T;
     }
     return undefined;
   }
 
-  public static RegiserAsset() {}
+  public static CreateAsset(asset: UAsset) {
+    // create .uasset file on disk
+    const data = JSON.stringify(asset);
+
+    const path = asset.Name;
+    window.api.serializeAsset(data, path);
+
+    // register the new asset
+    AssetManager._loadedAssets[path] = asset;
+  }
+
+  public static RegiserAsset(asset: UAsset) {
+    // load a .uasset from disk into loaded assets map
+    console.log(`registering asset found on disk ${asset.SrcPath}`);
+    AssetManager._loadedAssets[asset.Name] = asset;
+  }
 }
