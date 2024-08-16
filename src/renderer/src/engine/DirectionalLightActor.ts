@@ -16,7 +16,10 @@ export class DirectionalLightActor extends Actor {
 
     this._billboard = this.AddComponent(BillboardComponent);
 
-    const billboardTexture = new Texture2d('src/assets/edUI/icons/icon-directional-light.png');
+    const billboardTexture = new Texture2d(
+      'icon-directional-light',
+      'src/assets/edUI/icons/icon-directional-light.png'
+    );
     this._billboard.SetTexture(billboardTexture);
   }
 

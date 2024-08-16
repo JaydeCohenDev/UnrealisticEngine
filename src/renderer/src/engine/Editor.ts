@@ -24,7 +24,7 @@ import UClass from './UClass';
 import AssetManager from './AssetManager/AssetManager';
 import TextureLoader from './AssetManager/Loaders/TextureLoader';
 import AudioLoader from './AssetManager/Loaders/AudioLoader';
-import UAsset from './Asset';
+import Texture2d from './Texture2d';
 
 type ReactComponent = () => JSX.Element;
 
@@ -35,9 +35,9 @@ export default class Editor {
 
   protected _layout: EditorLayout;
   protected _registeredEditorPanels: { [id: string]: () => JSX.Element } = {};
-  protected _world: World;
+  protected _world!: World;
 
-  protected _viewportPawn: ViewportEditorPawn;
+  protected _viewportPawn!: ViewportEditorPawn;
 
   protected _allowActorSelection: boolean = true;
 
@@ -57,17 +57,24 @@ export default class Editor {
   };
 
   constructor() {
+    console.log('starting asset discovery');
     window.api.discoverAssets();
     window.api.assetsDiscovered((assets) => {
-      assets.forEach((asset) => {
-        AssetManager.RegiserAsset(asset as UAsset);
-      });
+      // assets.forEach((assetData) => {
+      //   let uasset = new Texture2d('_loading_', undefined);
+      //   uasset.Deserialize(assetData);
+
+      //   console.log(`asset preparing for load: ${uasset}`);
+      //   console.log(uasset);
+      //   AssetManager.RegiserAsset(uasset);
+      // });
+      console.log('asset discovery finished');
     });
 
     this._world = new World('editor world');
-    this._layout = new EditorLayout();
-
     this._viewportPawn = this._world.Spawn(ViewportEditorPawn);
+
+    this._layout = new EditorLayout();
 
     this.RegisterEdPanels([Viewport, ContentBrowser, Outliner, DetailsPanel]);
 

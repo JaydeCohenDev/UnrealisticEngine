@@ -15,7 +15,7 @@ export default class SpotlightActor extends Actor {
     this._spotlightComponent = this.AddComponent(SpotlightComponent);
     this._billboard = this.AddComponent(BillboardComponent);
 
-    const spriteTex = new Texture2d('src/assets/edUI/icons/icon-spotlight.png');
+    const spriteTex = new Texture2d('icon-spotlight', 'src/assets/edUI/icons/icon-spotlight.png');
     this._billboard.SetTexture(spriteTex);
   }
 

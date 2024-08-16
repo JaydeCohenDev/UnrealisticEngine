@@ -15,7 +15,7 @@ export default class PointLightActor extends Actor {
     this._pointLightComponent = this.AddComponent(PointLightComponent);
     this._billboard = this.AddComponent(BillboardComponent);
 
-    const spriteTex = new Texture2d('src/assets/edUI/icons/icon-pointlight.png');
+    const spriteTex = new Texture2d('icon-pointlight', 'src/assets/edUI/icons/icon-pointlight.png');
     this._billboard.SetTexture(spriteTex);
   }
 

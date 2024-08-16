@@ -9,7 +9,7 @@ export default class BillboardComponent extends SceneComponent {
   constructor() {
     super();
 
-    const texture = new Texture2d('src/assets/edUI/icons/icon-misc.png');
+    const texture = new Texture2d('icon-misc', 'src/assets/edUI/icons/icon-misc.png');
     const mat = new SpriteMaterial({ map: texture.Data });
     this._sprite = new Sprite(mat);
   }

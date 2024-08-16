@@ -5,11 +5,20 @@ import { UClass } from './Decorators';
 export default class UAsset {
   protected _id: string = generateUUID();
   protected _srcPath?: string;
+  protected _assetPath?: string;
 
   protected _name: string;
 
   constructor(name: string) {
     this._name = name;
+  }
+
+  public Serialize(): string {
+    return JSON.stringify(this);
+  }
+
+  public Deserialize(assetData) {
+    Object.assign(this, assetData);
   }
 
   public get Name(): string {
@@ -22,6 +31,10 @@ export default class UAsset {
 
   public get SrcPath(): string | undefined {
     return this._srcPath;
+  }
+
+  public get AssetPath(): string | undefined {
+    return this._assetPath;
   }
 
   public set SrcPath(newPath: string) {

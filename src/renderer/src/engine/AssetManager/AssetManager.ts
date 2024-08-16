@@ -60,7 +60,7 @@ export default class AssetManager {
 
   public static CreateAsset(asset: UAsset) {
     // create .uasset file on disk
-    const data = JSON.stringify(asset);
+    const data = asset.Serialize();
 
     const path = asset.Name;
     window.api.serializeAsset(data, path);
@@ -72,6 +72,7 @@ export default class AssetManager {
   public static RegiserAsset(asset: UAsset) {
     // load a .uasset from disk into loaded assets map
     console.log(`registering asset found on disk ${asset.SrcPath}`);
+    console.log(asset);
     AssetManager._loadedAssets[asset.Name] = asset;
   }
 }

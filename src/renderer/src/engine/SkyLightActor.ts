@@ -14,7 +14,7 @@ export default class SkyLightActor extends Actor {
 
     this._skyLightComponent = this.AddComponent(SkyLightComponent);
     this._billboardComponent = this.AddComponent(BillboardComponent);
-    const spriteTex = new Texture2d('src/assets/edUI/icons/icon-skylight.png');
+    const spriteTex = new Texture2d('icon-skylight', 'src/assets/edUI/icons/icon-skylight.png');
     this._billboardComponent.SetTexture(spriteTex);
   }
 
