@@ -34,7 +34,7 @@ export default class Editor {
   public OnSpawnableActorsUpdated: UEvent = new UEvent();
   public OnWindowLayoutReset: UEvent = new UEvent();
 
-  protected _layout: EditorLayout;
+  //protected _layout: EditorLayout;
   protected _registeredEditorPanels: { [id: string]: () => JSX.Element } = {};
   protected _world!: World;
 
@@ -75,7 +75,7 @@ export default class Editor {
     this._world = new World('editor world');
     this._viewportPawn = this._world.Spawn(ViewportEditorPawn);
 
-    this._layout = new EditorLayout();
+    //this._layout = new EditorLayout();
 
     this.RegisterEdPanels([Viewport, ContentBrowser, Outliner, DetailsPanel]);
 
@@ -125,10 +125,9 @@ export default class Editor {
     const loadedLayoutString = localStorage.getItem('edLayout');
     let forceReset = false;
     if (loadedLayoutString !== null && !forceReset) {
-      this._layout = new EditorLayout();
-      this._layout.Deserialize(loadedLayoutString);
-
-      await this._layout.GetRootPane().Load();
+      //this._layout = new EditorLayout();
+      //this._layout.Deserialize(loadedLayoutString);
+      //await this._layout.GetRootPane().Load();
     } else {
       this.ResetLayout();
     }
@@ -289,10 +288,6 @@ export default class Editor {
 
   public GetEdPanel(panelName: string): ReactComponent | undefined {
     return this._registeredEditorPanels[panelName];
-  }
-
-  public GetLayout(): EditorLayout {
-    return this._layout;
   }
 
   public GetWorld(): World {

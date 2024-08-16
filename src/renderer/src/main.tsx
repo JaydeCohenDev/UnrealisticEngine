@@ -5,6 +5,8 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import Editor from './engine/Editor';
 
+import './userWorker';
+
 window.Editor = new Editor();
 await window.Editor.Load();
 console.log('loading editor layout');

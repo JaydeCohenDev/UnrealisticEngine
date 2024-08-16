@@ -154,7 +154,7 @@ export default class UERenderContext {
     Time.GetWorldDeltaSeconds();
 
     const fpsCounter = document.querySelector('#fpsCounter');
-    fpsCounter!.innerHTML = `FPS: ${Math.floor(Time.GetFrameRate())}`;
+    if (fpsCounter) fpsCounter!.innerHTML = `FPS: ${Math.floor(Time.GetFrameRate())}`;
 
     this._composer.render();
     //this._renderer.render(window.Editor.GetWorld().GetRenderScene(), this._camera);

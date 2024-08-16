@@ -21,6 +21,7 @@ import ContentBrowser from './components/ContentBrowser';
 import DetailsPanel from './components/DetailsPanel/DetailsPanel';
 import Outliner from './components/Outliner/Outliner';
 import OutputLog from './components/OutputLog';
+import CodeEditor from './components/CodeEditor/CodeEditor';
 
 declare global {
   interface Window {
@@ -43,7 +44,7 @@ function App(): JSX.Element {
     Input.StartListening();
 
     window.Editor.OnWindowLayoutReset.AddListener(() => {
-      resetLayout();
+      resetLayout(api);
     });
 
     return () => {
@@ -58,10 +59,8 @@ function App(): JSX.Element {
     });
   }, [api]);
 
-  const resetLayout = () => {
+  const resetLayout = (api?: DockviewApi) => {
     api?.clear();
-
-    debugger;
 
     const viewport = api?.addPanel({
       id: 'Viewport',
@@ -70,6 +69,20 @@ function App(): JSX.Element {
         title: 'Viewport'
       }
     });
+
+    api?.addPanel({
+      id: 'Code Editor',
+      component: 'codeEditor',
+      params: {
+        title: 'Code Editor'
+      },
+      position: {
+        direction: 'within',
+        referencePanel: viewport
+      }
+    });
+
+    viewport?.focus();
 
     const detailsPanel = api?.addPanel({
       id: 'Details Panel',
@@ -117,6 +130,9 @@ function App(): JSX.Element {
         referencePanel: contentBrowser
       }
     });
+
+    const layout = api?.toJSON();
+    localStorage.setItem('edLayout', JSON.stringify(layout));
   };
 
   const onReady = (event: DockviewReadyEvent) => {
@@ -135,8 +151,8 @@ function App(): JSX.Element {
       }
     }
 
-    if (!loadedLayout) {
-      resetLayout();
+    if (!loadedLayout || true) {
+      resetLayout(event.api);
     }
   };
 
@@ -161,7 +177,8 @@ function App(): JSX.Element {
     detailsPanel: DetailsPanel,
     outliner: Outliner,
     contentBrowser: ContentBrowser,
-    outputLog: OutputLog
+    outputLog: OutputLog,
+    codeEditor: CodeEditor
   };
 
   // const tabComponents = {

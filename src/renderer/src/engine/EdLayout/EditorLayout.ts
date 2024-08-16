@@ -111,6 +111,7 @@ export class EditorLayoutPane implements ISerializable {
   }
 
   public Deserialize(data: string): boolean {
+    if (data === '') return false;
     let dataObj = JSON.parse(data);
 
     this._componentName = dataObj['componentName'];
