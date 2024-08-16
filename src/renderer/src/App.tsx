@@ -20,6 +20,7 @@ import Viewport from './components/Viewport/Viewport';
 import ContentBrowser from './components/ContentBrowser';
 import DetailsPanel from './components/DetailsPanel/DetailsPanel';
 import Outliner from './components/Outliner/Outliner';
+import OutputLog from './components/OutputLog';
 
 declare global {
   interface Window {
@@ -41,6 +42,10 @@ function App(): JSX.Element {
   useEffect(() => {
     Input.StartListening();
 
+    window.Editor.OnWindowLayoutReset.AddListener(() => {
+      resetLayout();
+    });
+
     return () => {
       Input.StopListening();
     };
@@ -54,6 +59,10 @@ function App(): JSX.Element {
   }, [api]);
 
   const resetLayout = () => {
+    api?.clear();
+
+    debugger;
+
     const viewport = api?.addPanel({
       id: 'Viewport',
       component: 'viewport',
@@ -85,7 +94,7 @@ function App(): JSX.Element {
       }
     });
 
-    api?.addPanel({
+    const contentBrowser = api?.addPanel({
       id: 'Content Browser',
       component: 'contentBrowser',
       params: {
@@ -94,6 +103,18 @@ function App(): JSX.Element {
       position: {
         direction: 'below',
         referencePanel: viewport
+      }
+    });
+
+    api?.addPanel({
+      id: 'Output Log',
+      component: 'outputLog',
+      params: {
+        title: 'Output Log'
+      },
+      position: {
+        direction: 'within',
+        referencePanel: contentBrowser
       }
     });
   };
@@ -139,7 +160,8 @@ function App(): JSX.Element {
     viewport: Viewport,
     detailsPanel: DetailsPanel,
     outliner: Outliner,
-    contentBrowser: ContentBrowser
+    contentBrowser: ContentBrowser,
+    outputLog: OutputLog
   };
 
   // const tabComponents = {

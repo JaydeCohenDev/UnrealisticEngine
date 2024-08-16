@@ -1,0 +1,23 @@
+.logPanel {
+  overflow: scroll;
+  height: 100%;
+  user-select: text;
+  font-family: 'Roboto Mono';
+  background-color: #141414;
+}
+::selection {
+  background: #2d5bcb;
+}
+
+.logRow {
+  font-size: 14px;
+  color: rgb(163, 163, 163);
+}
+
+.logError {
+  color: rgb(219, 45, 45);
+}
+
+.logWarning {
+  color: rgb(208, 137, 50);
+}

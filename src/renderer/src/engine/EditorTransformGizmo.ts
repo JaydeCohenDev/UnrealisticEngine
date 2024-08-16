@@ -3,6 +3,7 @@ import EditorTransformGizmoComponent from './EditorTransformGizmoComponent';
 import UEvent from './UEvent';
 import SceneComponent from './SceneComponent';
 import { UClass } from './Decorators';
+import Debug from './Logging/Debug';
 
 @UClass()
 export default class EditorTransformGizmo extends Actor {
@@ -18,6 +19,9 @@ export default class EditorTransformGizmo extends Actor {
 
   public BeginPlay(): void {
     super.BeginPlay();
+
+    Debug.Log('transform', 'Info', 'Editor transform gizmo created');
+
     this._transformGizmoComponent.TransformGizmo.addEventListener('space-changed', (e) => {
       this.OnTransformSpaceChanged.Invoke(e);
     });

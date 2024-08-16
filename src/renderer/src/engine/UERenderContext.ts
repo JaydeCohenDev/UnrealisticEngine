@@ -8,6 +8,7 @@ import {
   UnrealBloomPass,
   OutlinePass
 } from 'three/examples/jsm/addons';
+import Debug from './Logging/Debug';
 
 //import * as POSTPROCESSING from 'postprocessing';
 
@@ -28,7 +29,7 @@ export default class UERenderContext {
   public PostProcessStack: PostProcessStack = {};
 
   public constructor(canvas: HTMLCanvasElement) {
-    console.log('rendering context created');
+    Debug.Log('render context', 'Info', 'Render context created');
 
     const viewportWidth = canvas.parentElement ? canvas.parentElement.clientWidth : 0;
     const viewportHeight = canvas.parentElement ? canvas.parentElement.clientHeight : 0;

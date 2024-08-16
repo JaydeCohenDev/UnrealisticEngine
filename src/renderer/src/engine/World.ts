@@ -17,6 +17,7 @@ import Rotator from './Rotator';
 import PointLightActor from './PointLightActor';
 import SpotlightActor from './SpotlightActor';
 import AssetManager from './AssetManager/AssetManager';
+import Debug from './Logging/Debug';
 
 export default class World {
   protected _name: string;
@@ -30,7 +31,7 @@ export default class World {
   protected _scene: THREE.Scene;
 
   constructor(name: string) {
-    console.log('world created');
+    Debug.Log('world', 'Info', 'world created');
 
     this._name = name;
 

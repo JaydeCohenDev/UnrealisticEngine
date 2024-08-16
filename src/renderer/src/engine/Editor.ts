@@ -24,7 +24,7 @@ import UClass from './UClass';
 import AssetManager from './AssetManager/AssetManager';
 import TextureLoader from './AssetManager/Loaders/TextureLoader';
 import AudioLoader from './AssetManager/Loaders/AudioLoader';
-import Texture2d from './Texture2d';
+import Debug from './Logging/Debug';
 
 type ReactComponent = () => JSX.Element;
 
@@ -32,6 +32,7 @@ export default class Editor {
   public OnActorSelectionSetChanged: UEvent = new UEvent();
   public OnTransformSpaceChanged: UEvent = new UEvent();
   public OnSpawnableActorsUpdated: UEvent = new UEvent();
+  public OnWindowLayoutReset: UEvent = new UEvent();
 
   protected _layout: EditorLayout;
   protected _registeredEditorPanels: { [id: string]: () => JSX.Element } = {};
@@ -57,7 +58,7 @@ export default class Editor {
   };
 
   constructor() {
-    console.log('starting asset discovery');
+    Debug.Log('asset manager', 'Info', 'starting asset discovery...');
     window.api.discoverAssets();
     window.api.assetsDiscovered((assets) => {
       // assets.forEach((assetData) => {
@@ -68,7 +69,7 @@ export default class Editor {
       //   console.log(uasset);
       //   AssetManager.RegiserAsset(uasset);
       // });
-      console.log('asset discovery finished');
+      Debug.Log('asset manager', 'Info', 'asset discovery finished');
     });
 
     this._world = new World('editor world');
@@ -303,6 +304,7 @@ export default class Editor {
   }
 
   public ResetLayout(): void {
+    this.OnWindowLayoutReset.Invoke({});
     return;
     // this._layout = new EditorLayout();
     // this._layout

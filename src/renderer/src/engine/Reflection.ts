@@ -1,5 +1,6 @@
 import { ArrayContains } from './Array';
 import { SubclassOf } from './Class';
+import Debug from './Logging/Debug';
 import UClass, { UClassSpecifiers } from './UClass';
 import UEvent from './UEvent';
 import UProperty, { UPropertySpecifiers } from './UProperty';
@@ -23,8 +24,15 @@ export default class Reflection {
       propType = classDefaultObject[propertyName].constructor.name;
     }
 
-    console.log(`UPROPERTY REGISTERED: ${propertyName} on ${className} of type ${propType}`);
-    if (specifiers !== undefined) console.log(specifiers);
+    Debug.Log(
+      'reflection',
+      'Info',
+      `UPROPERTY REGISTERED: ${propertyName} on ${className} of type ${propType}`
+    );
+
+    if (specifiers !== undefined) {
+      //Debug.Log('reflection', 'Info', `${JSON.stringify(specifiers)}`);
+    }
 
     const uProp: UProperty = new UProperty(propType, parentClass, propertyName, specifiers);
 
@@ -59,14 +67,14 @@ export default class Reflection {
       const uclass = new UClass(constructor, specifiers || {}, parentClass, [], []);
       Reflection._registeredClasses[constructor.name] = uclass;
       if (!isParentProjection) uclass.SignalValidation();
-      console.log(`UCLASS REGISTERED: ${constructor.name}`);
-      console.log(uclass);
+      Debug.Log('reflection', 'Info', `UCLASS REGISTERED: ${constructor.name}`);
+      //Debug.Log('reflection', 'Info', JSON.stringify(uclass));
     } else {
       classToRegister.UpdateParentClass(parentClass);
       classToRegister.UpdateSpecifiers(specifiers || {});
       if (!isParentProjection) classToRegister.SignalValidation();
-      console.log(`UCLASS UPDATED: ${constructor.name}`);
-      console.log(classToRegister);
+      Debug.Log('reflection', 'Warning', `UCLASS UPDATED: ${constructor.name}`);
+      //console.log(classToRegister);
     }
 
     Reflection.OnUClassRegistryUpdate.Invoke(undefined);

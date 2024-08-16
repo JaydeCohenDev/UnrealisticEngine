@@ -4,6 +4,7 @@ import './../../assets/toolbar.css';
 import ToolbarMenuItem from './ToolbarMenuItem';
 import Actor from '@renderer/engine/Actor';
 import { useEffect, useState } from 'react';
+import Debug from '@renderer/engine/Logging/Debug';
 
 export default function Toolbar() {
   function CreateMenu(): EdMenu {
@@ -68,7 +69,7 @@ export default function Toolbar() {
 
     menu.AddItem(new EdMenuItem('Help'));
 
-    console.log('menu created');
+    Debug.Log('toolbar', 'Info', 'toolbar created');
 
     return menu;
   }

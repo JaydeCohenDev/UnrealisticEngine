@@ -3,6 +3,7 @@
   height: 100%;
   background-color: black;
   position: relative;
+  cursor: grabbing;
 }
 
 .viewportOverlay {

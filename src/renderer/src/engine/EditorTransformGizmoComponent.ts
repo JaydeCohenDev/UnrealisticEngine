@@ -61,6 +61,10 @@ export default class EditorTransformGizmoComponent extends SceneComponent {
     super.Tick(_deltaTime);
 
     window.Editor.AllowActorSelection = !this._transformGizmo.dragging;
+
+    window.RenderContext!.GetCanvas().style.cursor = this._transformGizmo.dragging
+      ? 'grabbing'
+      : 'crosshair';
   }
 
   public BeginPlay(): void {
