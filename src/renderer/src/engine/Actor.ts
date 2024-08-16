@@ -185,4 +185,8 @@ export default class Actor {
     this.EndPlay();
     this.GetWorld()?.Remove(this);
   }
+
+  public toString(): string {
+    return this.GetDisplayName();
+  }
 }

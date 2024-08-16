@@ -6,6 +6,7 @@
 .logPanel {
   overflow: scroll;
   height: 100%;
+  min-width: 100%;
   user-select: text;
   font-family: 'Roboto Mono';
   background-color: #141414;

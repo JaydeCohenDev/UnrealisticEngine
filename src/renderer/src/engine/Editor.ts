@@ -256,6 +256,8 @@ export default class Editor {
     this.SetTransformActor(this._selectedActors[0]);
 
     this.OnActorSelectionSetChanged.Invoke({ selectedActors: actors });
+
+    Debug.Log('editor', 'Info', `Selecting actors: ${this._selectedActors.toString()}`);
   }
 
   public GetSelectedActors(): Actor[] {
