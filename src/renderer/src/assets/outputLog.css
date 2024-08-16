@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Roboto Mono';
+  src: url('./fonts/Roboto_Mono/RobotoMono-VariableFont_wght.ttf') format('truetype'); /* Safari, Android, iOS */
+}
+
 .logPanel {
   overflow: scroll;
   height: 100%;

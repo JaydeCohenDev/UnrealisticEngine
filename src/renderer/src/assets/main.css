@@ -1,8 +1,13 @@
+@font-face {
+  font-family: 'Inter';
+  src: url('./fonts/Inter/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+}
+
 body {
   background-color: #161618;
   color: #dfdfd6;
   margin: 0px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter';
   user-select: none;
   scrollbar-color: #272a2f transparent;
 }
